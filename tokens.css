@@ -1,0 +1,242 @@
+/**
+ * AVVAI THEME SYSTEM
+ * Auto-generated from tokens.js — do not edit directly.
+ * Run: node build-tokens.js
+ */
+
+[data-theme="marutham-light"] {
+    /* Marutham (மருதம்): Paddy fields at dawn */
+    /* Vaikarai (Dawn) — New lesson, fresh start */
+
+    /* backgrounds */
+    --bg: #f4f6f0;              /* undefined */
+    --surface: #e8ebe2;    /* undefined */
+
+    /* semantic colors */
+    --primary: #9e4a7c;    /* undefined */
+    --secondary: #5c8a42; /* undefined */
+    --accent: #d4a032;      /* undefined */
+    --muted: #c8cdc2;        /* undefined */
+    --border: #a4ab98;      /* undefined */
+    --foreground: #1c2418; /* undefined */
+
+    /* text on colored backgrounds */
+    --on-primary: #ffffff;
+    --on-secondary: #ffffff;
+    --on-accent: #1a1a1a;
+    --on-muted: #1a1a1a;
+}
+
+[data-theme="marutham-dark"] {
+    /* Marutham (மருதம்): Paddy fields before first light */
+    /* Vaikarai (Dawn) — New lesson, fresh start */
+
+    /* backgrounds */
+    --bg: #0c100c;              /* undefined */
+    --surface: #1a211a;    /* undefined */
+
+    /* semantic colors */
+    --primary: #c466a8;    /* undefined */
+    --secondary: #6a9c4a; /* undefined */
+    --accent: #d4a83c;      /* undefined */
+    --muted: #3a3830;        /* undefined */
+    --border: #4a4a3c;      /* undefined */
+    --foreground: #e8e4da; /* undefined */
+
+    /* text on colored backgrounds */
+    --on-primary: #1a1a1a;
+    --on-secondary: #1a1a1a;
+    --on-accent: #1a1a1a;
+    --on-muted: #ffffff;
+}
+
+[data-theme="palai-light"] {
+    /* Palai (பாலை): Desert at harsh midday */
+    /* Nanpakal (Midday) — Challenge, struggle, endurance */
+
+    /* backgrounds */
+    --bg: #f8f5ef;              /* undefined */
+    --surface: #ebe6db;    /* undefined */
+
+    /* semantic colors */
+    --primary: #a67842;    /* undefined */
+    --secondary: #8a9a7a; /* undefined */
+    --accent: #7ca3c4;      /* undefined */
+    --muted: #d4cfc5;        /* undefined */
+    --border: #a8a093;      /* undefined */
+    --foreground: #2a2218; /* undefined */
+
+    /* text on colored backgrounds */
+    --on-primary: #1a1a1a;
+    --on-secondary: #1a1a1a;
+    --on-accent: #1a1a1a;
+    --on-muted: #1a1a1a;
+}
+
+[data-theme="palai-dark"] {
+    /* Palai (பாலை): Desert under starless sky */
+    /* Nanpakal (Midday) — Challenge, struggle, endurance */
+
+    /* backgrounds */
+    --bg: #12100c;              /* undefined */
+    --surface: #221e18;    /* undefined */
+
+    /* semantic colors */
+    --primary: #c4945c;    /* undefined */
+    --secondary: #9aaa8a; /* undefined */
+    --accent: #8ab4d4;      /* undefined */
+    --muted: #3a3630;        /* undefined */
+    --border: #4a4438;      /* undefined */
+    --foreground: #e8e2d8; /* undefined */
+
+    /* text on colored backgrounds */
+    --on-primary: #1a1a1a;
+    --on-secondary: #1a1a1a;
+    --on-accent: #1a1a1a;
+    --on-muted: #ffffff;
+}
+
+[data-theme="neithal-light"] {
+    /* Neithal (நெய்தல்): Seashore at sunset */
+    /* Erpadu (Sunset) — Review, longing, nostalgia */
+
+    /* backgrounds */
+    --bg: #faf6f0;              /* undefined */
+    --surface: #ebe5db;    /* undefined */
+
+    /* semantic colors */
+    --primary: #d47a4a;    /* undefined */
+    --secondary: #6a8088; /* undefined */
+    --accent: #d48a9a;      /* undefined */
+    --muted: #d6d0c8;        /* undefined */
+    --border: #a9a196;      /* undefined */
+    --foreground: #2c2620; /* undefined */
+
+    /* text on colored backgrounds */
+    --on-primary: #1a1a1a;
+    --on-secondary: #ffffff;
+    --on-accent: #1a1a1a;
+    --on-muted: #1a1a1a;
+}
+
+[data-theme="neithal-dark"] {
+    /* Neithal (நெய்தல்): Seashore after sunset */
+    /* Erpadu (Sunset) — Review, longing, nostalgia */
+
+    /* backgrounds */
+    --bg: #0e1012;              /* undefined */
+    --surface: #1a1e22;    /* undefined */
+
+    /* semantic colors */
+    --primary: #e8946a;    /* undefined */
+    --secondary: #7a9aa8; /* undefined */
+    --accent: #e4a4b4;      /* undefined */
+    --muted: #2e3234;        /* undefined */
+    --border: #4a4e52;      /* undefined */
+    --foreground: #e6e2dc; /* undefined */
+
+    /* text on colored backgrounds */
+    --on-primary: #1a1a1a;
+    --on-secondary: #1a1a1a;
+    --on-accent: #1a1a1a;
+    --on-muted: #ffffff;
+}
+
+[data-theme="mullai-light"] {
+    /* Mullai (முல்லை): Forest in golden hour */
+    /* Maalai (Evening) — Practice, patience, steady rhythm */
+
+    /* backgrounds */
+    --bg: #f5f4f0;              /* undefined */
+    --surface: #e8e6e0;    /* undefined */
+
+    /* semantic colors */
+    --primary: #b85a42;    /* undefined */
+    --secondary: #7a6a4a; /* undefined */
+    --accent: #e8dcb4;      /* undefined */
+    --muted: #ccd0c4;        /* undefined */
+    --border: #a4a898;      /* undefined */
+    --foreground: #2a2c24; /* undefined */
+
+    /* text on colored backgrounds */
+    --on-primary: #ffffff;
+    --on-secondary: #ffffff;
+    --on-accent: #1a1a1a;
+    --on-muted: #1a1a1a;
+}
+
+[data-theme="mullai-dark"] {
+    /* Mullai (முல்லை): Forest at dusk */
+    /* Maalai (Evening) — Practice, patience, steady rhythm */
+
+    /* backgrounds */
+    --bg: #0c0e0c;              /* undefined */
+    --surface: #1a1e1a;    /* undefined */
+
+    /* semantic colors */
+    --primary: #c45a3d;    /* undefined */
+    --secondary: #8a7350; /* undefined */
+    --accent: #e8dcb4;      /* undefined */
+    --muted: #2e382c;        /* undefined */
+    --border: #4a5444;      /* undefined */
+    --foreground: #e4e8e2; /* undefined */
+
+    /* text on colored backgrounds */
+    --on-primary: #ffffff;
+    --on-secondary: #ffffff;
+    --on-accent: #1a1a1a;
+    --on-muted: #ffffff;
+}
+
+[data-theme="kurinji-light"] {
+    /* Kurinji (குறிஞ்சி): Mountains in soft light */
+    /* Yamam (Midnight) — Mastery, union, achievement */
+
+    /* backgrounds */
+    --bg: #f4f4f8;              /* undefined */
+    --surface: #e6e6ee;    /* undefined */
+
+    /* semantic colors */
+    --primary: #5a68a8;    /* undefined */
+    --secondary: #7a7a88; /* undefined */
+    --accent: #9898c8;      /* undefined */
+    --muted: #c8c8d4;        /* undefined */
+    --border: #a4a4b4;      /* undefined */
+    --foreground: #1a1c24; /* undefined */
+
+    /* text on colored backgrounds */
+    --on-primary: #ffffff;
+    --on-secondary: #ffffff;
+    --on-accent: #1a1a1a;
+    --on-muted: #1a1a1a;
+}
+
+[data-theme="kurinji-dark"] {
+    /* Kurinji (குறிஞ்சி): Mountains at midnight */
+    /* Yamam (Midnight) — Mastery, union, achievement */
+
+    /* backgrounds */
+    --bg: #0a0a10;              /* undefined */
+    --surface: #18181e;    /* undefined */
+
+    /* semantic colors */
+    --primary: #6b7cc4;    /* undefined */
+    --secondary: #8a8a98; /* undefined */
+    --accent: #a8b0d8;      /* undefined */
+    --muted: #2a2834;        /* undefined */
+    --border: #44425a;      /* undefined */
+    --foreground: #e6e4ea; /* undefined */
+
+    /* text on colored backgrounds */
+    --on-primary: #ffffff;
+    --on-secondary: #1a1a1a;
+    --on-accent: #1a1a1a;
+    --on-muted: #ffffff;
+}
+
+/* Utility classes — background + text bundled */
+.bg-primary { background: var(--primary); color: var(--on-primary); }
+.bg-secondary { background: var(--secondary); color: var(--on-secondary); }
+.bg-accent { background: var(--accent); color: var(--on-accent); }
+.bg-muted { background: var(--muted); color: var(--on-muted); }
+.bg-surface { background: var(--surface); color: var(--foreground); }
