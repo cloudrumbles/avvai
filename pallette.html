@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avvai - Sangam Thinnais Palette</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400;600;800&family=Mukta+Malar:wght@200;400;600;800&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-page: #050505;
+            --text-page: #ffffff;
+            
+            /* 1. MARUTHAM: Morning (Vaikarai) */
+            --marutham-1: #f2f6f2; /* Background (Fresh) */
+            --marutham-2: #ebeae3; /* Surface (Pale Sky) */
+            --marutham-3: #ca6db9; /* Primary (Jarul Flower) */
+            --marutham-4: #7e8d5f; /* Paddy (Field) */
+            --marutham-5: #e3b455; /* Gold (Flower Center) */
+            --marutham-6: #1b320b; /* Leaf (Deep Green) */
+            --marutham-7: #4a3b22; /* Bark (Palm Trunk) */
+            --marutham-8: #0d1a07; /* Text (Dark Forest) */
+
+            /* 2. PALAI: Midday (Nanpakal) */
+            --palai-1: #f5f2ed; /* Background (Light Sand) */
+            --palai-2: #e7e5cd; /* Surface (Desert Flower) */
+            --palai-3: #bc9873; /* Primary (Dry Earth) */
+            --palai-4: #6a82ae; /* Mirage (Distant Mountain) */
+            --palai-5: #3a4426; /* Shrub (Cactus Green) */
+            --palai-6: #b4c0da; /* Cloud (Grey Sky) */
+            --palai-7: #4b3c27; /* Branch (Acacia Brown) */
+            --palai-8: #2d1f14; /* Text (Burned Earth) */
+
+            /* 3. NEITHAL: Sunset (Erpadu) */
+            --neithal-1: #eee5d7; /* Background (Sky Haze) */
+            --neithal-2: #adafa7; /* Surface (Sea Grey) */
+            --neithal-3: #f2e6d4; /* Primary (Sun Path) */
+            --neithal-4: #8a8c82; /* Horizon (Muted Blue) */
+            --neithal-5: #c9b591; /* Accent (Golden Reflection) */
+            --neithal-6: #fbf6ee; /* Foam (Surf White) */
+            --neithal-7: #5c5546; /* Sand (Wet Shore) */
+            --neithal-8: #2b2822; /* Text (Deep Ocean) */
+
+            /* 4. MULLAI: Evening (Maalai) */
+            --mullai-1: #0a140d; /* Background */
+            --mullai-2: #1b2b1e; /* Surface */
+            --mullai-3: #83734b; /* Primary (Deer) */
+            --mullai-4: #c44d32; /* Sunset */
+            --mullai-5: #fdfaf1; /* Jasmine */
+            --mullai-6: #4a5d31; /* Leaf */
+            --mullai-7: #57584c; /* Bark */
+            --mullai-8: #e3e8e1; /* Text */
+
+            /* 5. KURINJI: Midnight (Yamam) */
+            --kurinji-1: #0d0a11; /* Background */
+            --kurinji-2: #202230; /* Surface */
+            --kurinji-3: #3b4e9f; /* Primary */
+            --kurinji-4: #1b3067; /* Sec Surf */
+            --kurinji-5: #9098c8; /* Lavender */
+            --kurinji-6: #2d453e; /* Forest */
+            --kurinji-7: #58606e; /* Dim */
+            --kurinji-8: #e5e4e3; /* Text */
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-page);
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            padding: 4rem;
+        }
+
+        h1 {
+            font-family: 'Eczar', serif;
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 4rem;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .card-header {
+            padding: 2rem;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .landscape-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            object-fit: cover;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .thinai-name {
+            font-family: 'Mukta Malar', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .thinai-sub {
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .time-badge {
+            display: inline-block;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(4px);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(255,255,255,0.15);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .swatch {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 120px;
+            transition: transform 0.2s ease;
+        }
+
+        .hex {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .role {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.3px;
+        }
+
+        /* Thinnai Specific Classes */
+        
+        /* MARUTHAM */
+        .marutham-text { color: var(--marutham-8); text-shadow: none; }
+        .ma-1 { background: var(--marutham-1); color: var(--marutham-8); }
+        .ma-2 { background: var(--marutham-2); color: var(--marutham-8); }
+        .ma-3 { background: var(--marutham-3); color: #fff; }
+        .ma-4 { background: var(--marutham-4); color: #fff; }
+        .ma-5 { background: var(--marutham-5); color: #000; }
+        .ma-6 { background: var(--marutham-6); color: #fff; }
+        .ma-7 { background: var(--marutham-7); color: #fff; }
+        .ma-8 { background: var(--marutham-8); color: var(--marutham-1); }
+
+        /* PALAI */
+        .palai-text { color: var(--palai-8); text-shadow: none; }
+        .p-1 { background: var(--palai-1); color: var(--palai-8); }
+        .p-2 { background: var(--palai-2); color: var(--palai-8); }
+        .p-3 { background: var(--palai-3); color: #fff; }
+        .p-4 { background: var(--palai-4); color: #fff; }
+        .p-5 { background: var(--palai-5); color: #fff; }
+        .p-6 { background: var(--palai-6); color: var(--palai-8); }
+        .p-7 { background: var(--palai-7); color: #fff; }
+        .p-8 { background: var(--palai-8); color: var(--palai-1); }
+
+        /* NEITHAL */
+        .neithal-text { color: var(--neithal-8); }
+        .n-1 { background: var(--neithal-1); color: var(--neithal-8); }
+        .n-2 { background: var(--neithal-2); color: var(--neithal-8); }
+        .n-3 { background: var(--neithal-3); color: var(--neithal-8); }
+        .n-4 { background: var(--neithal-4); color: #fff; }
+        .n-5 { background: var(--neithal-5); color: #000; }
+        .n-6 { background: var(--neithal-6); color: var(--neithal-8); }
+        .n-7 { background: var(--neithal-7); color: #fff; }
+        .n-8 { background: var(--neithal-8); color: var(--neithal-1); }
+
+        /* MULLAI */
+        .mullai-text { color: var(--mullai-8); }
+        .m-1 { background: var(--mullai-1); color: var(--mullai-8); }
+        .m-2 { background: var(--mullai-2); color: var(--mullai-8); }
+        .m-3 { background: var(--mullai-3); color: #fff; }
+        .m-4 { background: var(--mullai-4); color: #fff; }
+        .m-5 { background: var(--mullai-5); color: #000; }
+        .m-6 { background: var(--mullai-6); color: #fff; }
+        .m-7 { background: var(--mullai-7); color: #fff; }
+        .m-8 { background: var(--mullai-8); color: var(--mullai-1); }
+
+        /* KURINJI */
+        .kurinji-text { color: var(--kurinji-8); }
+        .k-1 { background: var(--kurinji-1); color: var(--kurinji-8); }
+        .k-2 { background: var(--kurinji-2); color: var(--kurinji-8); }
+        .k-3 { background: var(--kurinji-3); color: #fff; }
+        .k-4 { background: var(--kurinji-4); color: #fff; }
+        .k-5 { background: var(--kurinji-5); color: #000; }
+        .k-6 { background: var(--kurinji-6); color: #fff; }
+        .k-7 { background: var(--kurinji-7); color: #fff; }
+        .k-8 { background: var(--kurinji-8); color: var(--kurinji-1); }
+
+    </style>
+</head>
+<body>
+
+    <h1>Avvai • Aithinnai Palette</h1>
+
+    <div class="grid">
+        
+        <!-- 1. MARUTHAM: Morning (Vaikarai) -->
+        <div class="card">
+            <div class="card-header marutham-text">
+                <svg class="landscape-bg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <rect width="100" height="100" fill="var(--marutham-2)" />
+                    <!-- The Paddy Field -->
+                    <rect x="0" y="40" width="100" height="60" fill="var(--marutham-4)" />
+                    <!-- The Palm Tree -->
+                    <rect x="37" y="25" width="2" height="30" fill="var(--marutham-7)" />
+                    <circle cx="38" cy="22" r="5" fill="var(--marutham-6)" />
+                    <!-- The Jarul Flowers -->
+                    <circle cx="80" cy="70" r="3" fill="var(--marutham-3)" />
+                    <circle cx="85" cy="75" r="2" fill="var(--marutham-3)" />
+                    <circle cx="82" cy="72" r="1" fill="var(--marutham-5)" />
+                </svg>
+
+                <div class="header-content">
+                    <div class="thinai-name">மருதம்</div>
+                    <div class="thinai-sub">Marutham • Plains</div>
+                    <div class="time-badge">Vaikarai (Dawn)</div>
+                </div>
+            </div>
+            <div class="palette-grid">
+                <div class="swatch ma-1"><div class="role">Background</div><div class="hex">#F2F6F2</div></div>
+                <div class="swatch ma-2"><div class="role">Surface</div><div class="hex">#EBEAE3</div></div>
+                <div class="swatch ma-3"><div class="role">Primary</div><div class="hex">#CA6DB9</div></div>
+                <div class="swatch ma-4"><div class="role">Paddy</div><div class="hex">#7E8D5F</div></div>
+                <div class="swatch ma-5"><div class="role">Gold</div><div class="hex">#E3B455</div></div>
+                <div class="swatch ma-6"><div class="role">Leaf</div><div class="hex">#1B320B</div></div>
+                <div class="swatch ma-7"><div class="role">Bark</div><div class="hex">#4A3B22</div></div>
+                <div class="swatch ma-8"><div class="role">Text</div><div class="hex">#0D1A07</div></div>
+            </div>
+        </div>
+
+        <!-- 2. PALAI: Midday (Nanpakal) -->
+        <div class="card">
+            <div class="card-header palai-text">
+                <svg class="landscape-bg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <rect width="100" height="100" fill="var(--palai-6)" />
+                    <!-- Distant Mountains -->
+                    <path d="M0 60 L20 45 L40 55 L60 40 L80 50 L100 45 V 100 H 0 Z" fill="var(--palai-4)" opacity="0.6" />
+                    <!-- The Desert Floor -->
+                    <rect x="0" y="60" width="100" height="40" fill="var(--palai-3)" />
+                    <!-- Desert Shrub -->
+                    <circle cx="50" cy="85" r="8" fill="var(--palai-5)" />
+                    <!-- Flower Blossom -->
+                    <circle cx="48" cy="82" r="1.5" fill="var(--palai-2)" />
+                    <circle cx="52" cy="84" r="1.2" fill="var(--palai-2)" />
+                </svg>
+
+                <div class="header-content">
+                    <div class="thinai-name">பாலை</div>
+                    <div class="thinai-sub">Palai • Desert</div>
+                    <div class="time-badge">Nanpakal (Midday)</div>
+                </div>
+            </div>
+            <div class="palette-grid">
+                <div class="swatch p-1"><div class="role">Background</div><div class="hex">#F5F2ED</div></div>
+                <div class="swatch p-2"><div class="role">Surface</div><div class="hex">#E7E5CD</div></div>
+                <div class="swatch p-3"><div class="role">Primary</div><div class="hex">#BC9873</div></div>
+                <div class="swatch p-4"><div class="role">Mirage</div><div class="hex">#6A82AE</div></div>
+                <div class="swatch p-5"><div class="role">Shrub</div><div class="hex">#3A4426</div></div>
+                <div class="swatch p-6"><div class="role">Cloud</div><div class="hex">#B4C0DA</div></div>
+                <div class="swatch p-7"><div class="role">Branch</div><div class="hex">#4B3C27</div></div>
+                <div class="swatch p-8"><div class="role">Text</div><div class="hex">#2D1F14</div></div>
+            </div>
+        </div>
+
+        <!-- 3. NEITHAL: Sunset (Erpadu) -->
+        <div class="card">
+            <div class="card-header neithal-text">
+                <svg class="landscape-bg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <rect width="100" height="100" fill="var(--neithal-1)" />
+                    <!-- The Sun -->
+                    <circle cx="50" cy="30" r="12" fill="var(--neithal-3)" />
+                    <!-- The Ocean -->
+                    <rect x="0" y="50" width="100" height="50" fill="var(--neithal-2)" />
+                    <!-- Sun Path on Water -->
+                    <path d="M40 50 L60 50 L70 100 L30 100 Z" fill="var(--neithal-5)" opacity="0.6" />
+                    <!-- Surf/Foam -->
+                    <path d="M0 70 Q 25 65, 50 70 T 100 70 V 75 H 0 Z" fill="var(--neithal-6)" opacity="0.4" />
+                    <!-- The Shore -->
+                    <path d="M0 85 Q 50 80, 100 85 V 100 H 0 Z" fill="var(--neithal-7)" />
+                </svg>
+
+                <div class="header-content">
+                    <div class="thinai-name">நெய்தல்</div>
+                    <div class="thinai-sub">Neithal • Ocean</div>
+                    <div class="time-badge">Erpadu (Sunset)</div>
+                </div>
+            </div>
+            <div class="palette-grid">
+                <div class="swatch n-1"><div class="role">Background</div><div class="hex">#EEE5D7</div></div>
+                <div class="swatch n-2"><div class="role">Surface</div><div class="hex">#ADAFA7</div></div>
+                <div class="swatch n-3"><div class="role">Sun</div><div class="hex">#F2E6D4</div></div>
+                <div class="swatch n-4"><div class="role">Horizon</div><div class="hex">#8A8C82</div></div>
+                <div class="swatch n-5"><div class="role">Reflect</div><div class="hex">#C9B591</div></div>
+                <div class="swatch n-6"><div class="role">Foam</div><div class="hex">#FBF6EE</div></div>
+                <div class="swatch n-7"><div class="role">Sand</div><div class="hex">#5C5546</div></div>
+                <div class="swatch n-8"><div class="role">Text</div><div class="hex">#2B2822</div></div>
+            </div>
+        </div>
+
+        <!-- 4. MULLAI: Evening (Maalai) -->
+        <div class="card">
+            <div class="card-header mullai-text">
+                <svg class="landscape-bg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <rect width="100" height="100" fill="var(--mullai-1)" />
+                    <path d="M0 100 C 20 60, 40 60, 60 100 S 80 60, 100 100 Z" fill="var(--mullai-2)" />
+                    <path d="M-10 100 C 10 70, 30 70, 50 100 S 70 70, 110 100 Z" fill="var(--mullai-6)" />
+                    <!-- The Deer -->
+                    <ellipse cx="60" cy="85" rx="5" ry="3" fill="var(--mullai-3)" />
+                    <circle cx="65" cy="80" r="2" fill="var(--mullai-3)" />
+                    <!-- The Sunset -->
+                    <circle cx="20" cy="30" r="10" fill="var(--mullai-4)" opacity="0.3" />
+                    <!-- Jasmine -->
+                    <circle cx="80" cy="40" r="1" fill="var(--mullai-5)" />
+                    <circle cx="85" cy="45" r="0.8" fill="var(--mullai-5)" />
+                </svg>
+
+                <div class="header-content">
+                    <div class="thinai-name">முல்லை</div>
+                    <div class="thinai-sub">Mullai • Forest</div>
+                    <div class="time-badge">Maalai (Evening)</div>
+                </div>
+            </div>
+            <div class="palette-grid">
+                <div class="swatch m-1"><div class="role">Background</div><div class="hex">#0A140D</div></div>
+                <div class="swatch m-2"><div class="role">Surface</div><div class="hex">#1B2B1E</div></div>
+                <div class="swatch m-3"><div class="role">Primary</div><div class="hex">#83734B</div></div>
+                <div class="swatch m-4"><div class="role">Sunset</div><div class="hex">#C44D32</div></div>
+                <div class="swatch m-5"><div class="role">Jasmine</div><div class="hex">#FDFAF1</div></div>
+                <div class="swatch m-6"><div class="role">Leaf</div><div class="hex">#4A5D31</div></div>
+                <div class="swatch m-7"><div class="role">Bark</div><div class="hex">#57584C</div></div>
+                <div class="swatch m-8"><div class="role">Text</div><div class="hex">#E3E8E1</div></div>
+            </div>
+        </div>
+
+        <!-- 5. KURINJI: Midnight (Yamam) -->
+        <div class="card">
+            <div class="card-header kurinji-text">
+                <svg class="landscape-bg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <rect width="100" height="100" fill="var(--kurinji-1)" />
+                    <path d="M0 100 L30 40 L60 100 Z" fill="var(--kurinji-7)" />
+                    <path d="M40 100 L70 30 L100 100 Z" fill="var(--kurinji-7)" />
+                    <path d="M-10 100 L40 50 L90 100 Z" fill="var(--kurinji-2)" />
+                    <path d="M50 100 L80 60 L110 100 Z" fill="var(--kurinji-2)" />
+                    <circle cx="85" cy="15" r="5" fill="var(--kurinji-8)" opacity="0.8" />
+                </svg>
+                
+                <div class="header-content">
+                    <div class="thinai-name">குறிஞ்சி</div>
+                    <div class="thinai-sub">Kurinji • Mountains</div>
+                    <div class="time-badge">Yamam (Midnight)</div>
+                </div>
+            </div>
+            <div class="palette-grid">
+                <div class="swatch k-1"><div class="role">Background</div><div class="hex">#0D0A11</div></div>
+                <div class="swatch k-2"><div class="role">Surface</div><div class="hex">#202230</div></div>
+                <div class="swatch k-3"><div class="role">Primary</div><div class="hex">#3B4E9F</div></div>
+                <div class="swatch k-4"><div class="role">Sec. Surf</div><div class="hex">#1B3067</div></div>
+                <div class="swatch k-5"><div class="role">Lavender</div><div class="hex">#9098C8</div></div>
+                <div class="swatch k-6"><div class="role">Forest</div><div class="hex">#2D453E</div></div>
+                <div class="swatch k-7"><div class="role">Dim</div><div class="hex">#58606E</div></div>
+                <div class="swatch k-8"><div class="role">Text</div><div class="hex">#E5E4E3</div></div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
