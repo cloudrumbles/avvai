@@ -30,7 +30,7 @@ export const thinnai = {
             colors: {
                 bg:        '#f4f6f0',  // morning mist over fields
                 surface:   '#e8ebe2',  // pale dawn sky
-                primary:   '#9e4a7c',  // jarul flower
+                primary:   '#c8c864',  // marutham flower yellow
                 secondary: '#5c8a42',  // young paddy
                 accent:    '#d4a032',  // morning sun on grain
                 muted:     '#c8cdc2',  // dew on leaves
@@ -43,7 +43,7 @@ export const thinnai = {
             colors: {
                 bg:        '#0c100c',  // rich dark soil
                 surface:   '#1a211a',  // shadowed paddy field
-                primary:   '#c466a8',  // jarul flower glowing
+                primary:   '#dcdc8c',  // marutham flower glowing
                 secondary: '#6a9c4a',  // paddy in moonlight
                 accent:    '#d4a83c',  // first gold of dawn
                 muted:     '#3a3830',  // wet dark earth
@@ -65,10 +65,10 @@ export const thinnai = {
         light: {
             landscape: 'Desert at harsh midday',
             colors: {
-                bg:        '#f8f5ef',  // bleached sand
-                surface:   '#ebe6db',  // heat haze
-                primary:   '#a67842',  // parched earth
-                secondary: '#8a9a7a',  // dusty scrubland
+                bg:        '#fffbf0',  // harsh sunlight
+                surface:   '#f0e6d2',  // parched earth
+                primary:   '#EFD79B',  // palai flower
+                secondary: '#a69b8d',  // dry dead wood
                 accent:    '#7ca3c4',  // hazy sky
                 muted:     '#d4cfc5',  // dust cloud
                 border:    '#a8a093',  // cracked clay
@@ -80,7 +80,7 @@ export const thinnai = {
             colors: {
                 bg:        '#12100c',  // cold desert night
                 surface:   '#221e18',  // dark dunes
-                primary:   '#c4945c',  // sand in moonlight
+                primary:   '#F5E6D3',  // palai flower light
                 secondary: '#9aaa8a',  // scrub in moonlight
                 accent:    '#8ab4d4',  // clear night sky
                 muted:     '#3a3630',  // cold sand
@@ -102,14 +102,14 @@ export const thinnai = {
         light: {
             landscape: 'Seashore at sunset',
             colors: {
-                bg:        '#faf6f0',  // glowing horizon
-                surface:   '#ebe5db',  // warm sand
-                primary:   '#d47a4a',  // setting sun
-                secondary: '#6a8088',  // distant sea
+                bg:        '#f0f7fa',  // sea mist
+                surface:   '#e0e8e9',  // wet sand
+                primary:   '#8d76a0',  // neithal flower extracted
+                secondary: '#4a8b9f',  // teal sea
                 accent:    '#d48a9a',  // coral pink sky
-                muted:     '#d6d0c8',  // sea foam
-                border:    '#a9a196',  // tideline
-                foreground:'#2c2620',  // deep ocean
+                muted:     '#c8d6d8',  // sea foam
+                border:    '#96a1a9',  // tideline
+                foreground:'#1a262c',  // deep ocean
             }
         },
         dark: {
@@ -117,7 +117,7 @@ export const thinnai = {
             colors: {
                 bg:        '#0e1012',  // night sea
                 surface:   '#1a1e22',  // wet rocks
-                primary:   '#e8946a',  // last glow on horizon
+                primary:   '#74b9ff',  // neithal flower light
                 secondary: '#7a9aa8',  // moonlit waves
                 accent:    '#e4a4b4',  // pink afterglow
                 muted:     '#2e3234',  // dark sand
@@ -139,26 +139,26 @@ export const thinnai = {
         light: {
             landscape: 'Forest in golden hour',
             colors: {
-                bg:        '#f5f4f0',  // filtered sunlight
-                surface:   '#e8e6e0',  // dappled shade
-                primary:   '#b85a42',  // evening sun through trees
-                secondary: '#7a6a4a',  // deer coat
+                bg:        '#edf2ea',  // misty forest green
+                surface:   '#dde6da',  // pale leaf green
+                primary:   '#fdcb6e',  // mullai flower gold
+                secondary: '#607d3b',  // leaf green
                 accent:    '#e8dcb4',  // jasmine glow
-                muted:     '#ccd0c4',  // forest floor
-                border:    '#a4a898',  // bark
-                foreground:'#2a2c24',  // deep shade
+                muted:     '#b8c5b6',  // sage green
+                border:    '#8f9e8a',  // mossy border
+                foreground:'#1a261a',  // deep forest shade
             }
         },
         dark: {
             landscape: 'Forest at dusk',
             colors: {
-                bg:        '#0c0e0c',  // forest darkness
-                surface:   '#1a1e1a',  // shadowed glade
-                primary:   '#c45a3d',  // dying sun through trees
-                secondary: '#8a7350',  // deer's hide
+                bg:        '#0d140d',  // deep forest night
+                surface:   '#1c261c',  // dark canopy
+                primary:   '#ffeaa7',  // mullai flower pale gold
+                secondary: '#558b2f',  // forest moss
                 accent:    '#e8dcb4',  // jasmine in darkness
-                muted:     '#2e382c',  // undergrowth
-                border:    '#4a5444',  // bark shadow
+                muted:     '#2c3e2c',  // deep undergrowth
+                border:    '#3e4f3e',  // shadowed leaves
                 foreground:'#e4e8e2',  // moonlit mist
             }
         }
@@ -178,7 +178,7 @@ export const thinnai = {
             colors: {
                 bg:        '#f4f4f8',  // mountain mist
                 surface:   '#e6e6ee',  // cloud cover
-                primary:   '#5a68a8',  // kurinji flower
+                primary:   '#6c5ce7',  // kurinji flower purple
                 secondary: '#7a7a88',  // granite stone
                 accent:    '#9898c8',  // lavender fields
                 muted:     '#c8c8d4',  // morning fog
@@ -191,7 +191,7 @@ export const thinnai = {
             colors: {
                 bg:        '#0a0a10',  // mountain night
                 surface:   '#18181e',  // rocky outcrop
-                primary:   '#6b7cc4',  // kurinji flower
+                primary:   '#a29bfe',  // kurinji flower light
                 secondary: '#8a8a98',  // moonlit stone
                 accent:    '#a8b0d8',  // starlit lavender
                 muted:     '#2a2834',  // stone shadow
@@ -203,6 +203,17 @@ export const thinnai = {
 };
 
 // Flatten into themes object for backwards compatibility
+export const roleDescriptions = {
+    bg: 'page background',
+    surface: 'cards, elevated containers',
+    primary: 'main actions (buttons, links)',
+    secondary: 'supporting actions',
+    accent: 'highlights, alerts, badges',
+    muted: 'disabled, subtle elements',
+    border: 'dividers, outlines',
+    foreground: 'main text on bg/surface'
+};
+
 export const themes = {};
 for (const [id, t] of Object.entries(thinnai)) {
     for (const mode of ['light', 'dark']) {
@@ -225,7 +236,8 @@ for (const [id, t] of Object.entries(thinnai)) {
         for (const [role, value] of Object.entries(modeData.colors)) {
             themes[themeId].colors[role] = {
                 value: value,
-                on: getContrastColor(value)
+                on: getContrastColor(value),
+                desc: roleDescriptions[role] || ''
             };
         }
     }

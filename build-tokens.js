@@ -67,8 +67,8 @@ function generateCSS() {
 
 // Generate and write
 const css = generateCSS();
-writeFileSync('tokens.css', css);
-console.log('Generated tokens.css');
+writeFileSync('src/client/tokens.css', css);
+console.log('Generated src/client/tokens.css');
 
 // Also output a summary
 console.log('\nThemes:');

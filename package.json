@@ -1,0 +1,23 @@
+{
+  "name": "avvai",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "ui": "vite",
+    "build": "vite build",
+    "build:tokens": "bun run build-tokens.js"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "vite": "^7.3.0",
+    "vite-plugin-solid": "^2.11.10"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@elysiajs/static": "^1.4.7",
+    "elysia": "^1.4.19",
+    "solid-js": "^1.9.10"
+  }
+}
