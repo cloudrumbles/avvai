@@ -4,8 +4,7 @@
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "ui": "vite",
-    "build": "vite build",
-    "build:tokens": "bun run build-tokens.js"
+    "build": "vite build"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -17,6 +16,8 @@
   },
   "dependencies": {
     "@elysiajs/static": "^1.4.7",
+    "@vanilla-extract/css": "^1.18.0",
+    "@vanilla-extract/vite-plugin": "^5.1.4",
     "elysia": "^1.4.19",
     "solid-js": "^1.9.10"
   }

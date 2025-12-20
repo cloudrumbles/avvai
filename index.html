@@ -7,64 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arima:wght@400;600&family=Baloo+Thambi+2:wght@400;600;800&family=Catamaran:wght@400;700;900&family=Eczar:wght@400;600;700&family=Hind+Madurai:wght@400;600&family=Kavivanar&family=Mukta+Malar:wght@300;400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* Base Reset from original styleguide */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Mukta Malar', sans-serif;
-            background: var(--bg);
-            color: var(--foreground);
-            min-height: 100vh;
-            transition: background 0.3s, color 0.3s;
-        }
-        /* Layout classes needed for SolidJS app */
-        .layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
-        .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 1.5rem; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
-        .sidebar h1 { font-family: 'Eczar', serif; font-size: 1.5rem; margin-bottom: 0.25rem; }
-        .sidebar-subtitle { font-size: 0.8rem; color: var(--foreground); opacity: 0.5; margin-bottom: 2rem; }
-        .theme-list { list-style: none; margin-bottom: 2rem; }
-        .theme-list li { margin-bottom: 0.25rem; }
-        .theme-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: 6px; background: var(--bg); border: 1px solid transparent; transition: border-color 0.15s; cursor: pointer; }
-        .theme-row.active { border-color: var(--primary); }
-        .theme-select { display: flex; align-items: center; gap: 0.75rem; flex: 1; padding: 0.25rem; background: transparent; border: none; cursor: pointer; font-family: inherit; font-size: 0.9rem; color: var(--foreground); text-align: left; }
-        .theme-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-        .theme-meta { display: block; font-size: 0.7rem; opacity: 0.6; }
-        .mode-toggle { display: flex; gap: 2px; background: var(--muted); border-radius: 4px; padding: 2px; }
-        .mode-btn { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border: none; border-radius: 3px; background: transparent; color: var(--on-muted); cursor: pointer; transition: background 0.15s, color 0.15s; }
-        .mode-btn.active { background: var(--surface); color: var(--primary); }
-        .nav-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--foreground); opacity: 0.5; margin-bottom: 0.5rem; }
-        main { padding: 2rem 3rem; max-width: 900px; }
-        section { margin-bottom: 4rem; }
-        h2 { font-family: 'Eczar', serif; font-size: 1.75rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
-        p.desc { color: var(--foreground); opacity: 0.6; margin-bottom: 1.5rem; font-size: 0.95rem; }
-        .swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-        .swatch { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
-        .swatch-color { height: 80px; }
-        .swatch-info { padding: 0.75rem; background: var(--surface); }
-        .swatch-name { font-weight: 600; font-size: 0.85rem; }
-        .swatch-hex { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--foreground); opacity: 0.6; }
-        .swatch-label { 
-            font-family: 'Space Mono', monospace; 
-            font-size: 0.7rem; 
-            font-weight: 600;
-            padding: 4px 8px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(4px);
-            border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        [data-theme*="-light"] .swatch-label {
-            background: rgba(0, 0, 0, 0.05);
-            border-color: rgba(0, 0, 0, 0.05);
-        }
-        .theme-info { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 2rem; }
-        .theme-info-title { font-family: 'Eczar', serif; font-size: 1.25rem; }
-        .theme-info-meta { font-size: 0.85rem; color: var(--secondary); }
-    </style>
   </head>
-  <body data-theme="marutham-dark">
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/client/index.tsx"></script>
   </body>
