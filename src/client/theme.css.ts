@@ -268,6 +268,13 @@ for (const [id, t] of Object.entries(thinnai)) {
   }
 }
 
+// Font variables
+export const fontVars = {
+  tamil: "'Catamaran', 'Noto Sans Tamil', sans-serif",
+  body: "'Crimson Pro', Georgia, serif",
+  mono: "'JetBrains Mono', monospace",
+};
+
 // Global styles
 globalStyle('*', {
   margin: 0,
@@ -275,8 +282,16 @@ globalStyle('*', {
   boxSizing: 'border-box',
 });
 
+globalStyle(':root', {
+  vars: {
+    '--font-tamil': fontVars.tamil,
+    '--font-body': fontVars.body,
+    '--font-mono': fontVars.mono,
+  },
+});
+
 globalStyle('body', {
-  fontFamily: "'Mukta Malar', sans-serif",
+  fontFamily: fontVars.body,
   background: vars.bg,
   color: vars.foreground,
   minHeight: '100vh',

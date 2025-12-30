@@ -1,0 +1,63 @@
+<!-- Question 2 correct + Question 3 -->
+<div class="quiz-progress">
+  <div class="quiz-progress-dot completed"></div>
+  <div class="quiz-progress-dot completed"></div>
+  <div class="quiz-progress-dot current"></div>
+  <div class="quiz-progress-dot"></div>
+</div>
+
+<div class="quiz-result" style="margin-bottom: var(--space-8);">
+  <div class="quiz-result-icon">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+      <polyline points="22 4 12 14.01 9 11.01"/>
+    </svg>
+  </div>
+  <p class="quiz-result-text" style="color: var(--primary);">அருமை! Excellent!</p>
+  <p class="quiz-result-detail">நன்றி means "Thank you"</p>
+</div>
+
+<!-- Question 3 -->
+<div class="quiz-question">
+  <p class="quiz-prompt">How do you say "How are you?" (formal)</p>
+  <p class="quiz-word" style="font-size: var(--text-3xl);">?</p>
+</div>
+
+<div class="quiz-options">
+  <button
+    class="quiz-option"
+    hx-post="/check-answer"
+    hx-vals='{"question": 3, "answer": "nalla_irukken"}'
+    hx-target="#quiz-area"
+    hx-swap="innerHTML"
+  >
+    <span class="tamil">நல்லா இருக்கேன்</span>
+  </button>
+  <button
+    class="quiz-option"
+    hx-post="/check-answer"
+    hx-vals='{"question": 3, "answer": "eppadi_irukkeenga"}'
+    hx-target="#quiz-area"
+    hx-swap="innerHTML"
+  >
+    <span class="tamil">எப்படி இருக்கீங்க?</span>
+  </button>
+  <button
+    class="quiz-option"
+    hx-post="/check-answer"
+    hx-vals='{"question": 3, "answer": "poi_varugiren"}'
+    hx-target="#quiz-area"
+    hx-swap="innerHTML"
+  >
+    <span class="tamil">போய் வருகிறேன்</span>
+  </button>
+  <button
+    class="quiz-option"
+    hx-post="/check-answer"
+    hx-vals='{"question": 3, "answer": "vaanga"}'
+    hx-target="#quiz-area"
+    hx-swap="innerHTML"
+  >
+    <span class="tamil">வாங்க</span>
+  </button>
+</div>

@@ -2,6 +2,7 @@ import { render } from 'solid-js/web';
 import { createSignal, createEffect, For, Show } from 'solid-js';
 import { themes, themeData, thinnaiMeta, vars, type ThemeKey } from './theme.css';
 import * as s from './styles.css';
+import Lesson from './Lesson';
 
 const fonts = [
   'Arima',
@@ -96,6 +97,14 @@ function App() {
         <ul class={s.themeList}>
           <li>
             <div
+              class={`${s.themeRow} ${currentView() === 'lesson' ? s.themeRowActive : ''}`}
+              onClick={() => setView('lesson')}
+            >
+              <button class={s.themeSelect}>Lesson View</button>
+            </div>
+          </li>
+          <li>
+            <div
               class={`${s.themeRow} ${currentView() === 'themes' ? s.themeRowActive : ''}`}
               onClick={() => setView('themes')}
             >
@@ -155,8 +164,13 @@ function App() {
         </Show>
       </aside>
 
-      <main class={s.main}>
-        <Show when={currentView() === 'themes'}>
+      <Show when={currentView() === 'lesson'}>
+        <Lesson />
+      </Show>
+
+      <Show when={currentView() !== 'lesson'}>
+        <main class={s.main}>
+          <Show when={currentView() === 'themes'}>
           <div class={s.themeInfo}>
             <div class={s.themeInfoTitle}>
               {currentTheme().meta.name} {currentTheme().meta.mode === 'light' ? 'Light' : 'Dark'} ({currentTheme().meta.tamil})
@@ -359,7 +373,8 @@ function App() {
             </div>
           </section>
         </Show>
-      </main>
+        </main>
+      </Show>
     </div>
   );
 }
