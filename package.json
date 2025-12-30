@@ -2,8 +2,7 @@
   "name": "avvai",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "styleguide": "vite --config mockups/style-guide/vite.config.ts",
     "typecheck": "tsgo"
   },
   "devDependencies": {
@@ -17,7 +16,25 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@fontsource/anek-tamil": "^5.2.7",
+    "@fontsource/arima": "^5.2.8",
+    "@fontsource/baloo-thambi-2": "^5.2.7",
+    "@fontsource/catamaran": "^5.2.8",
+    "@fontsource/crimson-pro": "^5.2.8",
+    "@fontsource/eczar": "^5.2.8",
+    "@fontsource/hind-madurai": "^5.2.8",
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@fontsource/kavivanar": "^5.2.8",
+    "@fontsource/meera-inimai": "^5.2.8",
+    "@fontsource/mukta-malar": "^5.2.7",
+    "@fontsource/noto-sans-tamil": "^5.2.7",
+    "@fontsource/noto-serif-tamil": "^5.2.9",
+    "@fontsource/pavanam": "^5.2.8",
+    "@fontsource/space-mono": "^5.2.9",
+    "@fontsource/tiro-tamil": "^5.2.8",
     "@vanilla-extract/css": "^1.18.0",
+    "@vanilla-extract/recipes": "^0.5.7",
+    "@vanilla-extract/sprinkles": "^1.6.5",
     "@vanilla-extract/vite-plugin": "^5.1.4",
     "solid-js": "^1.9.10"
   }
