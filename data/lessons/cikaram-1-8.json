@@ -1,0 +1,22 @@
+{
+  "id": "cikaram-1-8",
+  "title": "Vocabulary",
+  "titleTamil": "அறிந்துகொள்வோம்",
+  "chapter": 1,
+  "section": 8,
+  "cards": [
+    {
+      "type": "vocab",
+      "title": "அறிந்துகொள்வோம்",
+      "items": [
+        { "term": "Tyrannical rule", "meaning": "கொடுங்கோல் ஆட்சி" },
+        { "term": "Seize", "meaning": "கைப்பற்று" },
+        { "term": "Poet", "meaning": "புலவர்" },
+        { "term": "Scene", "meaning": "காட்சி" },
+        { "term": "Palace", "meaning": "அரண்மனை" },
+        { "term": "Sin", "meaning": "பாவச்செயல்" },
+        { "term": "Revival", "meaning": "மறுமலர்ச்சி" }
+      ]
+    }
+  ]
+}

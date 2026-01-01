@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Comparison: Pro vs Flash</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans Tamil', system-ui, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .controls {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            z-index: 100;
+        }
+        .controls label {
+            font-weight: 600;
+        }
+        .controls select {
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .stats {
+            margin-left: auto;
+            font-size: 14px;
+            color: #666;
+        }
+        .stats .diff-count {
+            background: #dc3545;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .panel {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .panel-header {
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .pro .panel-header {
+            background: #4a90d9;
+            color: white;
+        }
+        .flash .panel-header {
+            background: #e67e22;
+            color: white;
+        }
+        .panel-content {
+            padding: 20px;
+            min-height: 400px;
+            line-height: 1.8;
+        }
+        .panel-content table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .panel-content td, .panel-content th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .view-toggle {
+            display: flex;
+            gap: 8px;
+        }
+        .view-toggle button {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .view-toggle button.active {
+            background: #333;
+            color: #fff;
+            border-color: #333;
+        }
+        .diff-word {
+            background: #ffeb3b;
+            padding: 1px 3px;
+            border-radius: 3px;
+            border-bottom: 2px solid #f57c00;
+        }
+        .diff-missing {
+            background: #ffcdd2;
+            padding: 1px 3px;
+            border-radius: 3px;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .diff-added {
+            background: #c8e6c9;
+            padding: 1px 3px;
+            border-radius: 3px;
+        }
+        @media (max-width: 900px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>OCR Comparison: Gemini Pro vs Flash</h1>
+
+    <div class="controls">
+        <label for="page-select">Page:</label>
+        <select id="page-select">
+            <option value="001">Page 1</option>
+            <option value="002">Page 2</option>
+            <option value="003">Page 3</option>
+            <option value="004">Page 4</option>
+            <option value="005">Page 5</option>
+            <option value="006">Page 6</option>
+            <option value="007">Page 7</option>
+            <option value="008">Page 8</option>
+            <option value="009">Page 9</option>
+            <option value="010">Page 10</option>
+        </select>
+
+        <div class="view-toggle">
+            <button id="btn-rendered" class="active">Rendered</button>
+            <button id="btn-diff">Text Diff</button>
+            <button id="btn-source">Source</button>
+        </div>
+
+        <div class="stats">
+            <span id="diff-stats"></span>
+        </div>
+    </div>
+
+    <div class="comparison">
+        <div class="panel pro">
+            <div class="panel-header">Gemini Pro</div>
+            <div class="panel-content" id="pro-content"></div>
+        </div>
+        <div class="panel flash">
+            <div class="panel-header">Gemini Flash</div>
+            <div class="panel-content" id="flash-content"></div>
+        </div>
+    </div>
+
+    <script>
+        const pageSelect = document.getElementById('page-select');
+        const proContent = document.getElementById('pro-content');
+        const flashContent = document.getElementById('flash-content');
+        const btnRendered = document.getElementById('btn-rendered');
+        const btnDiff = document.getElementById('btn-diff');
+        const btnSource = document.getElementById('btn-source');
+        const diffStats = document.getElementById('diff-stats');
+
+        let viewMode = 'rendered';
+        let proHtml = '';
+        let flashHtml = '';
+
+        async function loadPage(pageNum) {
+            try {
+                const [proRes, flashRes] = await Promise.all([
+                    fetch(`html/page-${pageNum}.html`),
+                    fetch(`html-flash/page-${pageNum}.html`)
+                ]);
+
+                proHtml = await proRes.text();
+                flashHtml = await flashRes.text();
+
+                render();
+            } catch (e) {
+                proContent.textContent = 'Error loading Pro content';
+                flashContent.textContent = 'Error loading Flash content';
+            }
+        }
+
+        function extractText(html) {
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            return div.textContent || div.innerText || '';
+        }
+
+        function tokenize(text) {
+            // Split into words only, normalize whitespace
+            return text.split(/\s+/).filter(t => t.length > 0);
+        }
+
+        // LCS-based diff
+        function computeDiff(tokens1, tokens2) {
+            const m = tokens1.length;
+            const n = tokens2.length;
+
+            // Build LCS table
+            const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));
+
+            for (let i = 1; i <= m; i++) {
+                for (let j = 1; j <= n; j++) {
+                    if (tokens1[i-1] === tokens2[j-1]) {
+                        dp[i][j] = dp[i-1][j-1] + 1;
+                    } else {
+                        dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                    }
+                }
+            }
+
+            // Backtrack to find diff
+            const result1 = [];
+            const result2 = [];
+            let i = m, j = n;
+
+            while (i > 0 || j > 0) {
+                if (i > 0 && j > 0 && tokens1[i-1] === tokens2[j-1]) {
+                    result1.unshift({ text: tokens1[i-1], type: 'same' });
+                    result2.unshift({ text: tokens2[j-1], type: 'same' });
+                    i--; j--;
+                } else if (j > 0 && (i === 0 || dp[i][j-1] >= dp[i-1][j])) {
+                    result2.unshift({ text: tokens2[j-1], type: 'added' });
+                    j--;
+                } else {
+                    result1.unshift({ text: tokens1[i-1], type: 'removed' });
+                    i--;
+                }
+            }
+
+            return { diff1: result1, diff2: result2 };
+        }
+
+        function renderDiff(diff) {
+            return diff.map(item => {
+                const escaped = escapeHtml(item.text);
+                if (item.type === 'same') {
+                    return escaped;
+                } else {
+                    return `<mark class="diff-word">${escaped}</mark>`;
+                }
+            }).join(' ');
+        }
+
+        function render() {
+            if (viewMode === 'rendered') {
+                proContent.innerHTML = proHtml;
+                flashContent.innerHTML = flashHtml;
+                diffStats.innerHTML = '';
+            } else if (viewMode === 'diff') {
+                const proText = extractText(proHtml);
+                const flashText = extractText(flashHtml);
+
+                const proTokens = tokenize(proText);
+                const flashTokens = tokenize(flashText);
+
+                const { diff1, diff2 } = computeDiff(proTokens, flashTokens);
+
+                const diffCount1 = diff1.filter(d => d.type !== 'same').length;
+                const diffCount2 = diff2.filter(d => d.type !== 'same').length;
+                const totalDiffs = Math.max(diffCount1, diffCount2);
+
+                proContent.innerHTML = `<div style="line-height: 2;">${renderDiff(diff1)}</div>`;
+                flashContent.innerHTML = `<div style="line-height: 2;">${renderDiff(diff2)}</div>`;
+
+                if (totalDiffs > 0) {
+                    diffStats.innerHTML = `<span class="diff-count">${totalDiffs}</span> differences`;
+                } else {
+                    diffStats.innerHTML = `<span style="color: green;">Identical</span>`;
+                }
+            } else {
+                proContent.innerHTML = `<pre style="white-space: pre-wrap; font-size: 12px;">${escapeHtml(proHtml)}</pre>`;
+                flashContent.innerHTML = `<pre style="white-space: pre-wrap; font-size: 12px;">${escapeHtml(flashHtml)}</pre>`;
+                diffStats.innerHTML = '';
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function setActiveButton(btn) {
+            [btnRendered, btnDiff, btnSource].forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        pageSelect.addEventListener('change', (e) => loadPage(e.target.value));
+
+        btnRendered.addEventListener('click', () => {
+            viewMode = 'rendered';
+            setActiveButton(btnRendered);
+            render();
+        });
+
+        btnDiff.addEventListener('click', () => {
+            viewMode = 'diff';
+            setActiveButton(btnDiff);
+            render();
+        });
+
+        btnSource.addEventListener('click', () => {
+            viewMode = 'source';
+            setActiveButton(btnSource);
+            render();
+        });
+
+        // Load first page
+        loadPage('001');
+    </script>
+</body>
+</html>
