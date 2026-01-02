@@ -1,0 +1,14 @@
+[package]
+name = "tamil-unicode"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Tamil Unicode handling - grapheme clusters, letter classification, and transformations"
+
+[dependencies]
+unicode-segmentation.workspace = true
+unicode-normalization.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+pretty_assertions.workspace = true

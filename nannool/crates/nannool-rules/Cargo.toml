@@ -1,0 +1,16 @@
+[package]
+name = "nannool-rules"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Nannool grammar rules - parsed verses and sandhi rule definitions"
+
+[dependencies]
+tamil-unicode.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+toml.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+pretty_assertions.workspace = true
