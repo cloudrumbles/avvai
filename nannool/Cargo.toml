@@ -1,0 +1,54 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/tamil-unicode",
+    "crates/nannool-rules",
+    "crates/nannool-morph",
+    "crates/nannool-checker",
+    "crates/nannool-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/avvai/nannool"
+
+[workspace.dependencies]
+# Internal crates
+tamil-unicode = { path = "crates/tamil-unicode" }
+nannool-rules = { path = "crates/nannool-rules" }
+nannool-morph = { path = "crates/nannool-morph" }
+nannool-checker = { path = "crates/nannool-checker" }
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+miette = { version = "7.0", features = ["fancy"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+
+# CLI
+clap = { version = "4.0", features = ["derive"] }
+
+# FST for morphological analysis
+rustfst = "0.14"
+fst = "0.4"
+
+# Web scraping (for Nannool text parsing)
+reqwest = { version = "0.12", features = ["blocking"] }
+scraper = "0.22"
+
+# Unicode handling
+unicode-segmentation = "1.11"
+unicode-normalization = "0.1"
+
+# Testing
+pretty_assertions = "1.4"
+
+[profile.release]
+lto = true
+codegen-units = 1

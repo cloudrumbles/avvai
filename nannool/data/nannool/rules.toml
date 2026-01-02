@@ -1,0 +1,200 @@
+# Nannool Sandhi Rules
+# Formalized rules from Nannool verses 151-257
+# Format follows the SandhiRule struct
+
+# =============================================================================
+# உயிரீற்றுப் புணரியல் (Vowel-ending Sandhi) - Verses 151-203
+# =============================================================================
+
+[[rules]]
+id = "vallinam-miguthal-165"
+nannool_verses = [165]
+tamil_name = "வல்லினம் மிகுதல்"
+english_name = "Vallinam doubling"
+category = "thondral"
+priority = 50
+description = "Hard consonants (க ச ட த ப ற) double after vowel endings"
+
+[rules.left_context]
+type = "any_uyir"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "double_initial"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "udampadumei-ya-162"
+nannool_verses = [162]
+tamil_name = "உடம்படுமெய் - யகரம்"
+english_name = "Buffer consonant - ya"
+category = "thondral"
+priority = 60
+description = "After இ/ஈ/ஐ, ய் appears before a following vowel"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["இ", "ஈ", "ஐ"]
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "insert"
+text = "ய்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "udampadumei-va-162"
+nannool_verses = [162]
+tamil_name = "உடம்படுமெய் - வகரம்"
+english_name = "Buffer consonant - va"
+category = "thondral"
+priority = 60
+description = "After vowels other than இ/ஈ/ஐ/ஏ, வ் appears before a following vowel"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["அ", "ஆ", "உ", "ஊ", "எ", "ஒ", "ஓ", "ஔ"]
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "insert"
+text = "வ்"
+
+# =============================================================================
+# மெய்யீற்றுப் புணரியல் (Consonant-ending Sandhi) - Verses 204-239
+# =============================================================================
+
+[[rules]]
+id = "mei-uyir-combination-204"
+nannool_verses = [204]
+tamil_name = "மெய்யும் உயிரும் புணர்தல்"
+english_name = "Consonant-vowel combination"
+category = "iyalbu"
+priority = 100
+description = "When a vowel follows a consonant, they naturally combine"
+
+[rules.left_context]
+type = "any_mei"
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "otru-irattal-205"
+nannool_verses = [205]
+tamil_name = "ஒற்று இரட்டல்"
+english_name = "Consonant doubling"
+category = "thondral"
+priority = 70
+description = "A consonant after a single short vowel doubles when a vowel follows"
+
+[rules.left_context]
+type = "kuril_plus_mei"
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "double_initial"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "kutriyalukaram-206"
+nannool_verses = [206]
+tamil_name = "குற்றியலுகரப் புணர்ச்சி"
+english_name = "Kutriyalukaram sandhi"
+category = "thondral"
+priority = 65
+description = "Kutriyalukaram (short உ) followed by vallinam - the vallinam doubles"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["உ"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "double_initial"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "mam-vallinam-217"
+nannool_verses = [217]
+tamil_name = "மகர இறுதி வல்லின புணர்ச்சி"
+english_name = "Mam + vallinam sandhi"
+category = "thirithal"
+priority = 55
+description = "When ம் ending meets vallinam beginning, ம் becomes the corresponding mellinam"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ம்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "final_to_mellinam"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "retroflex-assimilation-220"
+nannool_verses = [220]
+tamil_name = "ன்-த புணர்ச்சி"
+english_name = "Retroflex assimilation"
+category = "thirithal"
+priority = 75
+description = "When ன் meets த, த becomes ற"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ன்"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["த்"]
+
+[rules.transformation]
+type = "replace_beginning"
+old = "த"
+new = "ற"
+
+# =============================================================================
+# Additional Common Rules
+# =============================================================================
+
+[[rules]]
+id = "aaytham-vallinam"
+nannool_verses = []
+tamil_name = "ஆய்த வல்லினம்"
+english_name = "Aaytham before vallinam"
+category = "iyalbu"
+priority = 80
+description = "Aaytham (ஃ) before vallinam follows special rules"
+
+[rules.left_context]
+type = "specific_word"
+words = ["அஃது"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"

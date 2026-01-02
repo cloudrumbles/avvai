@@ -1,0 +1,18 @@
+[package]
+name = "nannool-checker"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Tamil grammar checker - sandhi validation with Nannool rule references"
+
+[dependencies]
+tamil-unicode.workspace = true
+nannool-rules.workspace = true
+nannool-morph.workspace = true
+miette.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+pretty_assertions.workspace = true

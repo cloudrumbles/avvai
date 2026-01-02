@@ -1,0 +1,20 @@
+[package]
+name = "nannool-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "CLI for Nannool Tamil grammar checker"
+
+[[bin]]
+name = "nannool"
+path = "src/main.rs"
+
+[dependencies]
+nannool-checker.workspace = true
+nannool-rules.workspace = true
+nannool-morph.workspace = true
+tamil-unicode.workspace = true
+clap.workspace = true
+miette = { workspace = true, features = ["fancy"] }
+anyhow.workspace = true
+serde_json.workspace = true

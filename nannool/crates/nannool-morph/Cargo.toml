@@ -1,0 +1,16 @@
+[package]
+name = "nannool-morph"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Tamil morphological analyzer - word root extraction and grammatical feature analysis"
+
+[dependencies]
+tamil-unicode.workspace = true
+nannool-rules.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+fst.workspace = true
+
+[dev-dependencies]
+pretty_assertions.workspace = true

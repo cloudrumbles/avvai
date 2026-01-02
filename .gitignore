@@ -142,3 +142,8 @@ vite.config.ts.timestamp-*
 
 .*
 !.gitignore
+
+# Rust
+nannool/target/
+**/*.rs.bk
+Cargo.lock
