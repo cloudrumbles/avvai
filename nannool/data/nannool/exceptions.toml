@@ -1,0 +1,144 @@
+# Exception word lists for sandhi checking
+# Derived from classical grammar and modern usage patterns
+
+# ஓரெழுத்து ஒரு மொழி - Single letter words that trigger vallinam doubling
+[one_letter_words]
+words = ["கை", "தீ", "தை", "பூ", "மை", "நீ", "தா", "வா", "போ"]
+
+# சுட்டு எழுத்துக்கள் - Demonstrative bases
+[suttu]
+words = ["அ", "இ", "உ"]
+
+# வினா எழுத்துக்கள் - Interrogative bases
+[vina]
+words = ["எ", "யா"]
+
+# சுட்டு/வினா அடியாகத் தோன்றிய சொற்கள் - Words derived from demonstratives/interrogatives
+# These do NOT trigger vallinam doubling (மிகா)
+[suttu_vina_derived]
+words = [
+    # Basic demonstratives
+    "அந்த", "இந்த", "எந்த",
+    # Place deictics
+    "அங்கு", "இங்கு", "எங்கு", "ஆங்கு", "ஈங்கு", "யாங்கு",
+    # Manner deictics
+    "அப்படி", "இப்படி", "எப்படி",
+    # Time deictics
+    "அப்போது", "இப்போது", "எப்போது",
+    # Year/time
+    "ஆண்டு", "ஈண்டு", "யாண்டு",
+    # Type/kind
+    "அவ்வகை", "இவ்வகை", "எவ்வகை",
+    # Quantity
+    "அத்துணை", "இத்துணை", "எத்துணை",
+    "அத்தனை", "இத்தனை", "எத்தனை",
+    "அவ்வளவு", "இவ்வளவு", "எவ்வளவு",
+    # Manner
+    "அவ்வாறு", "இவ்வாறு", "எவ்வாறு",
+    # Pronouns
+    "அது", "இது", "எது", "யாது",
+    "அவை", "இவை", "எவை",
+    "அவன்", "இவன்", "எவன்",
+    "அவள்", "இவள்", "எவள்",
+    "அவர்", "இவர்", "எவர்",
+    # Time references
+    "அன்று", "இன்று", "என்று",
+]
+
+# எண்ணுப்பெயர்கள் - Numerals (மிகா)
+[numerals]
+words = [
+    # Cardinal numbers
+    "ஒன்று", "இரண்டு", "மூன்று", "நான்கு", "ஐந்து",
+    "ஆறு", "ஏழு", "எட்டு", "ஒன்பது", "பத்து",
+    "நூறு", "ஆயிரம்", "இலக்கம்", "கோடி",
+    # Short forms
+    "ஒரு", "இரு", "மூ", "நா", "ஐ", "அறு", "எழு", "எண்",
+]
+
+# வியங்கோள் வினைமுற்று - Optative verb forms (மிகா)
+[viyangol]
+words = [
+    "கற்க", "நில்", "கவனி", "செல்", "செல்க",
+    "மன்னிய", "வெல்க", "செப்பும்", "வினாவும்",
+    "வாழ்க", "ஓம்பல்", "அஞ்சாமை", "வாழி", "வீழ்க",
+    "ஒழிக", "வருக", "உண்க", "அருள்க", "கருணைபுரிக",
+    "வாழிய", "வாழியர்", "வாரற்க", "கூறற்க", "செல்லற்க",
+    "வாரல்", "செல்லல்", "பகரேல்",
+]
+
+# பல/சில போன்ற சொற்கள் - Quantifiers (மிகா)
+[quantifiers]
+words = ["பல", "சில", "கல", "உள", "இல"]
+
+# ஏவல் வினை - Imperative verbs (மிகா when single syllable)
+[imperative_verbs]
+words = ["வா", "போ", "செல்", "நில்", "கொல்", "சொல்", "எழு", "பார்"]
+
+# மிகாச் சொற்கள் - Common words that don't trigger doubling
+[no_doubling_words]
+words = [
+    # Common particles
+    "என்று", "என்ற", "என்னும்", "என்பது",
+    "என்றால்", "என்றாலும்", "என்றே",
+    # Conjunctions
+    "ஆனால்", "ஆகவே", "ஆதலால்", "ஆகையால்",
+    "எனவே", "எனினும்", "எனில்",
+    "ஆயினும்", "அல்லது", "அன்றி",
+    # Common adverbs
+    "மிக", "மிகவும்", "நன்கு", "நன்றாக",
+]
+
+# சொல்லுருபுகள் - Postpositions/case markers that block doubling
+[postpositions]
+words = [
+    # -ஒடு/-ஓடு forms
+    "உடன்", "கூட",
+    # Common compound suffixes
+    "கொண்டு", "விட்டு", "போட்டு",
+]
+
+# Suffix patterns that indicate மிகாமை (checked as endings)
+[no_doubling_endings]
+patterns = [
+    # Case-related
+    "ஒடு", "ஓடு",           # Sociative
+    "கொண்டு",              # With (participle)
+    "லிருந்து",            # From (il + irunthu)
+    "னின்று",              # From (in + ninru)
+    # 6th case possessives
+    "அது", "உடைய",
+    # Verbal participles (மென்தொடர்/இடைத்தொடர் குற்றியலுகரம்)
+    "ண்டு", "ந்து", "ன்று", "ய்து",
+    # Relative participle endings
+    "ஆத", "ஆததொரு",
+    "இய", "இயதொரு",
+    "ற்ற", "ல்ல", "ட்ட",
+    "கின்ற", "கிற",
+    # Other non-doubling endings
+    "உம்", "ஆக", "ஆன",
+]
+
+# Suffix patterns that indicate மிகும் (checked as endings)
+[doubling_endings]
+patterns = [
+    # Accusative
+    "ஐ",
+    # Dative
+    "கு", "க்கு",
+    # Verbal participle/infinitive அ-ending
+    # (handled by rules, but listed for reference)
+]
+
+# உயர்திணைப் பெயர்கள் - Rational nouns (people/deities - often மிகா)
+[rational_nouns]
+words = [
+    # Relationships
+    "அம்மா", "அப்பா", "அண்ணன்", "தம்பி", "அக்கா", "தங்கை",
+    "மாமா", "மாமி", "அத்தை", "சித்தப்பா", "சித்தி",
+    "தாத்தா", "பாட்டி", "மகன்", "மகள்",
+    # Titles
+    "ஐயா", "அம்மா", "அவர்கள்",
+    # Deities
+    "சிவன்", "முருகன்", "பிள்ளையார்", "திருமால்",
+]

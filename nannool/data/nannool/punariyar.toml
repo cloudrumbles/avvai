@@ -1,0 +1,641 @@
+# நன்னூல் புணரியல் (Sandhi Rules) - Verses 151-257
+
+# உயிரீற்றுப் புணரியல்
+[[verse]]
+number = 151
+section = "உயிரீற்றுப் புணரியல்"
+text = "மெய் உயிர் முதல் ஈறு ஆம் இரு பதங்களும் தன்னொடும் பிறிதொடும் அல்வழி வேற்றுமைப் பொருளின் பொருந்துழி நிலைவரு மொழிகள் இயல்பொடு விகாரத்து இயைவது புணர்ப்பே"
+meaning = "The combination of two words (standing word and coming word) naturally or with changes when they meet in a case-relational or non-case-relational sense is called Sandhi."
+
+[[verse]]
+number = 152
+section = "உயிரீற்றுப் புணரியல்"
+text = "வேற்றுமை ஐம் முதல் ஆறு ஆம் அல்வழி தொழில் பண்பு உவமை உம்மை அன்மொழி எழுவாய் விளி ஈர் எச்சம் முற்று இடை உரி தழுவுதொடர் அடுக்கு என ஈர் ஏழே"
+meaning = "Non-case-relational (alvazhi) sandhi is of 14 types: verbal nouns, quality nouns, comparisons, coordinate compounds, and various phrase types."
+
+[[verse]]
+number = 153
+section = "உயிரீற்றுப் புணரியல்"
+text = "விகாரம் அனைத்தும் மேவலது இயல்பே"
+meaning = "Natural joining (iyalbu) occurs when none of the transformations are required."
+
+[[verse]]
+number = 154
+section = "உயிரீற்றுப் புணரியல்"
+text = "தோன்றல் திரிதல் கெடுதல் விகாரம் மூன்றும் மொழிமூ இடத்தும் ஆகும்"
+meaning = "The three types of transformations (appearance, change, deletion) can happen at the beginning, middle, or end of a word."
+
+[[verse]]
+number = 155
+section = "உயிரீற்றுப் புணரியல்"
+text = "வலித்தல் மெலித்தல் நீட்டல் குறுக்கல் விரித்தல் தொகுத்தலும் வரும் செய்யுள் வேண்டுழி"
+meaning = "In poetry, six types of changes occur: hardening, softening, lengthening, shortening, expansion, and contraction."
+
+[[verse]]
+number = 156
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஒருமொழி மூவழிக் குறைதலும் அனைத்தே"
+meaning = "Dropping of a sound from a single word in three ways (beginning, middle, end) is also possible."
+
+[[verse]]
+number = 157
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஒருபுணர்க்கு இரண்டு மூன்றும் உறப்பெறும்"
+meaning = "A single sandhi operation may involve two or three transformations."
+
+[[verse]]
+number = 158
+section = "உயிரீற்றுப் புணரியல்"
+text = "எண்மூ எழுத்து ஈற்று எவ்வகை மொழிக்கும் முன் வரும் ஞ ந ம ய வக்கள் இயல்பும் குறில் வழி ய தனி ஐ நொ து முன் மெலி மிகலுமாம் ண ள ன ல வழி ந திரியும்"
+meaning = "Before words starting with ஞ, ந, ம, ய, வ, natural joining occurs; after a single short vowel, if ய follows, doubling occurs; after ண, ள, ன, ல, the initial ந changes."
+
+[[verse]]
+number = 159
+section = "உயிரீற்றுப் புணரியல்"
+text = "பொதுப்பெயர் உயர்திணைப் பெயர்கள் ஈற்றுமெய் வலிவரின் இயல்பாம் ஆவி ய ர முன் வன்மை மிகாசில விகாரமாம் உயர்திணை"
+meaning = "Proper nouns and high-caste nouns end naturally before hard consonants; vowels, ய, ர usually don't cause doubling of hard consonants."
+
+[[verse]]
+number = 160
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஈற்றுயா வினாவிளிப் பெயர்முன் வலி இயல்பே"
+meaning = "Before interrogative and vocative words, hard consonants join naturally."
+
+[[verse]]
+number = 161
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஆவி ய ர ழ இறுதி முன்னிலை வினை ஏவல்முன் வல்லினம் இயல்பொடு விகற்பே"
+meaning = "Before imperative verbs, hard consonants may join naturally or double."
+
+[[verse]]
+number = 162
+section = "உயிரீற்றுப் புணரியல்"
+text = "இ ஈ ஐ வழி யவ்வும் ஏனை உயிர்வழி வவ்வும் ஏ முன் இவ் இருமையும் உயிர்வரின் உடம்படு மெய் என்று ஆகும்"
+meaning = "After இ/ஈ/ஐ, ய் appears; after other vowels, வ் appears; after ஏ, either can appear - when a vowel follows."
+commentary = "This rule prevents hiatus (two vowels together) by inserting a semivowel. After front vowels (i, ii, ai), 'y' is used. After other vowels, 'v' is used. After 'e', either can be used."
+
+[[verse]]
+number = 163
+section = "உயிரீற்றுப் புணரியல்"
+text = "எகர வினா முச்சுட்டின் முன்னர் உயிரும் யகரமும் எய்தின் வவ்வும் பிறவரின் அவையும் தூக்கில் சுட்டு நீளின் யகரமும் தோன்றுதல் நெறியே"
+meaning = "After the interrogative 'e' and the three demonstratives (a, i, u), if a vowel or 'ya' follows, 'va' appears; if others follow, they join naturally; in poetry, if demonstratives are lengthened, 'ya' appears."
+
+[[verse]]
+number = 164
+section = "உயிரீற்றுப் புணரியல்"
+text = "உயிர்வரின் உக்குறள் மெய்விட்டு ஓடும் யவ்வரின் இய்யாம் முற்றும் அற்று ஒரோ வழி"
+meaning = "When a vowel follows, the short 'u' (kutriyalukaram) drops, leaving the consonant; if 'ya' follows, 'u' becomes 'i'; this also happens for 'mutriyalukaram' in some places."
+
+[[verse]]
+number = 165
+section = "உயிரீற்றுப் புணரியல்"
+text = "இயல்பினும் விதியினும் நின்ற உயிர்முன் க ச த ப மிகும் விதவாதன மன்னே"
+meaning = "Before hard consonants (க, ச, த, ப), doubling occurs after a vowel that is there naturally or by rule, except where exceptions are specified."
+
+[[verse]]
+number = 166
+section = "உயிரீற்றுப் புணரியல்"
+text = "மரப்பெயர் முன்னர் இன மெல்லெழுத்து வரப் பெறுனவும் உள வேற்றுமை வழியே"
+meaning = "In tree names, the corresponding nasal (mellinam) may appear instead of doubling in case-relational (veitrumai) sandhi."
+
+[[verse]]
+number = 167
+section = "உயிரீற்றுப் புணரியல்"
+text = "செய்யிய என்னும் வினையெச்சம் பல்வகைப் பெயரின் எச்சம் முற்று ஆறன் உருபே அஃறிணைப் பன்மை அம்ம முன் இயல்பே"
+meaning = "After 'seyyiya' verbal participle, various relative participles, finite verbs, the sixth case marker, neuter plurals, and the word 'amma', natural sandhi (no doubling) occurs."
+
+[[verse]]
+number = 168
+section = "உயிரீற்றுப் புணரியல்"
+text = "வாழிய என்பதன் ஈற்றின் உயிர்மெய் ஏகலும் உரித்து அஃது ஏகினும் இயல்பே"
+meaning = "In the word 'vazhiya', the final syllable may drop; even if it doesn't, natural sandhi occurs."
+
+[[verse]]
+number = 169
+section = "உயிரீற்றுப் புணரியல்"
+text = "சாவ என் மொழி ஈற்று உயிர்மெய் சாதலும் விதி"
+meaning = "In the word 'saava', the final syllable 'va' may drop."
+
+[[verse]]
+number = 170
+section = "உயிரீற்றுப் புணரியல்"
+text = "பல சில எனும் இவை தம்முன் தாம்வரின் இயல்பும் மிகலும் அகரம் ஏக லகரம் றகரம் ஆகலும் பிறவரின் அகரம் விகற்பம் ஆகலும் உளபிற"
+meaning = "When 'pala' or 'sila' are followed by themselves, natural sandhi, doubling, dropping of 'a', or 'la' becoming 'ra' can occur; before other words, 'a' may drop or stay."
+
+[[verse]]
+number = 171
+section = "உயிரீற்றுப் புணரியல்"
+text = "அல்வழி ஆ மா மியா முற்று முன் மிகா"
+meaning = "In non-case-relational (alvazhi) sandhi, doubling does not occur after 'aa', 'maa', 'miyaa', and finite verbs."
+
+[[verse]]
+number = 172
+section = "உயிரீற்றுப் புணரியல்"
+text = "குறியதன் கீழ் ஆக் குறுகலும் அதனோடு உகரம் ஏற்றலும் இயல்புமாம் தூக்கின்"
+meaning = "After a single short vowel, 'aa' may shorten or take 'u' in poetry; it may also remain natural."
+
+[[verse]]
+number = 173
+section = "உயிரீற்றுப் புணரியல்"
+text = "அன்றி இன்றி என் வினையெஞ்சு இகரம் தொடர்பினுள் உகரம் ஆய் வரின் இயல்பே"
+meaning = "When the 'i' ending of verbal participles 'andri' and 'indri' becomes 'u' in a sequence, it's natural sandhi."
+
+[[verse]]
+number = 174
+section = "உயிரீற்றுப் புணரியல்"
+text = "உரிவரின் நாழியின் ஈற்று உயிர்மெய் கெட மருவும் டகரம் உரியின் வழியே யகர உயிர்மெய் ஆம் ஏற்பன வரினே"
+meaning = "When 'uri' follows 'naazhi', the final syllable of 'naazhi' drops and 'da' appears; in some contexts, it takes 'ya'."
+
+[[verse]]
+number = 175
+section = "உயிரீற்றுப் புணரியல்"
+text = "சுவைப் புளி முன் இன மென்மையும் தோன்றும்"
+meaning = "Before the word 'puli' (meaning tamarind/sour), the corresponding nasal (mellinam) may also appear."
+
+[[verse]]
+number = 177
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஆ முன் பகர ஈ அனைத்தும் வரக் குறுகும் மேலன அல்வழி இயல்பு ஆகும்மே"
+meaning = "Before hard consonants starting with 'pa', the preceding 'aa' shortens; in non-case-relational sandhi, it's natural."
+
+[[verse]]
+number = 178
+section = "உயிரீற்றுப் புணரியல்"
+text = "பவ்வீ நீ மீ முன்னர் அல்வழி இயல்பாம் வலிமெலி மிகலுமாம் மீக்கே"
+meaning = "After 'pavvi', 'nee', 'mee', natural sandhi occurs in alvazhi; for 'mee', doubling of hard or soft consonants may also occur."
+
+[[verse]]
+number = 179
+section = "உயிரீற்றுப் புணரியல்"
+text = "மூன்று ஆறு உருபு எண் வினைத்தொகை சுட்டு ஈறு ஆகும் உகரம் முன்னர் இயல்பாம்"
+meaning = "After the words for 3 and 6, case markers, numbers, verb compounds, and demonstratives ending in 'u', natural sandhi occurs."
+
+[[verse]]
+number = 180
+section = "உயிரீற்றுப் புணரியல்"
+text = "அது முன் வரும் அன்று ஆன்று ஆம் தூக்கின்"
+meaning = "When 'andru', 'aandru', or 'aam' follows the word 'athu', they join specially in poetry."
+
+[[verse]]
+number = 181
+section = "உயிரீற்றுப் புணரியல்"
+text = "வன்தொடர் அல்லன முன்மிகா அல்வழி"
+meaning = "After words not ending in a hard cluster (vanthodar), doubling does not occur in non-case-relational sandhi."
+
+[[verse]]
+number = 182
+section = "உயிரீற்றுப் புணரியல்"
+text = "இடைத்தொடர் ஆய்தத்தொடர் ஒற்று இடையின் மிகாநெடில் உயிர்த்தொடர் முன்மிகா வேற்றுமை"
+meaning = "In middle clusters (idaithodar) and aaytham clusters, doubling does not occur in the middle; for long vowel clusters (nedilthodar) and vowel clusters, doubling does not occur in case-relational sandhi."
+
+[[verse]]
+number = 183
+section = "உயிரீற்றுப் புணரியல்"
+text = "நெடிலோடு உயிர்த்தொடர்க் குற்றுக ரங்களுள் ட ற ஒற்று இரட்டும் வேற்றுமை மிகவே"
+meaning = "For words ending in 'u' after long vowels or vowel clusters, the consonants 'da' and 'ra' double in case-relational sandhi."
+
+[[verse]]
+number = 184
+section = "உயிரீற்றுப் புணரியல்"
+text = "மென்தொடர் மொழியுள் சில வேற்றுமையில் தம் இன வன்தொடர் ஆகா மன்னே"
+meaning = "In soft cluster (menthodar) words, some do not change to their corresponding hard cluster in case-relational sandhi."
+
+[[verse]]
+number = 185
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஐ ஈற்று உடைக் குற்றுகரமும் உளவே"
+meaning = "Some words ending in 'ai' also behave like words ending in 'u' (kutriyalukaram)."
+
+[[verse]]
+number = 186
+section = "உயிரீற்றுப் புணரியல்"
+text = "திசையொடு திசையும் பிறவும் சேரின் நிலையீற்று உயிர்மெய் கவ்வொற்று நீங்கலும் றகரம் னலவாத் திரிதலும் ஆம் பிற"
+meaning = "When directions (east, west, etc.) join, the final consonant may drop, or 'la', 'la' may change to 'ra', etc."
+
+[[verse]]
+number = 187
+section = "உயிரீற்றுப் புணரியல்"
+text = "தெங்குநீண்டு ஈற்று உயிர்மெய் கெடும் காய்வரின்"
+meaning = "In the word 'thengu' (coconut), the final syllable drops when 'kaai' follows."
+
+[[verse]]
+number = 188
+section = "உயிரீற்றுப் புணரியல்"
+text = "எண் நிறை அளவும் பிறவும் எய்தின் ஒன்று முதல் எட்டு ஈறு ஆம் எண்ணுள் முதல் ஈர் எண் முதல் நீளும் மூன்று ஆறு ஏழ் குறுகும் ஆறு ஏழு அல்லவற்றின் ஈற்றுயிர் மெய்யும் ஏழன் உயிரும் ஏகும் ஏற்புழி என்மனார் புலவர்"
+meaning = "General rules for numbers (1-8) when joining with measurements or other words: some lengthen, some shorten, some drop syllables."
+
+[[verse]]
+number = 189
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஒன்றன் புள்ளி ரகரம் ஆக இரண்டன் ஒற்று உயிர் ஏக உவ் வருமே"
+meaning = "Rules for numbers 1 and 2."
+
+[[verse]]
+number = 190
+section = "உயிரீற்றுப் புணரியல்"
+text = "மூன்றன் உறுப்பு அழிவும் வந்ததும் ஆகும்"
+meaning = "Rules for number 3."
+
+[[verse]]
+number = 191
+section = "உயிரீற்றுப் புணரியல்"
+text = "நான்கன் மெய்யே ல ற ஆகும்மே"
+meaning = "Rules for number 4."
+
+[[verse]]
+number = 192
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஐந்தன் ஒற்று அடைவதும் இனமும் கேடும்"
+meaning = "Rules for number 5."
+
+[[verse]]
+number = 193
+section = "உயிரீற்றுப் புணரியல்"
+text = "எட்டன் உடம்பு ண ஆகும் என்ப"
+meaning = "Rules for number 8."
+
+[[verse]]
+number = 194
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஒன்பானொடு பத்தும் நூறும் ஒன்றின் முன்னதின் ஏனைய முரணி ஒவ்வொடு தகரம் நிறீஇப் பஃது அகற்றி னவ்வை நிரலே ணளவாத் திரிப்பது நெறியே"
+meaning = "Rules for number 10 when joining with 9 or 100."
+
+[[verse]]
+number = 195
+section = "உயிரீற்றுப் புணரியல்"
+text = "முதல் இரு நான்காம் எண் முனர்ப் பத்தின் இடைஒற்று ஏகல் ஆய்தம் ஆகல் என இரு விதியும் ஏற்கும் என்ப"
+meaning = "Rules for number 10 joining with 1-8."
+
+[[verse]]
+number = 196
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஒருபஃது ஆதி முன் ஒன்று முதல் ஒன்பான் எண்ணும் அவை ஊர் பிறவும் எய்தின் ஆய்தம் அழிய ஆண்டு ஆகும் தவ்வே"
+meaning = "Rules for number 10 when followed by 1-9."
+
+[[verse]]
+number = 197
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஒன்று முதல் ஈர் ஐந்து ஆயிரம் கோடி எண் நிறை அளவும் பிறவரின் பத்தின் ஈற்று உயிர்மெய் கெடுத்து இன்னும் இற்றும் ஏற்பது ஏற்கும் ஒன்பதும் இனைத்தே"
+meaning = "Rules for number 10 when followed by 1000 or crore."
+
+[[verse]]
+number = 198
+section = "உயிரீற்றுப் புணரியல்"
+text = "இரண்டு முன்வரின் பத்தின் ஈற்று உயிர்மெய் கரந்திட ஒற்று ன ஆகும் என்ப"
+meaning = "Rules for number 10 followed by 2."
+
+[[verse]]
+number = 199
+section = "உயிரீற்றுப் புணரியல்"
+text = "ஒன்பது ஒழித்த எண் ஒன்பதும் இரட்டின் முன்னதின் முன் அல ஓட உயிர்வரின் வவ்வும் மெய்வரின் வந்ததும் மிகல்நெறி"
+meaning = "Rules for repeated numbers (reduplication)."
+
+[[verse]]
+number = 200
+section = "உயிரீற்றுப் புணரியல்"
+text = "பூப்பெயர் முன் இன மென்மையும் தோன்றும்"
+meaning = "After the word 'poo' (flower), the corresponding nasal (mellinam) of the following hard consonant (vallinam) appears."
+
+[[verse]]
+number = 201
+section = "உயிரீற்றுப் புணரியல்"
+text = "இடைச்சொல் ஏ ஓ முன்வரின் இயல்பே"
+meaning = "When 'e' or 'o' particles come before, it's natural joining (no change)."
+
+[[verse]]
+number = 202
+section = "உயிரீற்றுப் புணரியல்"
+text = "வேற்றுமை ஆயின் ஐகான் இறுமொழி ஈற்று அழிவோடும் அம் ஏற்பவும் உளவே"
+
+[[verse]]
+number = 203
+section = "உயிரீற்றுப் புணரியல்"
+text = "பனைமுன் கொடிவரின் மிகலும் வலிவரின் ஐ போய் அம்மும் திரள்வரின் உறழ்வும் அட்டு உறின் ஐ கெட்டு அந்நீள்வுமாம் வேற்றுமை"
+
+
+# மெய்யீற்றுப் புணரியல்
+[[verse]]
+number = 204
+section = "மெய்யீற்றுப் புணரியல்"
+text = "உடல்மேல் உயிர்வந்து ஒன்றுவது இயல்பே"
+meaning = "When a vowel follows a consonant, they naturally combine into a single syllable."
+
+[[verse]]
+number = 205
+section = "மெய்யீற்றுப் புணரியல்"
+text = "தனிக்குறில் முன் ஒற்று உயிர்வரின் இரட்டும்"
+meaning = "A consonant following a single short vowel doubles when a vowel follows."
+
+[[verse]]
+number = 206
+section = "மெய்யீற்றுப் புணரியல்"
+text = "தன் ஒழி மெய்முன் யவ்வரின் இகரம் துன்னும் என்று துணிநரும் உளரே"
+meaning = "When 'ya' follows a consonant (other than 'ya' itself), some say that 'i' is inserted."
+
+[[verse]]
+number = 207
+section = "மெய்யீற்றுப் புணரியல்"
+text = "ஞ ண ந ம ல வ ள ன ஒற்று இறு தொழிற்பெயர் ஏவல் வினை நனி ய அல் மெய்வரின் உவ்வுறும் ஏவல் உறா சில சில் வழி"
+meaning = "In verbal nouns and imperatives ending in the consonants ஞ, ண, ந, ம, ல, வ, ள, ன, if a consonant (other than 'ya') follows, 'u' is inserted; for imperatives, this may not happen in some specific cases."
+
+[[verse]]
+number = 208
+section = "மெய்யீற்றுப் புணரியல்"
+text = "நவ்விறு தொழிற்பெயர்க்கு அவ்வுமாம் வேற்றுமை"
+meaning = "For verbal nouns ending in 'na', 'a' may be added in case-relational sandhi."
+
+[[verse]]
+number = 209
+section = "மெய்யீற்றுப் புணரியல்"
+text = "ண ன வல்லினம் வர ட றவும் பிறவரின் இயல்பும் ஆகும் வேற்றுமைக்கு அல்வழிக்கு அனைத்து மெய்வரினும் இயல்பு ஆகும்"
+meaning = "Before hard consonants, ண and ன become ட and ற respectively; before others, it's natural in case-relational sandhi; in alvazhi, it's natural before all consonants."
+
+[[verse]]
+number = 210
+section = "மெய்யீற்றுப் புணரியல்"
+text = "குறில் அணைவு இல்லா ண னக்கள் வந்த நகரம் திரிந்துழி நண்ணும் கேடே"
+meaning = "For ண and ன not following a short vowel, the initial ந changes and then the ண or ன drops."
+
+[[verse]]
+number = 211
+section = "மெய்யீற்றுப் புணரியல்"
+text = "சாதி குழூஉ பரண் கவண் பெயர் இறுதி இயல்பாம் வேற்றுமைக்கு உணவு எண் சாண் பிற டவ்வாகலும் ஆம் அல்வழி யும்மே"
+meaning = "Words like saathi, kuzhuu, paran, kavan stay natural in case-relational sandhi; words like unavu, en, saan, etc. may change 'na' to 'da' in alvazhi."
+
+[[verse]]
+number = 212
+section = "மெய்யீற்றுப் புணரியல்"
+text = "னஃகான் கிளைப்பெயர் இயல்பும் அஃகான் அடைவும் ஆகும் வேற்றுமைப் பொருட்கே"
+meaning = "Kinship terms ending in 'na' stay natural or take 'aa' in case-relational sandhi."
+
+[[verse]]
+number = 213
+section = "மெய்யீற்றுப் புணரியல்"
+text = "மீன் றவ்வொடு பொரூஉம் வேற்றுமை வழியே"
+meaning = "The word 'meen' (fish) takes 'ta' instead of 'ka' in case-relational sandhi."
+
+[[verse]]
+number = 214
+section = "மெய்யீற்றுப் புணரியல்"
+text = "தேன்மொழி மெய்வரின் இயல்பும் மென்மை மேவின் இறுதி அழிவும் வலிவரின் ஈறுபோய் வலிமெலி மிகலுமாம் இருவழி"
+meaning = "The word 'then' (honey) stays natural before consonants, but before soft consonants it may lose its final sound, and before hard consonants it may lose its final sound and doubling or nasalization occurs."
+
+[[verse]]
+number = 215
+section = "மெய்யீற்றுப் புணரியல்"
+text = "மரம் அல் எகின் மொழி இயல்பும் அகரம் மருவ வலிமெலி மிகலும் ஆகும்"
+meaning = "The word 'egin' stays natural, or takes 'a' and doubling or nasalization occurs."
+
+[[verse]]
+number = 216
+section = "மெய்யீற்றுப் புணரியல்"
+text = "குயின் ஊன் வேற்றுமைக் கண்ணும் இயல்பே"
+meaning = "The words 'kuyin' and 'oon' stay natural in case-relational sandhi."
+
+[[verse]]
+number = 217
+section = "மெய்யீற்றுப் புணரியல்"
+text = "மின் பின் பன் கன் தொழிற்பெயர் அனைய கன் அவ்வேற்று மென்மையோடு உறழும்"
+meaning = "The words 'min', 'pin', 'pan', 'kan' behave like verbal nouns; 'kan' alternates with its nasal in case-relational sandhi."
+
+[[verse]]
+number = 218
+section = "மெய்யீற்றுப் புணரியல்"
+text = "தன் என் என்பவற்று ஈற்று னவ் வன்மையோடு உறழும் நின் ஈறு இயல்பாம் உறவே"
+meaning = "The words 'than', 'en' may alternate with hard consonants; 'nin' stays natural."
+
+[[verse]]
+number = 219
+section = "மெய்யீற்றுப் புணரியல்"
+text = "மவ்வீறு ஒற்று அழிந்து உயிர் ஈறு ஒப்பவும் வன்மைக்கு இனமாத் திரிபவும் ஆகும்"
+meaning = "Words ending in 'ma' lose the 'ma' and behave like vowel endings, or change to the corresponding nasal of the following hard consonant."
+
+[[verse]]
+number = 220
+section = "மெய்யீற்றுப் புணரியல்"
+text = "வேற்றுமை மப் போய் வலிமெலி உறழ்வும் அல்வழி உயிர் இடை வரின் இயல்பும் உள"
+meaning = "In case-relational sandhi, 'ma' drops and doubling or nasalization alternates; in alvazhi, if a vowel follows, it's natural."
+
+[[verse]]
+number = 221
+section = "மெய்யீற்றுப் புணரியல்"
+text = "நும் தம் எம் நம் ஈறாம் மவ்வரு ஞநவே"
+meaning = "The words 'num', 'tham', 'em', 'nam' ending in 'ma' change to the corresponding nasal of the following ஞ, ந."
+
+[[verse]]
+number = 222
+section = "மெய்யீற்றுப் புணரியல்"
+text = "அகமுனர்ச் செவி கை வரின் இடையன கெடும்"
+meaning = "In the word 'agam', if 'sevi' or 'kai' follow, the middle 'm' and 'a' drop."
+
+[[verse]]
+number = 223
+section = "மெய்யீற்றுப் புணரியல்"
+text = "ஈமும், கம்மும் உருமும் தொழிற்பெயர் மானும் முதலன வேற்றுமைக்கு அவ்வும் பெறுமே"
+meaning = "Words like 'eemum', 'kammum', 'urumum' take 'a' in case-relational sandhi."
+
+[[verse]]
+number = 224
+section = "மெய்யீற்றுப் புணரியல்"
+text = "ய ர ழ முன்னர்க் க ச த ப அல்வழி இயல்பும் மிகலும் ஆகும் வேற்றுமை மிகலும் இனத்தோடு உறழ்தலும் விதிமேல்"
+meaning = "After ய, ர, ழ, hard consonants join naturally or double in alvazhi; in case-relational sandhi, doubling or nasalization alternates."
+
+[[verse]]
+number = 225
+section = "மெய்யீற்றுப் புணரியல்"
+text = "தமிழ் அவ்வுறவும் பெறும் வேற்றுமைக்கே தாழும் கோல் வந்து உறுமேல் அற்றே"
+meaning = "The word 'thamizh' takes 'u' in case-relational sandhi."
+
+[[verse]]
+number = 226
+section = "மெய்யீற்றுப் புணரியல்"
+text = "கீழின்முன் வன்மை விகற்பமும் ஆகும்"
+meaning = "Before 'keezh', hard consonants may double or not."
+
+[[verse]]
+number = 227
+section = "மெய்யீற்றுப் புணரியல்"
+text = "ல ள வேற்றுமையில் ற டவும் அல்வழி அவற்றோடு உறழ்வும் வலிவரினாம் மெலி மேவின் ன ணவும் இடைவரின் இயல்பும் ஆகும் இரு வழி யானும் என்ப"
+meaning = "In case-relational sandhi, ல becomes ற and ள becomes ட; in alvazhi, they may alternate or stay natural; before soft consonants, they become ன and ண; before vowels, they stay natural."
+
+[[verse]]
+number = 228
+section = "மெய்யீற்றுப் புணரியல்"
+text = "குறில் வழி ல ள தவ்வணையின் ஆய்தம் ஆகவும் பெறூஉம் அல்வழி யானே"
+meaning = "After a short vowel, ல and ள may become 'aaytham' when 'ta' follows in alvazhi."
+
+[[verse]]
+number = 229
+section = "மெய்யீற்றுப் புணரியல்"
+text = "குறில் செறியா ல ள அல்வழி வந்த தகரம் திரிந்தபின் கேடும் ஈர் இடத்தும் வரு ந திரிந்தபின் மாய்வும் வலிவரின் இயல்பும் திரிபும் ஆவன உள பிற"
+meaning = "Rules for ல and ள not following a short vowel when followed by 'ta' or 'na'."
+
+[[verse]]
+number = 230
+section = "மெய்யீற்றுப் புணரியல்"
+text = "ல ள இறு தொழிற்பெயர் ஈர் இடத்தும் உவ்வுறா வலிவரின் அல்வழி இயல்பும் ஆவன உள"
+meaning = "Verbal nouns ending in ல, ள don't take 'u' before consonants; in alvazhi, they may stay natural."
+
+[[verse]]
+number = 231
+section = "மெய்யீற்றுப் புணரியல்"
+text = "வல்லே தொழிற்பெயர் அற்று இரு வழியும் பலகை நாய் வரினும் வேற்றுமைக்கு அவ்வுமாம்"
+meaning = "The word 'valle' behaves like verbal nouns; if 'palagai' or 'naai' follow, it takes 'a' in case-relational sandhi."
+
+[[verse]]
+number = 232
+section = "மெய்யீற்றுப் புணரியல்"
+text = "நெல்லும் செல்லும் கொல்லும் சொல்லும் அல்வழி யானும் றகரம் ஆகும்"
+meaning = "The words 'nel', 'sel', 'kol', 'sol' change to 'ra' even in alvazhi."
+
+[[verse]]
+number = 233
+section = "மெய்யீற்றுப் புணரியல்"
+text = "இல் என் இன்மைச் சொற்கு ஐ அடைய வன்மை விகற்பமும் ஆகா ரத்தொடு வன்மை ஆகலும் இயல்பும் ஆகும்"
+meaning = "The word 'il' (not) doesn't alternate before hard consonants when 'ai' is added; it stays natural or changes to 'ra'."
+
+[[verse]]
+number = 234
+section = "மெய்யீற்றுப் புணரியல்"
+text = "புள்ளும் வள்ளும் தொழிற்பெயரும் மானும்"
+meaning = "The words 'pul' and 'val' behave like verbal nouns."
+
+[[verse]]
+number = 235
+section = "மெய்யீற்றுப் புணரியல்"
+text = "சுட்டு வகரம் மூ இனம் உற முறையே ஆய்தமும் மென்மையும் இயல்பும் ஆகும்"
+meaning = "Demonstrative 'va' becomes 'aaytham', nasal, or stays natural before corresponding consonants."
+
+[[verse]]
+number = 236
+section = "மெய்யீற்றுப் புணரியல்"
+text = "தெவ் என் மொழியே தொழிற்பெயர் அற்றே மவ்வரின் வஃகான் மவ்வும் ஆகும்"
+meaning = "The word 'thev' behaves like verbal nouns; before 'ma', 'va' becomes 'ma'."
+
+[[verse]]
+number = 237
+section = "மெய்யீற்றுப் புணரியல்"
+text = "னலமுன் றனவும் ணளமுன் டணவும் ஆகும் தநக்கள் ஆயும் காலே"
+meaning = "Before த, ந: ல, ன become ற, ன; ள, ண become ட, ண."
+
+[[verse]]
+number = 238
+section = "மெய்யீற்றுப் புணரியல்"
+text = "உருபின் முடிபவை ஒக்கும் அப்பொருளினும்"
+meaning = "The rules for cases are similar."
+
+[[verse]]
+number = 239
+section = "மெய்யீற்றுப் புணரியல்"
+text = "இடை உரி வடசொலின் இயம்பிய கொளாதவும் போலியும் மரூஉவும் பொருந்திய ஆற்றிற்கு இயையப் புணர்த்தல் யாவர்க்கும் நெறியே"
+meaning = "Rules for particles, prefixes, and northern words (Sanskrit) should be followed according to tradition and usage."
+
+
+# உருபு புணரியல்
+[[verse]]
+number = 240
+section = "உருபு புணரியல்"
+text = "ஒருவன் ஒருத்தி பலர் ஒன்று பல என வருபெயர் ஐந்தொடு பெயர்முதல் இருநான்கு உருபும் உறழ்தர நாற்பதாம் உருபே"
+meaning = "There are 40 types of combinations when 5 types of nouns meet 8 types of case markers."
+
+[[verse]]
+number = 241
+section = "உருபு புணரியல்"
+text = "பெயர்வழித் தம்பொருள் தரவரும் உருபே"
+meaning = "Case markers provide specific grammatical meaning to the nouns they follow."
+
+[[verse]]
+number = 242
+section = "உருபு புணரியல்"
+text = "ஒற்று உயிர் முதல் ஈற்று உருபுகள் புணர்ச்சியின் ஒக்கும் மன் அப்பெயர் வேற்றுமைப் புணர்ப்பே"
+meaning = "The rules for combinations with case markers are similar to general sandhi rules."
+
+[[verse]]
+number = 243
+section = "உருபு புணரியல்"
+text = "பதம்முன் விகுதியும் பதமும் உருபும் புணர்வழி ஒன்றும் பலவும் சாரியை வருதலும் தவிர்தலும் விகற்பமும் ஆகும்"
+meaning = "When stems, suffixes, and case markers join, one or more empty markers (saariyai) may appear, drop, or alternate."
+
+[[verse]]
+number = 244
+section = "உருபு புணரியல்"
+text = "அன் ஆன் இன் அல் அற்று இற்று அத்து அம் தம் நம் நும் ஏ அ உ ஐ கு ன இன்ன பிறவும் பொதுச் சாரியையே"
+meaning = "List of common empty markers (saariyai): an, aan, in, al, atru, itru, athu, am, tham, nam, num, e, a, u, ai, ku, na, etc."
+
+[[verse]]
+number = 245
+section = "உருபு புணரியல்"
+text = "எல்லாம் என்பது இழிதிணை ஆயின் அற்று ஓடு உருபின் மேல் உம் உறுமே அன்றேல் நம் இடை அடைந்து அற்று ஆகும்"
+meaning = "Rules for the word 'ellaam' (all) when joining with case markers."
+
+[[verse]]
+number = 246
+section = "உருபு புணரியல்"
+text = "எல்லாரும் எல்லீரும் என்பவற்று உம்மை தள்ளி நிரலே தம் நும் சாரப் புல்லும் உருபின் பின்னர் உம்மே"
+meaning = "Rules for 'ellaarum' and 'elleerum' (all people) with case markers."
+
+[[verse]]
+number = 247
+section = "உருபு புணரியல்"
+text = "தான் தாம் நாம் முதல் குறுகும் யான் யாம் நீ நீர் என் எம் நின் நும் ஆம் பிற குவ்வின் அவ்வரும் நான்கு ஆறு இரட்டல"
+meaning = "Rules for pronouns (thaan, thaam, naam, yaan, yaam, nee, neer, en, em, nin, num) when joining with case markers."
+
+[[verse]]
+number = 248
+section = "உருபு புணரியல்"
+text = "ஆ மா கோ னவ்வணையவும் பெறுமே"
+meaning = "Rules for words 'aa' (cow), 'maa' (animal), 'ko' (king) with case markers."
+
+[[verse]]
+number = 249
+section = "உருபு புணரியல்"
+text = "ஒன்று முதல் எட்டு ஈறு ஆம் எண் ஊர் பத்தின் முன் ஆன் வரின் பவ்வொற்று ஒழிய மேல் எல்லாம் ஓடும் ஒன்பதும் இற்றே"
+meaning = "Rules for numbers 1-8 followed by 10 and then case markers."
+
+[[verse]]
+number = 250
+section = "உருபு புணரியல்"
+text = "வவ்விறு சுட்டிற்கு அற்று உறல் வழியே"
+meaning = "Rules for demonstratives ending in 'va' with case markers."
+
+[[verse]]
+number = 251
+section = "உருபு புணரியல்"
+text = "சுட்டின் முன் ஆய்தம் அன் வரின் கெடுமே"
+meaning = "Rules for demonstratives with 'aaytham' when 'an' follows."
+
+[[verse]]
+number = 252
+section = "உருபு புணரியல்"
+text = "அத்தின் அகரம் அகர முனை இல்லை"
+meaning = "In the empty marker 'aththu', the 'a' drops before another 'a'."
+
+[[verse]]
+number = 253
+section = "உருபு புணரியல்"
+text = "இதற்கு இது சாரியை எனின் அளவு இன்மையின் விகுதியும் பதமும் உருபும் பகுத்து இடை நின்ற எழுத்தும் பதமும் இயற்கையும் ஒன்ற உணர்த்தல் உரவோர் நெறியே"
+meaning = "Since there's no end to specific 'saariyai' rules, the wise should analyze stems, suffixes, and markers and combine them naturally."
+
+[[verse]]
+number = 254
+section = "உருபு புணரியல்"
+text = "விகுதி பதம் சாரியை உருபு அனைத்தினும் உரைத்த விதியின் ஓர்ந்து ஒப்பன கொளலே."
+meaning = "Follow the rules for suffixes, stems, saariyai, and markers as explained, and adopt similar rules where appropriate."
+
+[[verse]]
+number = 255
+section = "உருபு புணரியல்"
+text = "இயல்பின் விகாரமும் விகாரத்து இயல்பும் உயர்திணை இடத்து விரிந்தும் தொக்கும் விரவுப் பெயரின் விரிந்தும் நின்றும் அன்ன பிறவும் ஆகும் ஐ உருபே"
+meaning = "The second case marker 'ai' may involve natural or changed joining, and may stay or drop in various noun types."
+
+[[verse]]
+number = 256
+section = "உருபு புணரியல்"
+text = "புள்ளியும் உயிரும் ஆய் இறு சொல் முன் தம்மின் ஆகிய தொழில் மொழி வரினே வல்லினம் விகற்பமும் இயல்பும் ஆகும்"
+meaning = "Before verbal words, words ending in consonants or vowels may have alternating or natural sandhi for hard consonants."
+
+[[verse]]
+number = 257
+section = "உருபு புணரியல்"
+text = "இதற்கு இது முடிபு என்று எஞ்சாது யாவும் விதிப்ப அளவு இன்மையின் விதித்தவற்று இயலான் வகுத்து உரையாதவும் வகுத்தனர் கொளலே"
+meaning = "Since it's impossible to specify every single combination, follow the given rules and tradition for those not explicitly mentioned."

@@ -5,9 +5,8 @@
 
 use serde::{Deserialize, Serialize};
 use tamil_unicode::{
-    grapheme::{TamilGrapheme, get_final_grapheme, get_initial_grapheme},
+    grapheme::{get_final_grapheme, get_initial_grapheme, TamilGrapheme},
     letters::*,
-    transform::*,
 };
 
 /// Left context - what the first word must end with
@@ -32,10 +31,26 @@ pub enum LeftContext {
     Mellinam,
     /// Idaiyinam consonants
     Idaiyinam,
+    /// Kutriyalukaram (shortened u)
+    Kutriyalukaram,
+    /// Vanthodar Kutriyalukaram (hard-cluster shortened u)
+    VanthodarKutriyalukaram,
+    /// Mellinthodar Kutriyalukaram (soft-cluster shortened u)
+    MellinthodarKutriyalukaram,
+    /// Idaithodar Kutriyalukaram (middle-cluster shortened u)
+    IdaithodarKutriyalukaram,
+    /// Uyirthodar Kutriyalukaram (vowel-cluster shortened u)
+    UyirthodarKutriyalukaram,
+    /// Nedilthodar Kutriyalukaram (long-vowel-cluster shortened u)
+    NedilthodarKutriyalukaram,
+    /// Aythathodar Kutriyalukaram (aytham-cluster shortened u)
+    AythathodarKutriyalukaram,
     /// Specific word(s)
     SpecificWord { words: Vec<String> },
     /// Pattern: short vowel + consonant (for ஒற்று இரட்டல்)
     KurilPlusMei,
+    /// Any combined consonant-vowel ending
+    AnyUyirmei,
     /// Any ending
     Any,
 }
@@ -58,6 +73,10 @@ pub enum RightContext {
     Idaiyinam,
     /// Specific consonant(s)
     SpecificMei { letters: Vec<String> },
+    /// Specific word(s)
+    SpecificWord { words: Vec<String> },
+    /// Any combined consonant-vowel beginning
+    AnyUyirmei,
     /// Any beginning
     Any,
 }
@@ -88,9 +107,13 @@ impl LeftContext {
             LeftContext::AnyMei => final_grapheme.ends_with_consonant(),
 
             LeftContext::SpecificMei { letters } => {
-                if let Some(base) = final_grapheme.consonant_base() {
-                    let mei = format!("{}்", base);
-                    letters.contains(&mei)
+                if final_grapheme.ends_with_consonant() {
+                    if let Some(base) = final_grapheme.consonant_base() {
+                        let mei = format!("{}்", base);
+                        letters.contains(&mei)
+                    } else {
+                        false
+                    }
                 } else {
                     false
                 }
@@ -106,6 +129,34 @@ impl LeftContext {
 
             LeftContext::Idaiyinam => {
                 final_grapheme.ends_with_consonant() && final_grapheme.is_idaiyinam()
+            }
+
+            LeftContext::Kutriyalukaram => {
+                is_any_kutriyalukaram(word)
+            }
+
+            LeftContext::VanthodarKutriyalukaram => {
+                get_kutriyalukaram_type(word) == Some(KutriyalukaramType::Vanthodar)
+            }
+
+            LeftContext::MellinthodarKutriyalukaram => {
+                get_kutriyalukaram_type(word) == Some(KutriyalukaramType::Mellinthodar)
+            }
+
+            LeftContext::IdaithodarKutriyalukaram => {
+                get_kutriyalukaram_type(word) == Some(KutriyalukaramType::Idaithodar)
+            }
+
+            LeftContext::UyirthodarKutriyalukaram => {
+                get_kutriyalukaram_type(word) == Some(KutriyalukaramType::Uyirthodar)
+            }
+
+            LeftContext::NedilthodarKutriyalukaram => {
+                get_kutriyalukaram_type(word) == Some(KutriyalukaramType::Nedilthodar)
+            }
+
+            LeftContext::AythathodarKutriyalukaram => {
+                get_kutriyalukaram_type(word) == Some(KutriyalukaramType::Aythathodar)
             }
 
             LeftContext::SpecificWord { words } => words.iter().any(|w| word == w),
@@ -125,6 +176,10 @@ impl LeftContext {
                 } else {
                     false
                 }
+            }
+
+            LeftContext::AnyUyirmei => {
+                matches!(final_grapheme, TamilGrapheme::UyirMei { .. })
             }
 
             LeftContext::Any => true,
@@ -184,6 +239,12 @@ impl RightContext {
                 }
             }
 
+            RightContext::SpecificWord { words } => words.iter().any(|w| word == w),
+
+            RightContext::AnyUyirmei => {
+                matches!(initial_grapheme, TamilGrapheme::UyirMei { .. })
+            }
+
             RightContext::Any => true,
         }
     }
@@ -199,6 +260,13 @@ impl RightContext {
     pub fn specific_mei(consonants: &[&str]) -> Self {
         RightContext::SpecificMei {
             letters: consonants.iter().map(|s| s.to_string()).collect(),
+        }
+    }
+
+    /// Create a RightContext for specific words
+    pub fn specific_word(words: &[&str]) -> Self {
+        RightContext::SpecificWord {
+            words: words.iter().map(|s| s.to_string()).collect(),
         }
     }
 }
@@ -219,6 +287,101 @@ impl SandhiContext {
     pub fn matches(&self, word1: &str, word2: &str) -> bool {
         self.left.matches(word1) && self.right.matches(word2)
     }
+}
+
+/// Types of Kutriyalukaram based on the preceding letter
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum KutriyalukaramType {
+    /// Vanthodar - Hard consonant cluster (e.g., சுக்கு)
+    Vanthodar,
+    /// Mellinthodar - Soft consonant cluster (e.g., மஞ்சு)
+    Mellinthodar,
+    /// Idaithodar - Medial consonant cluster (e.g., மார்பு)
+    Idaithodar,
+    /// Uyirthodar - Vowel cluster (e.g., வரகு)
+    Uyirthodar,
+    /// Nedilthodar - Long vowel series (e.g., நாடு)
+    Nedilthodar,
+    /// Aythathodar - Aytham cluster (e.g., எஃகு)
+    Aythathodar,
+}
+
+/// Check if a word ends in Kutriyalukaram
+pub fn is_any_kutriyalukaram(word: &str) -> bool {
+    get_kutriyalukaram_type(word).is_some()
+}
+
+/// Get the type of Kutriyalukaram
+pub fn get_kutriyalukaram_type(word: &str) -> Option<KutriyalukaramType> {
+    use tamil_unicode::grapheme::get_graphemes;
+
+    let graphemes = get_graphemes(word);
+    if graphemes.len() < 2 {
+        return None;
+    }
+
+    let last = &graphemes[graphemes.len() - 1];
+    
+    // Check if last letter is vallinam+u (ku, chu, du, thu, pu, ru)
+    let last_str = last.as_str();
+    let is_vallinam_u = match last_str.as_str() {
+        "கு" | "சு" | "டு" | "து" | "பு" | "று" => true,
+        _ => false,
+    };
+
+    if !is_vallinam_u {
+        return None;
+    }
+
+    let prev = &graphemes[graphemes.len() - 2];
+
+    // Check for Nedilthodar (2 letters, first is long vowel)
+    if graphemes.len() == 2 {
+        // If prev is uyir or uyirmei and ends with long vowel
+        let is_long = if let tamil_unicode::grapheme::TamilGrapheme::Uyir(c) = prev {
+            is_nedil(*c)
+        } else if let tamil_unicode::grapheme::TamilGrapheme::UyirMei { .. } = prev {
+             prev.final_vowel().map_or(false, is_nedil)
+        } else {
+            false
+        };
+
+        if is_long {
+            return Some(KutriyalukaramType::Nedilthodar);
+        }
+    }
+    
+    // Check preceding letter type
+    if prev.ends_with_consonant() {
+        if prev.is_vallinam() {
+            return Some(KutriyalukaramType::Vanthodar);
+        } else if prev.is_mellinam() {
+            return Some(KutriyalukaramType::Mellinthodar);
+        } else if prev.is_idaiyinam() {
+            return Some(KutriyalukaramType::Idaithodar);
+        } else if prev.as_str() == "ஃ" {
+            return Some(KutriyalukaramType::Aythathodar);
+        }
+    } else {
+        // If it's a short monosyllable (Mutriyalukaram) like "pasu"
+        if graphemes.len() == 2 {
+             let is_short = if let tamil_unicode::grapheme::TamilGrapheme::Uyir(c) = prev {
+                is_kuril(*c)
+            } else if let tamil_unicode::grapheme::TamilGrapheme::UyirMei { .. } = prev {
+                 prev.final_vowel().map_or(false, is_kuril)
+            } else {
+                false
+            };
+
+             if is_short {
+                 return None;
+             }
+        }
+        
+        return Some(KutriyalukaramType::Uyirthodar);
+    }
+
+    None
 }
 
 #[cfg(test)]

@@ -293,9 +293,9 @@ mod tests {
 
         let second_word = tokens.iter()
             .filter(|t| t.kind == TokenKind::TamilWord)
-            .nth(1);
-        assert!(second_word.is_some());
-        assert_eq!(second_word.unwrap().span.line, 2);
+            .nth(1)
+            .expect("should have second Tamil word");
+        assert_eq!(second_word.span.line, 2);
     }
 
     #[test]

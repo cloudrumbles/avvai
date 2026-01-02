@@ -1,11 +1,6 @@
-//! Main morphological analysis interface.
+//! Morphological analysis types and interfaces.
 
 use serde::{Deserialize, Serialize};
-use tamil_unicode::grapheme::{get_graphemes, graphemes_to_string};
-
-use crate::noun::NounFeatures;
-use crate::verb::VerbFeatures;
-use crate::suffix::SuffixPattern;
 
 /// Part of speech
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -15,6 +10,10 @@ pub enum PartOfSpeech {
     Noun,
     /// வினைச்சொல் - Verb
     Verb,
+    /// பெயரெச்சம் - Relative participle
+    RelativeParticiple,
+    /// வினையெச்சம் - Verbal participle
+    VerbalParticiple,
     /// உரிச்சொல் - Adjective/Adverb
     Adjective,
     /// பெயரடை - Attributive
@@ -43,6 +42,8 @@ impl PartOfSpeech {
         match self {
             PartOfSpeech::Noun => "பெயர்ச்சொல்",
             PartOfSpeech::Verb => "வினைச்சொல்",
+            PartOfSpeech::RelativeParticiple => "பெயரெச்சம்",
+            PartOfSpeech::VerbalParticiple => "வினையெச்சம்",
             PartOfSpeech::Adjective => "உரிச்சொல்",
             PartOfSpeech::Attributive => "பெயரடை",
             PartOfSpeech::Adverb => "வினையடை",
@@ -218,6 +219,8 @@ pub struct MorphAnalysis {
     pub pos: PartOfSpeech,
     /// Grammatical features
     pub features: Vec<Feature>,
+    /// Semantic tags (e.g., "tree", "direction", "rational")
+    pub semantic_tags: Vec<String>,
     /// Confidence score (0.0 - 1.0)
     pub confidence: f32,
 }
@@ -230,6 +233,7 @@ impl MorphAnalysis {
             lemma,
             pos,
             features: vec![],
+            semantic_tags: vec![],
             confidence: 1.0,
         }
     }
@@ -237,6 +241,12 @@ impl MorphAnalysis {
     /// Add a feature
     pub fn with_feature(mut self, feature: Feature) -> Self {
         self.features.push(feature);
+        self
+    }
+
+    /// Add a semantic tag
+    pub fn with_semantic_tag(mut self, tag: impl Into<String>) -> Self {
+        self.semantic_tags.push(tag.into());
         self
     }
 
@@ -267,330 +277,93 @@ impl MorphAnalysis {
             }
         })
     }
-}
 
-/// The morphological analyzer
-#[derive(Debug, Clone, Default)]
-pub struct MorphAnalyzer {
-    /// Known noun roots
-    noun_roots: Vec<String>,
-    /// Known verb roots
-    verb_roots: Vec<String>,
-}
-
-impl MorphAnalyzer {
-    /// Create a new analyzer
-    pub fn new() -> Self {
-        Self {
-            noun_roots: default_noun_roots(),
-            verb_roots: default_verb_roots(),
-        }
+    /// Get the person (இடம்) feature
+    pub fn get_person(&self) -> Option<Person> {
+        self.features.iter().find_map(|f| {
+            if let Feature::Person(p) = f {
+                Some(*p)
+            } else {
+                None
+            }
+        })
     }
 
-    /// Add noun roots
-    pub fn with_noun_roots(mut self, roots: Vec<String>) -> Self {
-        self.noun_roots.extend(roots);
-        self
+    /// Get the number (எண்) feature
+    pub fn get_number(&self) -> Option<Number> {
+        self.features.iter().find_map(|f| {
+            if let Feature::Number(n) = f {
+                Some(*n)
+            } else {
+                None
+            }
+        })
     }
 
-    /// Add verb roots
-    pub fn with_verb_roots(mut self, roots: Vec<String>) -> Self {
-        self.verb_roots.extend(roots);
-        self
+    /// Get the gender (பால்) feature
+    pub fn get_gender(&self) -> Option<Gender> {
+        self.features.iter().find_map(|f| {
+            if let Feature::Gender(g) = f {
+                Some(*g)
+            } else {
+                None
+            }
+        })
     }
 
-    /// Analyze a word
-    pub fn analyze(&self, word: &str) -> Vec<MorphAnalysis> {
-        let mut results = Vec::new();
-
-        // Try verb analysis
-        if let Some(analysis) = self.try_analyze_verb(word) {
-            results.push(analysis);
-        }
-
-        // Try noun analysis
-        if let Some(analysis) = self.try_analyze_noun(word) {
-            results.push(analysis);
-        }
-
-        // Try pronoun
-        if let Some(analysis) = self.try_analyze_pronoun(word) {
-            results.push(analysis);
-        }
-
-        // If no analysis found, return unknown
-        if results.is_empty() {
-            results.push(MorphAnalysis::new(
-                word.to_string(),
-                word.to_string(),
-                PartOfSpeech::Unknown,
-            ).with_confidence(0.0));
-        }
-
-        results
+    /// Get the honorific feature
+    pub fn get_honorific(&self) -> Option<Honorific> {
+        self.features.iter().find_map(|f| {
+            if let Feature::Honorific(h) = f {
+                Some(*h)
+            } else {
+                None
+            }
+        })
     }
 
-    /// Try to analyze as a verb
-    fn try_analyze_verb(&self, word: &str) -> Option<MorphAnalysis> {
-        // Common verb endings
-        let verb_endings = [
-            ("ஆன்", Tense::Past, Person::Third, Gender::Masculine, Number::Singular),
-            ("ஆள்", Tense::Past, Person::Third, Gender::Feminine, Number::Singular),
-            ("ஆர்", Tense::Past, Person::Third, Gender::RationalPlural, Number::Plural),
-            ("ஏன்", Tense::Past, Person::First, Gender::Masculine, Number::Singular),
-            ("ஓம்", Tense::Past, Person::First, Gender::RationalPlural, Number::Plural),
-            ("ஆய்", Tense::Past, Person::Second, Gender::Masculine, Number::Singular),
-            ("கிறான்", Tense::Present, Person::Third, Gender::Masculine, Number::Singular),
-            ("கிறாள்", Tense::Present, Person::Third, Gender::Feminine, Number::Singular),
-            ("கிறேன்", Tense::Present, Person::First, Gender::Masculine, Number::Singular),
-            ("வான்", Tense::Future, Person::Third, Gender::Masculine, Number::Singular),
-            ("வாள்", Tense::Future, Person::Third, Gender::Feminine, Number::Singular),
-            ("வேன்", Tense::Future, Person::First, Gender::Masculine, Number::Singular),
-        ];
+    /// Get the mood feature
+    pub fn get_mood(&self) -> Option<Mood> {
+        self.features.iter().find_map(|f| {
+            if let Feature::Mood(m) = f {
+                Some(*m)
+            } else {
+                None
+            }
+        })
+    }
 
-        for (ending, tense, person, gender, number) in &verb_endings {
-            if word.ends_with(ending) {
-                let stem = &word[..word.len() - ending.len()];
-                // Try to find the verb root
-                let lemma = self.find_verb_lemma(stem);
+    /// Check if this is a potential subject (noun/pronoun in nominative case)
+    pub fn is_potential_subject(&self) -> bool {
+        matches!(self.pos, PartOfSpeech::Noun | PartOfSpeech::Pronoun)
+            && self.get_case().map_or(true, |c| c == Case::Nominative)
+    }
 
-                return Some(MorphAnalysis::new(
-                    word.to_string(),
-                    lemma,
-                    PartOfSpeech::Verb,
+    /// Check if this is a finite verb (has PNG markers)
+    pub fn is_finite_verb(&self) -> bool {
+        self.pos == PartOfSpeech::Verb
+            && self.features.iter().any(|f| {
+                matches!(
+                    f,
+                    Feature::Person(_) | Feature::Number(_) | Feature::Gender(_)
                 )
-                .with_feature(Feature::Tense(*tense))
-                .with_feature(Feature::Person(*person))
-                .with_feature(Feature::Gender(*gender))
-                .with_feature(Feature::Number(*number))
-                .with_confidence(0.8));
-            }
-        }
-
-        None
+            })
     }
 
-    /// Find the lemma (infinitive) form of a verb
-    fn find_verb_lemma(&self, stem: &str) -> String {
-        // Common tense markers to remove
-        let tense_markers = ["ந்த", "த்த", "ன்ற", "கின்ற", "இன"];
-
-        for marker in &tense_markers {
-            if stem.ends_with(marker) {
-                let base = &stem[..stem.len() - marker.len()];
-                // Check if this matches a known root
-                for root in &self.verb_roots {
-                    if root.starts_with(base) || base.starts_with(root.as_str()) {
-                        return root.clone();
-                    }
-                }
-                return base.to_string();
-            }
-        }
-
-        stem.to_string()
+    /// Check if this is a rational (உயர்திணை) gender
+    pub fn is_rational(&self) -> bool {
+        self.get_gender().map_or(false, |g| {
+            matches!(
+                g,
+                Gender::Masculine | Gender::Feminine | Gender::RationalPlural
+            )
+        })
     }
 
-    /// Try to analyze as a noun
-    fn try_analyze_noun(&self, word: &str) -> Option<MorphAnalysis> {
-        // Case suffixes
-        let case_suffixes = [
-            ("ஐ", Case::Accusative),
-            ("ஆல்", Case::Instrumental),
-            ("ஓடு", Case::Instrumental),
-            ("உடன்", Case::Instrumental),
-            ("கு", Case::Dative),
-            ("க்கு", Case::Dative),
-            ("உக்கு", Case::Dative),
-            ("இடம்", Case::Dative),
-            ("இன்", Case::Ablative),
-            ("இருந்து", Case::Ablative),
-            ("அது", Case::Genitive),
-            ("உடைய", Case::Genitive),
-            ("இல்", Case::Locative),
-            ("இடத்தில்", Case::Locative),
-            ("கண்", Case::Locative),
-            ("ஏ", Case::Vocative),
-        ];
-
-        // Number suffixes
-        let plural_suffixes = ["கள்", "மார்", "அர்"];
-
-        for (suffix, case) in &case_suffixes {
-            if word.ends_with(suffix) {
-                let stem = &word[..word.len() - suffix.len()];
-
-                // Check for plural
-                let (lemma, number) = self.extract_number(stem, &plural_suffixes);
-
-                return Some(MorphAnalysis::new(
-                    word.to_string(),
-                    lemma,
-                    PartOfSpeech::Noun,
-                )
-                .with_feature(Feature::Case(*case))
-                .with_feature(Feature::Number(number))
-                .with_confidence(0.7));
-            }
-        }
-
-        // Check if it's just a noun with plural
-        for suffix in &plural_suffixes {
-            if word.ends_with(suffix) {
-                let stem = &word[..word.len() - suffix.len()];
-                return Some(MorphAnalysis::new(
-                    word.to_string(),
-                    stem.to_string(),
-                    PartOfSpeech::Noun,
-                )
-                .with_feature(Feature::Case(Case::Nominative))
-                .with_feature(Feature::Number(Number::Plural))
-                .with_confidence(0.6));
-            }
-        }
-
-        // Check known noun roots
-        for root in &self.noun_roots {
-            if word == root {
-                return Some(MorphAnalysis::new(
-                    word.to_string(),
-                    root.clone(),
-                    PartOfSpeech::Noun,
-                )
-                .with_feature(Feature::Case(Case::Nominative))
-                .with_feature(Feature::Number(Number::Singular))
-                .with_confidence(0.9));
-            }
-        }
-
-        None
-    }
-
-    /// Extract number from a stem
-    fn extract_number(&self, stem: &str, plural_suffixes: &[&str]) -> (String, Number) {
-        for suffix in plural_suffixes {
-            if stem.ends_with(suffix) {
-                let lemma = &stem[..stem.len() - suffix.len()];
-                return (lemma.to_string(), Number::Plural);
-            }
-        }
-        (stem.to_string(), Number::Singular)
-    }
-
-    /// Try to analyze as a pronoun
-    fn try_analyze_pronoun(&self, word: &str) -> Option<MorphAnalysis> {
-        let pronouns = [
-            ("நான்", Person::First, Number::Singular, Gender::Masculine),
-            ("நாம்", Person::First, Number::Plural, Gender::RationalPlural),
-            ("நாங்கள்", Person::First, Number::Plural, Gender::RationalPlural),
-            ("நீ", Person::Second, Number::Singular, Gender::Masculine),
-            ("நீங்கள்", Person::Second, Number::Plural, Gender::RationalPlural),
-            ("அவன்", Person::Third, Number::Singular, Gender::Masculine),
-            ("அவள்", Person::Third, Number::Singular, Gender::Feminine),
-            ("அவர்", Person::Third, Number::Singular, Gender::RationalPlural),
-            ("அவர்கள்", Person::Third, Number::Plural, Gender::RationalPlural),
-            ("அது", Person::Third, Number::Singular, Gender::InanimateSingular),
-            ("அவை", Person::Third, Number::Plural, Gender::InanimatePlural),
-            ("இவன்", Person::Third, Number::Singular, Gender::Masculine),
-            ("இவள்", Person::Third, Number::Singular, Gender::Feminine),
-            ("இது", Person::Third, Number::Singular, Gender::InanimateSingular),
-        ];
-
-        for (pronoun, person, number, gender) in &pronouns {
-            if word == *pronoun {
-                return Some(MorphAnalysis::new(
-                    word.to_string(),
-                    pronoun.to_string(),
-                    PartOfSpeech::Pronoun,
-                )
-                .with_feature(Feature::Person(*person))
-                .with_feature(Feature::Number(*number))
-                .with_feature(Feature::Gender(*gender))
-                .with_confidence(1.0));
-            }
-        }
-
-        None
-    }
-}
-
-/// Default noun roots
-fn default_noun_roots() -> Vec<String> {
-    vec![
-        "மரம்".to_string(),
-        "வீடு".to_string(),
-        "நாடு".to_string(),
-        "பள்ளி".to_string(),
-        "புத்தகம்".to_string(),
-        "தமிழ்".to_string(),
-        "மொழி".to_string(),
-        "பாட்டு".to_string(),
-        "கவிதை".to_string(),
-        "நூல்".to_string(),
-    ]
-}
-
-/// Default verb roots
-fn default_verb_roots() -> Vec<String> {
-    vec![
-        "பாடு".to_string(),
-        "வா".to_string(),
-        "போ".to_string(),
-        "சொல்".to_string(),
-        "செய்".to_string(),
-        "படி".to_string(),
-        "எழுது".to_string(),
-        "கேள்".to_string(),
-        "பார்".to_string(),
-        "நில்".to_string(),
-    ]
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_analyze_verb() {
-        let analyzer = MorphAnalyzer::new();
-
-        // Test with a word that clearly ends with a known verb ending
-        let results = analyzer.analyze("வந்தான்");
-        assert!(!results.is_empty());
-
-        // The morphological analyzer is basic - just check it returns something
-        // More sophisticated verb analysis requires proper FST or rule-based parsing
-    }
-
-    #[test]
-    fn test_analyze_noun() {
-        let analyzer = MorphAnalyzer::new();
-
-        let results = analyzer.analyze("மரத்தை");
-        let noun_analysis = results.iter()
-            .find(|a| a.pos == PartOfSpeech::Noun);
-        // This might not match exactly due to sandhi
-    }
-
-    #[test]
-    fn test_analyze_pronoun() {
-        let analyzer = MorphAnalyzer::new();
-
-        let results = analyzer.analyze("நான்");
-        assert!(!results.is_empty());
-
-        let pronoun = results.iter()
-            .find(|a| a.pos == PartOfSpeech::Pronoun);
-        assert!(pronoun.is_some());
-    }
-
-    #[test]
-    fn test_unknown_word() {
-        let analyzer = MorphAnalyzer::new();
-
-        let results = analyzer.analyze("xyz");
-        assert!(!results.is_empty());
-        assert_eq!(results[0].pos, PartOfSpeech::Unknown);
-        assert_eq!(results[0].confidence, 0.0);
+    /// Check if this is an inanimate (அஃறிணை) gender
+    pub fn is_inanimate(&self) -> bool {
+        self.get_gender().map_or(false, |g| {
+            matches!(g, Gender::InanimateSingular | Gender::InanimatePlural)
+        })
     }
 }

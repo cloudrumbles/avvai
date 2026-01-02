@@ -11,10 +11,12 @@
 pub mod letters;
 pub mod grapheme;
 pub mod transform;
+pub mod normalize;
 
 pub use letters::*;
 pub use grapheme::*;
 pub use transform::*;
+pub use normalize::*;
 
 /// Tamil Unicode range constants
 pub mod unicode_ranges {

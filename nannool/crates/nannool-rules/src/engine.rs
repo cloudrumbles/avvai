@@ -3,7 +3,15 @@
 //! This module provides the rule engine for matching and applying
 //! sandhi rules to word pairs.
 
-use crate::sandhi::{SandhiRule, get_builtin_rules};
+use std::path::Path;
+
+use crate::loader::{load_rules_from_file, load_rules_from_str, load_verses_from_file, load_verses_from_str, LoadError};
+use crate::sandhi::SandhiRule;
+use crate::verses::NannoolVerse;
+
+/// Bundled rules and verses
+const BUNDLED_RULES_TOML: &str = include_str!("../../../data/nannool/rules.toml");
+const BUNDLED_VERSES_TOML: &str = include_str!("../../../data/nannool/punariyar.toml");
 
 /// Strictness level for rule checking
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -22,6 +30,8 @@ pub enum StrictnessLevel {
 pub struct RuleEngine {
     /// All loaded rules
     rules: Vec<SandhiRule>,
+    /// Nannool verses
+    verses: Vec<NannoolVerse>,
     /// Strictness level
     strictness: StrictnessLevel,
 }
@@ -33,15 +43,68 @@ impl Default for RuleEngine {
 }
 
 impl RuleEngine {
-    /// Create a new rule engine with built-in rules
+    /// Create a new rule engine with bundled rules and verses
     pub fn new() -> Self {
-        let mut rules = get_builtin_rules();
-        // Sort by priority (higher first)
+        Self::bundled()
+    }
+
+    /// Create a new rule engine using bundled rules and verses
+    pub fn bundled() -> Self {
+        let rules = load_rules_from_str(BUNDLED_RULES_TOML).expect("Failed to parse bundled rules");
+        let verses = load_verses_from_str(BUNDLED_VERSES_TOML).expect("Failed to parse bundled verses");
+        
+        let mut engine = Self {
+            rules,
+            verses,
+            strictness: StrictnessLevel::default(),
+        };
+        engine.rules.sort_by(|a, b| b.priority.cmp(&a.priority));
+        engine
+    }
+
+    /// Create a new rule engine with built-in rules (minimal set)
+    #[deprecated(note = "Use RuleEngine::new() or RuleEngine::bundled() instead")]
+    pub fn builtin() -> Self {
+        Self::bundled()
+    }
+
+    /// Create a new rule engine by loading rules from a TOML file
+    pub fn from_file<P: AsRef<Path>>(path: P) -> Result<Self, LoadError> {
+        let mut rules = load_rules_from_file(path)?;
         rules.sort_by(|a, b| b.priority.cmp(&a.priority));
 
-        Self {
+        Ok(Self {
             rules,
+            verses: load_verses_from_str(BUNDLED_VERSES_TOML).unwrap_or_default(),
             strictness: StrictnessLevel::default(),
+        })
+    }
+
+    /// Create a new rule engine by loading rules and verses from TOML files
+    pub fn from_files<P: AsRef<Path>>(rules_path: P, verses_path: P) -> Result<Self, LoadError> {
+        let mut rules = load_rules_from_file(rules_path)?;
+        rules.sort_by(|a, b| b.priority.cmp(&a.priority));
+        let verses = load_verses_from_file(verses_path)?;
+
+        Ok(Self {
+            rules,
+            verses,
+            strictness: StrictnessLevel::default(),
+        })
+    }
+
+    /// Create a rule engine by loading from file, falling back to bundled rules
+    pub fn from_file_or_builtin<P: AsRef<Path>>(path: P) -> Self {
+        match load_rules_from_file(path) {
+            Ok(mut rules) => {
+                rules.sort_by(|a, b| b.priority.cmp(&a.priority));
+                Self {
+                    rules,
+                    verses: load_verses_from_str(BUNDLED_VERSES_TOML).unwrap_or_default(),
+                    strictness: StrictnessLevel::default(),
+                }
+            }
+            Err(_) => Self::bundled(),
         }
     }
 
@@ -58,9 +121,38 @@ impl RuleEngine {
         self
     }
 
+    /// Add custom verses to the engine
+    pub fn with_verses(mut self, additional_verses: Vec<NannoolVerse>) -> Self {
+        self.verses.extend(additional_verses);
+        self
+    }
+
     /// Get all rules
     pub fn rules(&self) -> &[SandhiRule] {
         &self.rules
+    }
+
+    /// Get all verses
+    pub fn verses(&self) -> &[NannoolVerse] {
+        &self.verses
+    }
+
+    /// Get a verse by its number
+    pub fn get_verse(&self, number: u32) -> Option<&NannoolVerse> {
+        self.verses.iter().find(|v| v.number == number)
+    }
+
+    /// Get all verses associated with a rule
+    pub fn get_verses_for_rule(&self, rule: &SandhiRule) -> Vec<&NannoolVerse> {
+        rule.nannool_verses
+            .iter()
+            .filter_map(|&number| self.get_verse(number))
+            .collect()
+    }
+
+    /// Get the current strictness level
+    pub fn strictness(&self) -> StrictnessLevel {
+        self.strictness
     }
 
     /// Find all rules that apply to a word pair
@@ -81,13 +173,28 @@ impl RuleEngine {
     /// Check if a word pair violates any sandhi rules
     /// Returns the violated rule if any
     pub fn check_violation(&self, word1: &str, word2: &str) -> Option<&SandhiRule> {
+        self.check_violation_with_context(word1, word2, None, None, crate::sandhi::Relationship::Any, &[])
+    }
+
+    /// Check if a word pair violates any sandhi rules with grammatical context
+    pub fn check_violation_with_context(
+        &self,
+        word1: &str,
+        word2: &str,
+        class1: Option<crate::sandhi::WordClass>,
+        class2: Option<crate::sandhi::WordClass>,
+        relationship: crate::sandhi::Relationship,
+        morph_conditions: &[String],
+    ) -> Option<&SandhiRule> {
         for rule in &self.rules {
-            if rule.matches(word1, word2) && !rule.is_satisfied(word1, word2) {
+            if rule.matches_with_context(word1, word2, class1, class2, relationship, morph_conditions)
+                && !rule.is_satisfied(word1, word2)
+            {
                 // Check if this is overridden by an exception rule
                 let has_exception = self.rules.iter().any(|r| {
                     r.is_exception
                         && r.exception_of.contains(&rule.id)
-                        && r.matches(word1, word2)
+                        && r.matches_with_context(word1, word2, class1, class2, relationship, morph_conditions)
                 });
 
                 if !has_exception {
@@ -95,14 +202,15 @@ impl RuleEngine {
                     match self.strictness {
                         StrictnessLevel::Classical => return Some(rule),
                         StrictnessLevel::Standard => {
-                            // Skip some minor rules in standard mode
-                            if rule.priority >= 40 {
+                            // Standard mode: most rules apply (priority >= 50)
+                            if rule.priority >= 50 {
                                 return Some(rule);
                             }
                         }
                         StrictnessLevel::Lenient => {
-                            // Only report major violations in lenient mode
-                            if rule.priority >= 60 {
+                            // Lenient mode: only critical violations (priority >= 90)
+                            // This effectively disables cross-word-boundary sandhi checking
+                            if rule.priority >= 90 {
                                 return Some(rule);
                             }
                         }
@@ -211,7 +319,7 @@ mod tests {
         assert!(violation.is_some());
         // Multiple rules could apply (vallinam-miguthal or kutriyalukaram)
         let rule_id = &violation.unwrap().id;
-        assert!(rule_id.contains("vallinam") || rule_id.contains("kutriyalukaram"));
+        assert!(rule_id.contains("vallinam") || rule_id.contains("kutriyalukaram") || rule_id.contains("vanthodar"));
 
         // This should not violate (properly doubled)
         let _violation = engine.check_violation("பாட்டு", "ப்பாடினான்");
@@ -261,5 +369,22 @@ mod tests {
 
         let rules_162 = engine.get_rules_by_verse(162);
         assert!(!rules_162.is_empty());
+    }
+
+    #[test]
+    fn test_verse_lookup() {
+        // Create engine with actual files to test verse lookup
+        let rules_path = concat!(env!("CARGO_MANIFEST_DIR"), "/../../data/nannool/rules.toml");
+        let verses_path = concat!(env!("CARGO_MANIFEST_DIR"), "/../../data/nannool/punariyar.toml");
+        
+        let engine = RuleEngine::from_files(rules_path, verses_path).unwrap();
+        
+        let verse_162 = engine.get_verse(162);
+        assert!(verse_162.is_some());
+        assert!(verse_162.unwrap().tamil_text.contains("உடம்படு மெய்"));
+        
+        let verse_204 = engine.get_verse(204);
+        assert!(verse_204.is_some());
+        assert!(verse_204.unwrap().tamil_text.contains("உடல்மேல் உயிர்"));
     }
 }

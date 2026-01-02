@@ -9,11 +9,14 @@ pub mod verses;
 pub mod sandhi;
 pub mod patterns;
 pub mod engine;
+pub mod loader;
+mod tests_new_rules;
 
 pub use verses::*;
 pub use sandhi::*;
 pub use patterns::*;
 pub use engine::*;
+pub use loader::*;
 
 /// Re-export commonly used types
 pub mod prelude {
@@ -21,4 +24,5 @@ pub mod prelude {
     pub use crate::sandhi::{SandhiRule, SandhiCategory, Transformation};
     pub use crate::patterns::{LeftContext, RightContext};
     pub use crate::engine::RuleEngine;
+    pub use crate::loader::{load_rules_from_file, load_rules_or_builtin, LoadError};
 }

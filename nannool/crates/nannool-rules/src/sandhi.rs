@@ -5,7 +5,7 @@
 
 use serde::{Deserialize, Serialize};
 use tamil_unicode::{
-    grapheme::{get_graphemes, get_initial_grapheme, graphemes_to_string},
+    grapheme::{get_graphemes, graphemes_to_string},
     letters::*,
     transform::*,
 };
@@ -66,8 +66,19 @@ pub enum Transformation {
     ReplaceEnding { old: String, new: String },
     /// Replace beginning of second word
     ReplaceBeginning { old: String, new: String },
+    /// Insert the corresponding mellinam (nasal) of the second word's initial
+    InsertMellinam,
     /// Convert final consonant to corresponding mellinam
     FinalToMellinam,
+    /// Replace ending of first word and beginning of second word
+    ReplaceBoth {
+        left_old: String,
+        left_new: String,
+        right_old: String,
+        right_new: String,
+    },
+    /// Apply multiple transformations in sequence
+    Compound { steps: Vec<Transformation> },
 }
 
 impl Transformation {
@@ -127,23 +138,66 @@ impl Transformation {
                 }
             }
 
+            Transformation::InsertMellinam => {
+                // Insert the corresponding mellinam of word2's initial
+                // e.g., பூ + கொடி → பூங் + கொடி
+                let graphemes2 = get_graphemes(word2);
+                if let Some(initial_base) = graphemes2.first().and_then(|g| g.consonant_base()) {
+                    if let Some(target_mellinam) = vallinam_to_mellinam(initial_base) {
+                        return (format!("{}{}{}", word1, target_mellinam, '்'), word2.to_string());
+                    }
+                }
+                (word1.to_string(), word2.to_string())
+            }
+
             Transformation::FinalToMellinam => {
-                // Convert final vallinam consonant to corresponding mellinam
-                let graphemes = get_graphemes(word1);
-                if graphemes.is_empty() {
+                // Convert final consonant to the mellinam corresponding to word2's initial
+                // e.g., மரம் + காய் → மரங் + காய் (ம் → ங் because க's pair is ங்)
+                let graphemes1 = get_graphemes(word1);
+                let graphemes2 = get_graphemes(word2);
+
+                if graphemes1.is_empty() || graphemes2.is_empty() {
                     return (word1.to_string(), word2.to_string());
                 }
 
-                let last = graphemes.last().unwrap();
-                if let Some(base) = last.consonant_base() {
-                    if let Some(mellinam) = vallinam_to_mellinam(base) {
-                        let mut result = graphemes_to_string(&graphemes[..graphemes.len() - 1]);
-                        result.push(mellinam);
+                // Get word2's initial consonant to determine target mellinam
+                if let Some(initial_base) = graphemes2.first().and_then(|g| g.consonant_base()) {
+                    if let Some(target_mellinam) = vallinam_to_mellinam(initial_base) {
+                        let mut result = graphemes_to_string(&graphemes1[..graphemes1.len() - 1]);
+                        result.push(target_mellinam);
                         result.push('்');
                         return (result, word2.to_string());
                     }
                 }
                 (word1.to_string(), word2.to_string())
+            }
+
+            Transformation::ReplaceBoth { left_old, left_new, right_old, right_new } => {
+                let mut current_word1 = word1.to_string();
+                let mut current_word2 = word2.to_string();
+
+                if current_word1.ends_with(left_old) {
+                    let base = &current_word1[..current_word1.len() - left_old.len()];
+                    current_word1 = format!("{}{}", base, left_new);
+                }
+
+                if current_word2.starts_with(right_old) {
+                    let rest = &current_word2[right_old.len()..];
+                    current_word2 = format!("{}{}", right_new, rest);
+                }
+
+                (current_word1, current_word2)
+            }
+
+            Transformation::Compound { steps } => {
+                let mut current_word1 = word1.to_string();
+                let mut current_word2 = word2.to_string();
+                for t in steps {
+                    let (w1, w2) = t.apply(&current_word1, &current_word2);
+                    current_word1 = w1;
+                    current_word2 = w2;
+                }
+                (current_word1, current_word2)
             }
         }
     }
@@ -151,7 +205,142 @@ impl Transformation {
     /// Get the expected combined form
     pub fn expected_form(&self, word1: &str, word2: &str) -> String {
         let (w1, w2) = self.apply(word1, word2);
-        format!("{}{}", w1, w2)
+        combine_words(&w1, &w2)
+    }
+
+    /// Check if the transformation is already satisfied by the word pair
+    pub fn check_satisfied(&self, word1: &str, word2: &str) -> bool {
+        match self {
+            Transformation::NoChange => true,
+
+            Transformation::DoubleInitial => {
+                // Check if the second word already has doubled initial
+                // e.g., "பாட்டுப் பாடினான்" - the ப் should be doubled
+                let graphemes = get_graphemes(word2);
+                if graphemes.len() >= 2 {
+                    let first = &graphemes[0];
+                    let second = &graphemes[1];
+                    if first.ends_with_consonant() {
+                        if let (Some(base1), Some(base2)) =
+                            (first.consonant_base(), second.consonant_base())
+                        {
+                            return base1 == base2;
+                        }
+                    }
+                }
+                false
+            }
+
+            Transformation::Insert { text } => word1.ends_with(text),
+
+            Transformation::DeleteFromFirst { .. } => {
+                // If the rule still matches, it's not satisfied (it should have been deleted)
+                false
+            }
+
+            Transformation::DeleteFromSecond { .. } => false,
+
+            Transformation::ReplaceEnding { new, .. } => word1.ends_with(new),
+
+            Transformation::ReplaceBeginning { new, .. } => word2.starts_with(new),
+
+            Transformation::InsertMellinam => {
+                // Check if word1 ends with the corresponding mellinam for word2
+                let graphemes2 = get_graphemes(word2);
+                if let Some(first) = graphemes2.first() {
+                    if let Some(initial_base) = first.consonant_base() {
+                        if let Some(expected_mellinam) = vallinam_to_mellinam(initial_base) {
+                            let expected_suffix = format!("{}்", expected_mellinam);
+                            return word1.ends_with(&expected_suffix);
+                        }
+                    }
+                }
+                false
+            }
+
+            Transformation::FinalToMellinam => {
+                // Check if final consonant is the CORRESPONDING mellinam for word2's initial
+                let graphemes1 = get_graphemes(word1);
+                let graphemes2 = get_graphemes(word2);
+
+                if let (Some(last), Some(first)) = (graphemes1.last(), graphemes2.first()) {
+                    if let Some(initial_base) = first.consonant_base() {
+                        if let Some(expected_mellinam) = vallinam_to_mellinam(initial_base) {
+                            if let Some(final_base) = last.consonant_base() {
+                                return final_base == expected_mellinam;
+                            }
+                        }
+                    }
+                }
+                false
+            }
+
+            Transformation::ReplaceBoth { left_new, right_new, .. } => {
+                word1.ends_with(left_new) && word2.starts_with(right_new)
+            }
+
+            Transformation::Compound { steps } => {
+                // For compound transformations, they are satisfied if all steps are satisfied
+                // This is a simplification but works for most cases
+                steps.iter().all(|t| t.check_satisfied(word1, word2))
+            }
+        }
+    }
+}
+
+/// Word classes for rule predicates
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum WordClass {
+    /// பெயர்ச்சொல் - Noun
+    Noun,
+    /// வினைச்சொல் - Verb
+    Verb,
+    /// பெயரெச்சம் - Relative participle
+    RelativeParticiple,
+    /// வினையெச்சம் - Verbal participle
+    VerbalParticiple,
+    /// இடைச்சொல் - Particle
+    Particle,
+    /// உரிச்சொல் - Adjective/Adverb base
+    Urichol,
+    /// பிரதிப்பெயர் - Pronoun
+    Pronoun,
+    /// Any class
+    Any,
+}
+
+/// Linguistic relationship between two words
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
+#[serde(rename_all = "snake_case")]
+pub enum Relationship {
+    /// அல்வழி - Non-case relationship
+    #[default]
+    Alvazhi,
+    /// வேற்றுமை - Case relationship
+    Vetrumai,
+    /// Any relationship
+    Any,
+}
+
+impl WordClass {
+    /// Convert from nannool_morph::PartOfSpeech to WordClass
+    pub fn from_pos(pos: nannool_morph::PartOfSpeech) -> Self {
+        use nannool_morph::PartOfSpeech;
+        match pos {
+            PartOfSpeech::Noun => WordClass::Noun,
+            PartOfSpeech::Verb => WordClass::Verb,
+            PartOfSpeech::VerbalParticiple => WordClass::VerbalParticiple,
+            PartOfSpeech::RelativeParticiple => WordClass::RelativeParticiple,
+            PartOfSpeech::Adjective | PartOfSpeech::Adverb => WordClass::Urichol,
+            PartOfSpeech::Particle | PartOfSpeech::Simile => WordClass::Particle,
+            PartOfSpeech::Pronoun => WordClass::Pronoun,
+            PartOfSpeech::Demonstrative
+            | PartOfSpeech::Interrogative
+            | PartOfSpeech::Numeral => WordClass::Noun,
+            PartOfSpeech::Attributive => WordClass::RelativeParticiple,
+            PartOfSpeech::Unknown => WordClass::Any,
+        }
     }
 }
 
@@ -170,13 +359,27 @@ pub struct SandhiRule {
     /// English name of the rule
     pub english_name: String,
 
+    /// Relationship type this rule applies to
+    #[serde(default)]
+    pub relationship: Relationship,
+
     /// What the first word must end with
-    #[serde(flatten)]
     pub left_context: LeftContext,
 
     /// What the second word must start with
-    #[serde(flatten)]
     pub right_context: RightContext,
+
+    /// Word class constraints for the first word
+    #[serde(default)]
+    pub left_class: Vec<WordClass>,
+
+    /// Word class constraints for the second word
+    #[serde(default)]
+    pub right_class: Vec<WordClass>,
+
+    /// Morphological conditions (e.g., "causative", "plural")
+    #[serde(default)]
+    pub conditions: Vec<String>,
 
     /// What transformation should occur
     pub transformation: Transformation,
@@ -216,8 +419,12 @@ impl SandhiRule {
             nannool_verses,
             tamil_name: tamil_name.into(),
             english_name: english_name.into(),
+            relationship: Relationship::default(),
             left_context,
             right_context,
+            left_class: vec![],
+            right_class: vec![],
+            conditions: vec![],
             transformation,
             category,
             priority: 50,
@@ -251,41 +458,66 @@ impl SandhiRule {
         self.left_context.matches(word1) && self.right_context.matches(word2)
     }
 
+    /// Check if this rule applies with additional grammatical context
+    pub fn matches_with_context(
+        &self,
+        word1: &str,
+        word2: &str,
+        class1: Option<WordClass>,
+        class2: Option<WordClass>,
+        relationship: Relationship,
+        morph_conditions: &[String],
+    ) -> bool {
+        if !self.matches(word1, word2) {
+            return false;
+        }
+
+        // Check relationship constraint
+        // If caller passes Any, match all rules
+        // If rule is Any, match all relationships
+        // Otherwise, must match exactly
+        if relationship != Relationship::Any
+            && self.relationship != Relationship::Any
+            && self.relationship != relationship
+        {
+            return false;
+        }
+
+        // Check word class constraints
+        if !self.left_class.is_empty() {
+            if let Some(c) = class1 {
+                if !self.left_class.contains(&c) && !self.left_class.contains(&WordClass::Any) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        if !self.right_class.is_empty() {
+            if let Some(c) = class2 {
+                if !self.right_class.contains(&c) && !self.right_class.contains(&WordClass::Any) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        // Check morphological conditions
+        for condition in &self.conditions {
+            if !morph_conditions.contains(condition) {
+                return false;
+            }
+        }
+
+        true
+    }
+
     /// Check if the current form satisfies the rule
     /// Returns true if sandhi is correctly applied, false if there's a violation
     pub fn is_satisfied(&self, word1: &str, word2: &str) -> bool {
-        match &self.transformation {
-            Transformation::NoChange => {
-                // No change needed, always satisfied
-                true
-            }
-            Transformation::DoubleInitial => {
-                // Check if the second word already has doubled initial
-                // e.g., "பாட்டுப் பாடினான்" - the ப் should be doubled
-                let graphemes = get_graphemes(word2);
-                if graphemes.len() >= 2 {
-                    // Check if first grapheme is mei and second has same base
-                    let first = &graphemes[0];
-                    let second = &graphemes[1];
-                    if first.ends_with_consonant() {
-                        if let (Some(base1), Some(base2)) =
-                            (first.consonant_base(), second.consonant_base())
-                        {
-                            return base1 == base2;
-                        }
-                    }
-                }
-                false
-            }
-            Transformation::Insert { text } => {
-                // Check if first word ends with the inserted text
-                word1.ends_with(text)
-            }
-            _ => {
-                // For other transformations, we'd need more complex checking
-                true
-            }
-        }
+        self.transformation.check_satisfied(word1, word2)
     }
 
     /// Get the suggested correction if rule is violated
@@ -299,160 +531,25 @@ impl SandhiRule {
 
     /// Get the verse text for this rule
     pub fn verse_text(&self) -> String {
-        use crate::verses::key_verses;
-
-        // Return the verse text for known verses
-        match self.nannool_verses.first() {
-            Some(162) => key_verses::VERSE_162.to_string(),
-            Some(165) => key_verses::VERSE_165.to_string(),
-            Some(204) => key_verses::VERSE_204.to_string(),
-            Some(205) => key_verses::VERSE_205.to_string(),
-            Some(206) => key_verses::VERSE_206.to_string(),
-            Some(217) => key_verses::VERSE_217.to_string(),
-            _ => String::new(),
-        }
+        String::new()
     }
-}
-
-/// Get all built-in sandhi rules
-pub fn get_builtin_rules() -> Vec<SandhiRule> {
-    vec![
-        // Verse 165 - வல்லினம் மிகுதல் (Vallinam doubling)
-        SandhiRule::new(
-            "vallinam-miguthal-165",
-            "வல்லினம் மிகுதல்",
-            "Vallinam doubling",
-            vec![165],
-            LeftContext::AnyUyir,
-            RightContext::Vallinam,
-            Transformation::DoubleInitial,
-            SandhiCategory::Thondral,
-        )
-        .with_priority(50)
-        .with_description("Hard consonants (க ச ட த ப ற) double after vowel endings"),
-
-        // Verse 162 - உடம்படுமெய் யகரம் (Buffer consonant - ya)
-        SandhiRule::new(
-            "udampadumei-ya-162",
-            "உடம்படுமெய் - யகரம்",
-            "Buffer consonant - ya",
-            vec![162],
-            LeftContext::SpecificUyir { letters: vec!['இ', 'ஈ', 'ஐ'] },
-            RightContext::AnyUyir,
-            Transformation::Insert { text: "ய்".to_string() },
-            SandhiCategory::Thondral,
-        )
-        .with_priority(60)
-        .with_description("After இ/ஈ/ஐ, ய் appears before a following vowel"),
-
-        // Verse 162 - உடம்படுமெய் வகரம் (Buffer consonant - va)
-        SandhiRule::new(
-            "udampadumei-va-162",
-            "உடம்படுமெய் - வகரம்",
-            "Buffer consonant - va",
-            vec![162],
-            LeftContext::SpecificUyir { letters: vec!['அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ'] },
-            RightContext::AnyUyir,
-            Transformation::Insert { text: "வ்".to_string() },
-            SandhiCategory::Thondral,
-        )
-        .with_priority(60)
-        .with_description("After vowels other than இ/ஈ/ஐ/ஏ, வ் appears before a following vowel"),
-
-        // Verse 204 - மெய்யும் உயிரும் புணர்தல் (Mei-Uyir combination)
-        SandhiRule::new(
-            "mei-uyir-combination-204",
-            "மெய்யும் உயிரும் புணர்தல்",
-            "Consonant-vowel combination",
-            vec![204],
-            LeftContext::AnyMei,
-            RightContext::AnyUyir,
-            Transformation::NoChange, // They naturally combine
-            SandhiCategory::Iyalbu,
-        )
-        .with_priority(100)
-        .with_description("When a vowel follows a consonant, they naturally combine"),
-
-        // Verse 205 - ஒற்று இரட்டல் (Consonant doubling after kuril)
-        SandhiRule::new(
-            "otru-irattal-205",
-            "ஒற்று இரட்டல்",
-            "Consonant doubling",
-            vec![205],
-            LeftContext::KurilPlusMei,
-            RightContext::AnyUyir,
-            Transformation::DoubleInitial, // The final consonant doubles
-            SandhiCategory::Thondral,
-        )
-        .with_priority(70)
-        .with_description("A consonant after a single short vowel doubles when a vowel follows"),
-
-        // Verse 206 - குற்றியலுகரப் புணர்ச்சி
-        SandhiRule::new(
-            "kutriyalukaram-206",
-            "குற்றியலுகரப் புணர்ச்சி",
-            "Kutriyalukaram sandhi",
-            vec![206],
-            LeftContext::SpecificUyir { letters: vec!['உ'] }, // Short உ
-            RightContext::Vallinam,
-            Transformation::DoubleInitial,
-            SandhiCategory::Thondral,
-        )
-        .with_priority(65)
-        .with_description("Kutriyalukaram (short உ) followed by vallinam - the vallinam doubles"),
-
-        // Verse 217 - ம் + வல்லினம் → corresponding mellinam
-        SandhiRule::new(
-            "mam-vallinam-217",
-            "மகர இறுதி வல்லின புணர்ச்சி",
-            "Mam + vallinam sandhi",
-            vec![217],
-            LeftContext::SpecificMei { letters: vec!["ம்".to_string()] },
-            RightContext::Vallinam,
-            Transformation::FinalToMellinam,
-            SandhiCategory::Thirithal,
-        )
-        .with_priority(55)
-        .with_description("When ம் ending meets vallinam beginning, ம் becomes the corresponding mellinam"),
-
-        // Additional common rules
-
-        // Aaytham before vallinam
-        SandhiRule::new(
-            "aaytham-vallinam",
-            "ஆய்த வல்லினம்",
-            "Aaytham before vallinam",
-            vec![],
-            LeftContext::SpecificWord { words: vec!["அஃது".to_string()] },
-            RightContext::Vallinam,
-            Transformation::NoChange,
-            SandhiCategory::Iyalbu,
-        )
-        .with_priority(80)
-        .with_description("Aaytham (ஃ) before vallinam follows special rules"),
-
-        // ன் + த → ன்ற (retroflex assimilation)
-        SandhiRule::new(
-            "retroflex-assimilation",
-            "ன்-த புணர்ச்சி",
-            "Retroflex assimilation",
-            vec![220],
-            LeftContext::SpecificMei { letters: vec!["ன்".to_string()] },
-            RightContext::SpecificMei { letters: vec!["த்".to_string()] },
-            Transformation::ReplaceBeginning {
-                old: "த".to_string(),
-                new: "ற".to_string()
-            },
-            SandhiCategory::Thirithal,
-        )
-        .with_priority(75)
-        .with_description("When ன் meets த, த becomes ற"),
-    ]
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_transformation_insert_mellinam() {
+        let trans = Transformation::InsertMellinam;
+        let (w1, w2) = trans.apply("பூ", "கொடி");
+        assert_eq!(w1, "பூங்");
+        assert_eq!(w2, "கொடி");
+
+        let (w1, w2) = trans.apply("பூ", "சோலை");
+        assert_eq!(w1, "பூஞ்");
+        assert_eq!(w2, "சோலை");
+    }
 
     #[test]
     fn test_transformation_double_initial() {
@@ -471,8 +568,85 @@ mod tests {
     }
 
     #[test]
+    fn test_transformation_replace_both() {
+        let trans = Transformation::ReplaceBoth {
+            left_old: "ல்".to_string(),
+            left_new: "ற்".to_string(),
+            right_old: "த".to_string(),
+            right_new: "ற".to_string(),
+        };
+        let (w1, w2) = trans.apply("கல்", "தீது");
+        assert_eq!(w1, "கற்");
+        assert_eq!(w2, "றீது");
+    }
+
+    #[test]
+    fn test_transformation_compound() {
+        let trans = Transformation::Compound {
+            steps: vec![
+                Transformation::ReplaceEnding { old: "ல்".to_string(), new: "ற்".to_string() },
+                Transformation::ReplaceBeginning { old: "த".to_string(), new: "ற".to_string() },
+            ],
+        };
+        let (w1, w2) = trans.apply("கல்", "தீது");
+        assert_eq!(w1, "கற்");
+        assert_eq!(w2, "றீது");
+    }
+
+    #[test]
+    fn test_transformation_check_satisfied() {
+        // DoubleInitial
+        let trans = Transformation::DoubleInitial;
+        assert!(!trans.check_satisfied("பாட்டு", "பாடினான்"));
+        assert!(trans.check_satisfied("பாட்டு", "ப்பாடினான்"));
+
+        // Insert
+        let trans = Transformation::Insert { text: "ய்".to_string() };
+        assert!(!trans.check_satisfied("படி", "அழகு"));
+        assert!(trans.check_satisfied("படிய்", "அழகு"));
+
+        // ReplaceEnding
+        let trans = Transformation::ReplaceEnding { old: "ம்".to_string(), new: "ங்".to_string() };
+        assert!(!trans.check_satisfied("மரம்", "காய்"));
+        assert!(trans.check_satisfied("மரங்", "காய்"));
+
+        // ReplaceBeginning
+        let trans = Transformation::ReplaceBeginning { old: "த".to_string(), new: "ற".to_string() };
+        assert!(!trans.check_satisfied("என்", "தந்தை"));
+        assert!(trans.check_satisfied("என்", "றந்தை"));
+
+        // ReplaceBoth
+        let trans = Transformation::ReplaceBoth {
+            left_old: "ல்".to_string(),
+            left_new: "ற்".to_string(),
+            right_old: "த".to_string(),
+            right_new: "ற".to_string(),
+        };
+        assert!(!trans.check_satisfied("கல்", "தீது"));
+        assert!(trans.check_satisfied("கற்", "றீது"));
+
+        // FinalToMellinam
+        let trans = Transformation::FinalToMellinam;
+        assert!(!trans.check_satisfied("மரம்", "காய்"));
+        assert!(trans.check_satisfied("மரங்", "காய்"));
+        assert!(!trans.check_satisfied("மரம்", "தலை"));
+        assert!(trans.check_satisfied("மரந்", "தலை"));
+
+        // Compound
+        let trans = Transformation::Compound {
+            steps: vec![
+                Transformation::ReplaceEnding { old: "ல்".to_string(), new: "ற்".to_string() },
+                Transformation::ReplaceBeginning { old: "த".to_string(), new: "ற".to_string() },
+            ],
+        };
+        assert!(!trans.check_satisfied("கல்", "தீது"));
+        assert!(trans.check_satisfied("கற்", "றீது"));
+    }
+
+    #[test]
     fn test_vallinam_rule_matches() {
-        let rules = get_builtin_rules();
+        let engine = crate::engine::RuleEngine::new();
+        let rules = engine.rules();
         let vallinam_rule = rules.iter()
             .find(|r| r.id == "vallinam-miguthal-165")
             .unwrap();
@@ -484,7 +658,8 @@ mod tests {
 
     #[test]
     fn test_vallinam_rule_satisfaction() {
-        let rules = get_builtin_rules();
+        let engine = crate::engine::RuleEngine::new();
+        let rules = engine.rules();
         let vallinam_rule = rules.iter()
             .find(|r| r.id == "vallinam-miguthal-165")
             .unwrap();
@@ -498,7 +673,8 @@ mod tests {
 
     #[test]
     fn test_suggest_fix() {
-        let rules = get_builtin_rules();
+        let engine = crate::engine::RuleEngine::new();
+        let rules = engine.rules();
         let vallinam_rule = rules.iter()
             .find(|r| r.id == "vallinam-miguthal-165")
             .unwrap();
@@ -509,7 +685,8 @@ mod tests {
 
     #[test]
     fn test_udampadumei_ya() {
-        let rules = get_builtin_rules();
+        let engine = crate::engine::RuleEngine::new();
+        let rules = engine.rules();
         let ya_rule = rules.iter()
             .find(|r| r.id == "udampadumei-ya-162")
             .unwrap();
@@ -519,9 +696,22 @@ mod tests {
     }
 
     #[test]
-    fn test_builtin_rules_count() {
-        let rules = get_builtin_rules();
+    fn test_rules_count() {
+        let engine = crate::engine::RuleEngine::new();
+        let rules = engine.rules();
         assert!(!rules.is_empty());
-        assert!(rules.len() >= 8); // We have at least 8 rules defined
+        // Should have many rules from TOML
+        assert!(rules.len() >= 50, "Expected at least 50 rules, got {}", rules.len());
+    }
+
+    #[test]
+    fn test_rule_ids_unique() {
+        let engine = crate::engine::RuleEngine::new();
+        let rules = engine.rules();
+        let mut ids: Vec<&str> = rules.iter().map(|r| r.id.as_str()).collect();
+        ids.sort();
+        let unique_count = ids.len();
+        ids.dedup();
+        assert_eq!(ids.len(), unique_count, "Rules should have unique IDs");
     }
 }

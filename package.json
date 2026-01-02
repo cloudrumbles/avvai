@@ -2,13 +2,18 @@
   "name": "avvai",
   "private": true,
   "scripts": {
+    "dev": "vite --config src/vite.config.ts src",
     "styleguide": "vite --config mockups/style-guide/vite.config.ts",
-    "typecheck": "tsgo"
+    "typecheck": "tsgo",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
-    "@typescript/native-preview": "latest",
     "@biomejs/biome": "^2.3.10",
     "@types/bun": "latest",
+    "@typescript/native-preview": "latest",
+    "drizzle-kit": "^0.31.8",
     "vite": "^7.3.0",
     "vite-plugin-solid": "^2.11.10"
   },
@@ -36,6 +41,7 @@
     "@vanilla-extract/recipes": "^0.5.7",
     "@vanilla-extract/sprinkles": "^1.6.5",
     "@vanilla-extract/vite-plugin": "^5.1.4",
+    "drizzle-orm": "^0.45.1",
     "solid-js": "^1.9.10"
   }
 }

@@ -3,14 +3,16 @@ name = "nannool-morph"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-description = "Tamil morphological analyzer - word root extraction and grammatical feature analysis"
+description = "Tamil morphological analyzer using ThamizhiMorph FST models"
 
 [dependencies]
-tamil-unicode.workspace = true
-nannool-rules.workspace = true
 serde.workspace = true
 thiserror.workspace = true
-fst.workspace = true
+libc = "0.2"
+tempfile = "3.24.0"
+
+[build-dependencies]
+pkg-config = "0.3"
 
 [dev-dependencies]
 pretty_assertions.workspace = true

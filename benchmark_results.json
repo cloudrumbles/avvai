@@ -1,0 +1,140 @@
+[
+  {
+    "name": "check_file_small",
+    "avg_ms": 4.034761599905323,
+    "std_dev_ms": 0.24503733928007868,
+    "min_ms": 3.7641840026481077,
+    "max_ms": 4.44825500017032,
+    "words_per_sec": 5452.614598224648
+  },
+  {
+    "name": "check_file_medium",
+    "avg_ms": 23.461249199317535,
+    "std_dev_ms": 0.40199129609874423,
+    "min_ms": 23.068455993779935,
+    "max_ms": 24.424668001302052,
+    "words_per_sec": 18754.32958671268
+  },
+  {
+    "name": "check_file_large",
+    "avg_ms": 314.11708060186356,
+    "std_dev_ms": 47.88744054563708,
+    "min_ms": 262.49357100459747,
+    "max_ms": 390.3823319997173,
+    "words_per_sec": 14007.515896841353
+  },
+  {
+    "name": "check_file_small_morph",
+    "avg_ms": 13.972846665031588,
+    "std_dev_ms": 0.4663818672058298,
+    "min_ms": 13.502227993740235,
+    "max_ms": 14.434872995479964,
+    "words_per_sec": 1574.4823175550296
+  },
+  {
+    "name": "check_file_medium_morph",
+    "avg_ms": 32.596217999525834,
+    "std_dev_ms": 0.9732840913842211,
+    "min_ms": 31.49395099899266,
+    "max_ms": 33.337187000142876,
+    "words_per_sec": 13498.498506986318
+  },
+  {
+    "name": "check_text_short",
+    "avg_ms": 3.3942543996090535,
+    "std_dev_ms": 1.058060683670699,
+    "min_ms": 2.536669999244623,
+    "max_ms": 6.2025279985391535
+  },
+  {
+    "name": "analyze_\u0bb5\u0ba8\u0bcd\u0ba4\u0bbe\u0ba9\u0bcd",
+    "avg_ms": 16.28091470047366,
+    "std_dev_ms": 0.6738606484250032,
+    "min_ms": 15.555283003777731,
+    "max_ms": 17.570110998349264
+  },
+  {
+    "name": "analyze_\u0bae\u0bb0\u0bae\u0bcd",
+    "avg_ms": 16.035966497292975,
+    "std_dev_ms": 0.4928561156222706,
+    "min_ms": 15.353026996308472,
+    "max_ms": 16.749300993978977
+  },
+  {
+    "name": "analyze_\u0baa\u0bc2\u0ba9\u0bc8",
+    "avg_ms": 16.221513799973764,
+    "std_dev_ms": 0.5882768511170579,
+    "min_ms": 15.55542999994941,
+    "max_ms": 17.570789001183584
+  },
+  {
+    "name": "analyze_\u0b93\u0b9f\u0bbf\u0ba9\u0bbe\u0ba9\u0bcd",
+    "avg_ms": 15.58852069938439,
+    "std_dev_ms": 0.7549068982479163,
+    "min_ms": 14.468178000242915,
+    "max_ms": 16.839653995702974
+  },
+  {
+    "name": "analyze_\u0baa\u0bc6\u0bb0\u0bbf\u0baf",
+    "avg_ms": 15.92782289881143,
+    "std_dev_ms": 0.35717296742475546,
+    "min_ms": 15.198945002339315,
+    "max_ms": 16.567862992815208
+  },
+  {
+    "name": "pair_\u0baa\u0bbe\u0b9f\u0bcd\u0b9f\u0bc1_\u0baa\u0bbe\u0b9f\u0bbf\u0ba9\u0bbe\u0ba9\u0bcd",
+    "avg_ms": 0.8829562990285922,
+    "std_dev_ms": 0.036069616424422156,
+    "min_ms": 0.8453319969703443,
+    "max_ms": 0.9683229945949279
+  },
+  {
+    "name": "pair_\u0bb5\u0bc0\u0b9f\u0bc1_\u0b95\u0b9f\u0bcd\u0b9f\u0bbf\u0ba9\u0bbe\u0ba9\u0bcd",
+    "avg_ms": 0.991649000934558,
+    "std_dev_ms": 0.07035280031648203,
+    "min_ms": 0.8986559987533838,
+    "max_ms": 1.1426420023781247
+  },
+  {
+    "name": "pair_\u0ba4\u0bae\u0bbf\u0bb4\u0bcd_\u0bae\u0bca\u0bb4\u0bbf",
+    "avg_ms": 0.9247552021406591,
+    "std_dev_ms": 0.13718995508564333,
+    "min_ms": 0.8102010033326223,
+    "max_ms": 1.1694050044752657
+  },
+  {
+    "name": "rules_list",
+    "avg_ms": 2.7289208002912346,
+    "std_dev_ms": 0.26733131890816325,
+    "min_ms": 2.4517210040357895,
+    "max_ms": 3.3454760050517507
+  },
+  {
+    "name": "explain_vallinam-miguthal-165",
+    "avg_ms": 2.604655799950706,
+    "std_dev_ms": 0.21947129810484206,
+    "min_ms": 2.3110459951567464,
+    "max_ms": 2.946403001260478
+  },
+  {
+    "name": "explain_kutriyalukaram-206",
+    "avg_ms": 2.687292900372995,
+    "std_dev_ms": 0.3977599883428427,
+    "min_ms": 2.306668997334782,
+    "max_ms": 3.662282004370354
+  },
+  {
+    "name": "paradigm_noun_\u0bae\u0bb0\u0bae\u0bcd",
+    "avg_ms": 7.72464600110349,
+    "std_dev_ms": 2.8834425764775737,
+    "min_ms": 5.9954030002700165,
+    "max_ms": 11.053315000026487
+  },
+  {
+    "name": "inflect_noun_\u0bae\u0bb0\u0bae\u0bcd_acc",
+    "avg_ms": 6.101963665666214,
+    "std_dev_ms": 0.1627707681266278,
+    "min_ms": 5.937920999713242,
+    "max_ms": 6.2634319983772
+  }
+]

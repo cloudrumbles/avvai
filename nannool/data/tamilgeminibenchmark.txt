@@ -1,0 +1,1611 @@
+[
+  {
+    "dataset_info": {
+      "language": "Tamil",
+      "total_sentences": 200,
+      "categories": ["Subject-Verb Agreement", "Tense Mismatch", "Case Marker Errors", "Number Mismatch", "Gender Mismatch", "Valid Syntax"]
+    },
+    "sentences": [
+      {
+        "id": 1,
+        "text": "அவன் நேற்று பள்ளிக்குச் சென்றாள்.",
+        "label": "incorrect",
+        "correction": "அவன் நேற்று பள்ளிக்குச் சென்றான்.",
+        "error_type": "Gender Mismatch",
+        "diagnosis": "Subject 'அவன்' (He) is masculine, but verb ending 'ஆள்' implies feminine."
+      },
+      {
+        "id": 2,
+        "text": "நான் உணவு சாப்பிட்டான்.",
+        "label": "incorrect",
+        "correction": "நான் உணவு சாப்பிட்டேன்.",
+        "error_type": "Person Mismatch",
+        "diagnosis": "Subject 'நான்' (I) is 1st person, verb 'சாப்பிட்டான்' is 3rd person."
+      },
+      {
+        "id": 3,
+        "text": "அவர்கள் மைதானத்தில் விளையாடுகிறது.",
+        "label": "incorrect",
+        "correction": "அவர்கள் மைதானத்தில் விளையாடுகிறார்கள்.",
+        "error_type": "Number Mismatch",
+        "diagnosis": "Subject 'அவர்கள்' (They) is plural/rational, verb 'விளையாடுகிறது' is singular/neuter."
+      },
+      {
+        "id": 4,
+        "text": "நாளை நான் ஊருக்குப் போனேன்.",
+        "label": "incorrect",
+        "correction": "நாளை நான் ஊருக்குப் போவேன்.",
+        "error_type": "Tense Mismatch",
+        "diagnosis": "Time context 'நாளை' (Tomorrow) requires future tense, but 'போனேன்' is past tense."
+      },
+      {
+        "id": 5,
+        "text": "குழந்தைகள் பாடம் படித்தான்.",
+        "label": "incorrect",
+        "correction": "குழந்தைகள் பாடம் படித்தார்கள்.",
+        "error_type": "Number Mismatch",
+        "diagnosis": "Subject 'குழந்தைகள்' is plural, verb 'படித்தான்' is singular."
+      },
+      {
+        "id": 6,
+        "text": "ஆசிரியர் வகுப்பிற்கு வந்தார்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 7,
+        "text": "என்னுடைய புத்தகம் மேஜையில் உள்ளது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 8,
+        "text": "நீ எப்போது வருவாய்?",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 9,
+        "text": "சீதா அழகாகப் பாடினாள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 10,
+        "text": "நாங்கள் நேற்று படம் பார்த்தோம்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 11,
+        "text": "பசு புல் மேய்ந்தார்கள்.",
+        "label": "incorrect",
+        "correction": "பசு புல் மேய்ந்தது.",
+        "error_type": "Rational/Irrational Mismatch",
+        "diagnosis": "Subject 'பசு' (Cow) is irrational (Ahrinai), verb suffix 'ஆர்கள்' is for humans (Uyarthinai)."
+      },
+      {
+        "id": 12,
+        "text": "கண்ணன் கடைக்கு சென்றது.",
+        "label": "incorrect",
+        "correction": "கண்ணன் கடைக்கு சென்றான்.",
+        "error_type": "Rational/Irrational Mismatch",
+        "diagnosis": "Subject 'கண்ணன்' is human, verb 'சென்றது' implies an animal or object."
+      },
+      {
+        "id": 13,
+        "text": "என் அப்பா எனக்கு பேனா வாங்கினார்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 14,
+        "text": "குமார் மிகவும் நல்லவன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 15,
+        "text": "அவள் நன்றாக நடனம் ஆடுகிறான்.",
+        "label": "incorrect",
+        "correction": "அவள் நன்றாக நடனம் ஆடுகிறாள்.",
+        "error_type": "Gender Mismatch",
+        "diagnosis": "Subject 'அவள்' (She) requires feminine suffix 'ஆள்', not masculine 'ஆன்'."
+      },
+      {
+        "id": 16,
+        "text": "நீங்கள் எங்கே செல்கிறாய்?",
+        "label": "incorrect",
+        "correction": "நீங்கள் எங்கே செல்கிறீர்கள்?",
+        "error_type": "Honorific Mismatch",
+        "diagnosis": "Subject 'நீங்கள்' (You - plural/respect) requires suffix 'ஈர்கள்', not singular 'ஆய்'."
+      },
+      {
+        "id": 17,
+        "text": "பறவைகள் வானில் பறந்தது.",
+        "label": "incorrect",
+        "correction": "பறவைகள் வானில் பறந்தன.",
+        "error_type": "Number Mismatch (Ahrinai)",
+        "diagnosis": "Plural irrational subject 'பறவைகள்' requires 'அன' suffix (பறந்தன), not singular 'அது'."
+      },
+      {
+        "id": 18,
+        "text": "சூரியன் கிழக்கே உதிக்கும்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 19,
+        "text": "மழை பெய்தால் பயிர்கள் வளரும்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 20,
+        "text": "நான் என் நண்பனைச் சந்தித்தேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 21,
+        "text": "ராமன் சீதையை அடித்தது.",
+        "label": "incorrect",
+        "correction": "ராமன் சீதையை அடித்தான்.",
+        "error_type": "Gender/Rational Mismatch",
+        "diagnosis": "Subject 'ராமன்' is human male, verb 'அடித்தது' is neuter singular."
+      },
+      {
+        "id": 22,
+        "text": "நேற்று மழை பெய்யும்.",
+        "label": "incorrect",
+        "correction": "நேற்று மழை பெய்தது.",
+        "error_type": "Tense Mismatch",
+        "diagnosis": "'நேற்று' (Yesterday) conflicts with future tense 'பெய்யும்'."
+      },
+      {
+        "id": 23,
+        "text": "அவன் அவளுக்கு பரிசு கொடுத்தான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 24,
+        "text": "இந்த புத்தகம் மிகவும் பயனுள்ளது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 25,
+        "text": "தம்பி வேகமாக ஓடினாள்.",
+        "label": "incorrect",
+        "correction": "தம்பி வேகமாக ஓடினான்.",
+        "error_type": "Gender Mismatch",
+        "diagnosis": "'தம்பி' (Younger brother) is male, verb suffix 'ஆள்' is female."
+      },
+      {
+        "id": 26,
+        "text": "அம்மா சமையல் செய்தார்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 27,
+        "text": "நீ பாடம் படிக்கிறீர்கள்.",
+        "label": "incorrect",
+        "correction": "நீ பாடம் படிக்கிறாய்.",
+        "error_type": "Number/Honorific Mismatch",
+        "diagnosis": "'நீ' (singular You) matches with 'ஆய்', not plural 'ஈர்கள்'."
+      },
+      {
+        "id": 28,
+        "text": "யானை மெதுவாக நடந்தது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 29,
+        "text": "அவர்கள் நாளை வருவார்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 30,
+        "text": "பூக்கள் மலர்ந்தது.",
+        "label": "incorrect",
+        "correction": "பூக்கள் மலர்ந்தன.",
+        "error_type": "Number Mismatch (Ahrinai)",
+        "diagnosis": "'பூக்கள்' (Flowers - Plural) requires 'மலர்ந்தன'."
+      },
+      {
+        "id": 31,
+        "text": "நான் மதுரைக்குச் செல்கிறேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 32,
+        "text": "மருத்துவர் நோயாளியை பரிசோதித்தார்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 33,
+        "text": "அவள் பள்ளிக்கு வரவில்லை.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 34,
+        "text": "தங்கள் பெயர் என்ன?",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 35,
+        "text": "நான் அவனை பார்த்தான்.",
+        "label": "incorrect",
+        "correction": "நான் அவனைப் பார்த்தேன்.",
+        "error_type": "Person Mismatch",
+        "diagnosis": "Subject 'நான்' requires 'ஏன்' ending, not 'ஆன்'."
+      },
+      {
+        "id": 36,
+        "text": "அவன் அவனிடம் பேசினேன்.",
+        "label": "incorrect",
+        "correction": "அவன் அவனிடம் பேசினான்.",
+        "error_type": "Person Mismatch",
+        "diagnosis": "Subject 'அவன்' requires 'ஆன்' ending, not 'ஏன்' (which is for 'I')."
+      },
+      {
+        "id": 37,
+        "text": "நாய் வேகமாக ஓடியது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 38,
+        "text": "என் நண்பர்கள் என்னுடன் விளையாடினார்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 39,
+        "text": "அவன் கடைக்கு போனார்கள்.",
+        "label": "incorrect",
+        "correction": "அவன் கடைக்கு போனான்.",
+        "error_type": "Number Mismatch",
+        "diagnosis": "Singular subject 'அவன்' cannot take plural suffix 'ஆர்கள்'."
+      },
+      {
+        "id": 40,
+        "text": "நாங்கள் நாளை வருவோம்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 41,
+        "text": "என் பேனா காணவில்லை.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 42,
+        "text": "நீங்கள் உட்காருங்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 43,
+        "text": "அவள் நன்றாகப் பாடுவாள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 44,
+        "text": "குதிரை வேகமாக ஓடுகின்றனர்.",
+        "label": "incorrect",
+        "correction": "குதிரை வேகமாக ஓடுகிறது.",
+        "error_type": "Rational/Irrational Mismatch",
+        "diagnosis": "'ஓடுகின்றனர்' implies human plural, 'குதிரை' is animal singular."
+      },
+      {
+        "id": 45,
+        "text": "மாணவர்கள் தேர்வு எழுதினார்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 46,
+        "text": "நீ உண்மையைச் சொன்னாய்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 47,
+        "text": "ரவி நேற்று வந்தான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 48,
+        "text": "நாங்கள் கிரிக்கெட் விளையாடினேன்.",
+        "label": "incorrect",
+        "correction": "நாங்கள் கிரிக்கெட் விளையாடினோம்.",
+        "error_type": "Number Mismatch (1st Person)",
+        "diagnosis": "'நாங்கள்' (We) requires 'ஓம்' suffix, 'ஏன்' is for 'நான்' (I)."
+      },
+      {
+        "id": 49,
+        "text": "அவன் என்னை அடித்தார்.",
+        "label": "incorrect",
+        "correction": "அவன் என்னை அடித்தான்.",
+        "error_type": "Number Mismatch",
+        "diagnosis": "'அவன்' is singular non-honorific, 'அடித்தார்' is honorific/plural. Use 'அடித்தான்' unless context implies respect for 'him'."
+      },
+      {
+        "id": 50,
+        "text": "பெண்கள் கோலம் போட்டார்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 51,
+        "text": "நான் அவனுக்கு உதவி செய்தேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 52,
+        "text": "ராமு பள்ளிக்கு போவான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 53,
+        "text": "அவன் கடிதம் எழுதினாள்.",
+        "label": "incorrect",
+        "correction": "அவன் கடிதம் எழுதினான்.",
+        "error_type": "Gender Mismatch",
+        "diagnosis": "Male subject 'அவன்' requires male suffix 'ஆன்'."
+      },
+      {
+        "id": 54,
+        "text": "மரம் கீழே விழுந்தார்கள்.",
+        "label": "incorrect",
+        "correction": "மரம் கீழே விழுந்தது.",
+        "error_type": "Rational/Irrational Mismatch",
+        "diagnosis": "Inanimate object 'மரம்' cannot take human plural suffix 'ஆர்கள்'."
+      },
+      {
+        "id": 55,
+        "text": "பறவை வானத்தில் பறக்கிறான்.",
+        "label": "incorrect",
+        "correction": "பறவை வானத்தில் பறக்கிறது.",
+        "error_type": "Rational/Irrational Mismatch",
+        "diagnosis": "Animal 'பறவை' cannot take human male suffix 'ஆன்'."
+      },
+      {
+        "id": 56,
+        "text": "நான் காலையில் எழுந்தேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 57,
+        "text": "குழந்தை அழுது கொண்டிருக்கிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 58,
+        "text": "அவர்கள் நன்றாக வேலை செய்தார்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 59,
+        "text": "நீ எப்போது தூங்குவாய்?",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 60,
+        "text": "அவள் ஒரு புத்தகம் வாசித்தான்.",
+        "label": "incorrect",
+        "correction": "அவள் ஒரு புத்தகம் வாசித்தாள்.",
+        "error_type": "Gender Mismatch",
+        "diagnosis": "'அவள்' (She) needs 'ஆள்' suffix."
+      },
+      {
+        "id": 61,
+        "text": "நான் நாளை வருவேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 62,
+        "text": "அவர்கள் உணவு உண்டனர்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 63,
+        "text": "பையன்கள் மைதானத்தில் ஓடினான்.",
+        "label": "incorrect",
+        "correction": "பையன்கள் மைதானத்தில் ஓடினார்கள்.",
+        "error_type": "Number Mismatch",
+        "diagnosis": "Plural 'பையன்கள்' requires plural suffix 'ஆர்கள்'."
+      },
+      {
+        "id": 64,
+        "text": "ஆசிரியர்கள் பாடம் நடத்தினார்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 65,
+        "text": "என் தங்கை அழகாக வரைகிறாள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 66,
+        "text": "நேற்று காற்று வீசியது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 67,
+        "text": "நான் பால் குடிக்கிறேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 68,
+        "text": "அவர் ஒரு நல்ல மனிதன்.",
+        "label": "incorrect",
+        "correction": "அவர் ஒரு நல்ல மனிதர்.",
+        "error_type": "Honorific Mismatch",
+        "diagnosis": "'அவர்' (Honorific He) expects 'ர்' ending (மனிதர்), not 'ன்' (மனிதன்)."
+      },
+      {
+        "id": 69,
+        "text": "மாடுகள் புல் மேய்ந்தது.",
+        "label": "incorrect",
+        "correction": "மாடுகள் புல் மேய்ந்தன.",
+        "error_type": "Number Mismatch (Ahrinai)",
+        "diagnosis": "Plural animals 'மாடுகள்' require 'அன' suffix."
+      },
+      {
+        "id": 70,
+        "text": "நான் புத்தகம் படிப்பேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 71,
+        "text": "அவன் பள்ளியில் படிக்கிறாள்.",
+        "label": "incorrect",
+        "correction": "அவன் பள்ளியில் படிக்கிறான்.",
+        "error_type": "Gender Mismatch",
+        "diagnosis": "Mismatch between masculine subject and feminine verb."
+      },
+      {
+        "id": 72,
+        "text": "நான் நாளைக்கு வந்தேன்.",
+        "label": "incorrect",
+        "correction": "நான் நாளைக்கு வருவேன்.",
+        "error_type": "Tense Mismatch",
+        "diagnosis": "Future indicator 'நாளைக்கு' conflicts with past tense 'வந்தேன்'."
+      },
+      {
+        "id": 73,
+        "text": "அவள் நேற்று பாடுவாள்.",
+        "label": "incorrect",
+        "correction": "அவள் நேற்று பாடினாள்.",
+        "error_type": "Tense Mismatch",
+        "diagnosis": "Past indicator 'நேற்று' conflicts with future tense 'பாடுவாள்'."
+      },
+      {
+        "id": 74,
+        "text": "அம்மா எனக்கு சாப்பாடு கொடுத்தார்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 75,
+        "text": "நாங்கள் கோவிலுக்குச் சென்றோம்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 76,
+        "text": "நீங்கள் நேற்று எங்கே போனீர்கள்?",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 77,
+        "text": "அவன் என் நண்பன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 78,
+        "text": "நீ நன்றாகப் படிக்கிறாய்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 79,
+        "text": "அவர்கள் பேசிக்கொண்டு இருக்கிறார்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 80,
+        "text": "புலிகள் காட்டில் வாழ்ந்தது.",
+        "label": "incorrect",
+        "correction": "புலிகள் காட்டில் வாழ்ந்தன.",
+        "error_type": "Number Mismatch (Ahrinai)",
+        "diagnosis": "Plural animals need 'அன' suffix."
+      },
+      {
+        "id": 81,
+        "text": "நான் அவனை அடித்தது.",
+        "label": "incorrect",
+        "correction": "நான் அவனை அடித்தேன்.",
+        "error_type": "Person/Rational Mismatch",
+        "diagnosis": "Subject 'நான்' requires 'ஏன்', verb 'அடித்தது' is neuter singular."
+      },
+      {
+        "id": 82,
+        "text": "அவர்கள் வேலை செய்கிறான்.",
+        "label": "incorrect",
+        "correction": "அவர்கள் வேலை செய்கிறார்கள்.",
+        "error_type": "Number Mismatch",
+        "diagnosis": "Plural 'அவர்கள்' does not match singular 'செய்கிறான்'."
+      },
+      {
+        "id": 83,
+        "text": "என் பெயர் ராஜா.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 84,
+        "text": "வானம் நீல நிறமாக உள்ளது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 85,
+        "text": "குழந்தை சிரித்தது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 86,
+        "text": "நீங்கள் என்ன சாப்பிட்டாய்?",
+        "label": "incorrect",
+        "correction": "நீங்கள் என்ன சாப்பிட்டீர்கள்?",
+        "error_type": "Honorific Mismatch",
+        "diagnosis": "'நீங்கள்' requires 'ஈர்கள்' suffix."
+      },
+      {
+        "id": 87,
+        "text": "நாங்கள் படம் பார்த்தேன்.",
+        "label": "incorrect",
+        "correction": "நாங்கள் படம் பார்த்தோம்.",
+        "error_type": "Number Mismatch",
+        "diagnosis": "'நாங்கள்' (We) needs 'ஓம்' suffix."
+      },
+      {
+        "id": 88,
+        "text": "அவர் ஒரு ஆசிரியர்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 89,
+        "text": "பசு பால் கொடுக்கிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 90,
+        "text": "அவன் மதுரைக்கு செல்கிறாள்.",
+        "label": "incorrect",
+        "correction": "அவன் மதுரைக்கு செல்கிறான்.",
+        "error_type": "Gender Mismatch",
+        "diagnosis": "Masculine subject with feminine verb."
+      },
+      {
+        "id": 91,
+        "text": "நான் அவளை பார்த்தான்.",
+        "label": "incorrect",
+        "correction": "நான் அவளை பார்த்தேன்.",
+        "error_type": "Person Mismatch",
+        "diagnosis": "1st person subject with 3rd person verb."
+      },
+      {
+        "id": 92,
+        "text": "அவன் ஒரு நல்ல மாணவன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 93,
+        "text": "கடிகாரம் ஓடுகிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 94,
+        "text": "அவள் நாளை வருவாள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 95,
+        "text": "அவர்கள் கிரிக்கெட் விளையாடுகிறான்.",
+        "label": "incorrect",
+        "correction": "அவர்கள் கிரிக்கெட் விளையாடுகிறார்கள்.",
+        "error_type": "Number Mismatch",
+        "diagnosis": "Plural subject with singular verb."
+      },
+      {
+        "id": 96,
+        "text": "நான் கடைக்குச் சென்றேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 97,
+        "text": "நீ நன்றாக பாடினாய்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 98,
+        "text": "அவன் புத்தகம் படித்தது.",
+        "label": "incorrect",
+        "correction": "அவன் புத்தகம் படித்தான்.",
+        "error_type": "Rational/Irrational Mismatch",
+        "diagnosis": "Human subject with neuter verb."
+      },
+      {
+        "id": 99,
+        "text": "அவர்கள் நேற்று வந்தனர்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 100,
+        "text": "நான் நேற்று ஊருக்குப் போவேன்.",
+        "label": "incorrect",
+        "correction": "நான் நேற்று ஊருக்குப் போனேன்.",
+        "error_type": "Tense Mismatch",
+        "diagnosis": "Past time context 'நேற்று' conflicts with future 'போவேன்'."
+      },
+      {
+        "id": 101,
+        "text": "நான் அவனை கேட்டேன்.",
+        "label": "incorrect",
+        "correction": "நான் அவனிடம் கேட்டேன்.",
+        "error_type": "Case Marker Error",
+        "diagnosis": "Incorrect case. 'Asking him' usually translates to 'Asking TO him' (idathil/idam) or requires specific context. More commonly 'அவனிடம்' for asking."
+      },
+      {
+        "id": 102,
+        "text": "அவன் கத்தியால் வெட்டினான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 103,
+        "text": "மரத்தின் கிளை ஒடிந்தது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 104,
+        "text": "நான் பள்ளியை சென்றேன்.",
+        "label": "incorrect",
+        "correction": "நான் பள்ளிக்குச் சென்றேன்.",
+        "error_type": "Case Marker Error",
+        "diagnosis": "Destination requires 'Ku' (Dative case), not 'Ai' (Accusative). 'பள்ளிக்கு' is correct."
+      },
+      {
+        "id": 105,
+        "text": "அவன் கத்தி வெட்டினான்.",
+        "label": "incorrect",
+        "correction": "அவன் கத்தியால் வெட்டினான்.",
+        "error_type": "Case Marker Error (Missing)",
+        "diagnosis": "Instrumental case 'aal' is missing. 'With a knife' is 'கத்தியால்'."
+      },
+      {
+        "id": 106,
+        "text": "ராமன் வீடு சென்றான்.",
+        "label": "incorrect",
+        "correction": "ராமன் வீட்டுக்குச் சென்றான்.",
+        "error_type": "Case Marker/Oblique Form",
+        "diagnosis": "Direction requires Dative case. 'Veedu' changes to oblique 'Veettu' + 'kku'."
+      },
+      {
+        "id": 107,
+        "text": "அவன் தலை வலித்தது.",
+        "label": "incorrect",
+        "correction": "அவனுக்குத் தலை வலித்தது.",
+        "error_type": "Case Marker Error",
+        "diagnosis": "Possessive/Experiencer requires Dative 'Ku'. 'He had a headache' -> 'To him head pained'."
+      },
+      {
+        "id": 108,
+        "text": "என் தந்தை எனக்குப் பேனா தந்தார்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 109,
+        "text": "பால் குடிக்க குழந்தை அழுதது.",
+        "label": "incorrect",
+        "correction": "பால் குடிக்கக் குழந்தை அழுதது.",
+        "error_type": "Sandhi Error (Vallinam)",
+        "diagnosis": "Missing Vallinam (k). 'Kudikka' + 'Kulanthai' -> 'Kudikkak kulanthai'."
+      },
+      {
+        "id": 110,
+        "text": "கடைக்கு போ.",
+        "label": "incorrect",
+        "correction": "கடைக்குப் போ.",
+        "error_type": "Sandhi Error (Vallinam)",
+        "diagnosis": "Dative case 'Ku' followed by 'Po' requires doubling of 'p'."
+      },
+      {
+        "id": 111,
+        "text": "அவன் பாடம் படித்தான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 112,
+        "text": "அவள் நன்றாக நடனம் ஆடினாள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 113,
+        "text": "பறவை கூட்டில் வாழ்கிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 114,
+        "text": "இது என்னுடைய வீடு.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 115,
+        "text": "திருக்குறள் திருவள்ளுவரால் எழுதப்பட்டது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 116,
+        "text": "அவன் என்னை பார்த்தான்.",
+        "label": "incorrect",
+        "correction": "அவன் என்னைப் பார்த்தான்.",
+        "error_type": "Sandhi Error",
+        "diagnosis": "Accusative 'Ai' followed by 'Pa' requires doubling. 'Ennai' + 'Paarthaan' -> 'Ennaip paarthaan'."
+      },
+      {
+        "id": 117,
+        "text": "பூனை எலியை பிடித்தது.",
+        "label": "incorrect",
+        "correction": "பூனை எலியைப் பிடித்தது.",
+        "error_type": "Sandhi Error",
+        "diagnosis": "Accusative 'Ai' followed by 'Pi' requires doubling."
+      },
+      {
+        "id": 118,
+        "text": "மலை மீது ஏறினான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 119,
+        "text": "அவள் கண்கள் அழகாக உள்ளன.",
+        "label": "incorrect",
+        "correction": "அவளுடைய கண்கள் அழகாக உள்ளன.",
+        "error_type": "Case Marker (Genitive)",
+        "diagnosis": "Genitive case 'Udaiya' or 'In' makes the sentence more grammatically complete (Her eyes vs She eyes)."
+      },
+      {
+        "id": 120,
+        "text": "நான் சாப்பிட்டு வந்தேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 121,
+        "text": "அவன் பந்து விளையாடினான்.",
+        "label": "incorrect",
+        "correction": "அவன் பந்து விளையாடினான். (Context dependent, usually பந்தை)",
+        "error_type": "Case Marker (Accusative)",
+        "diagnosis": "Explicit accusative 'ai' is preferred. 'Banthai vilayaadinaan'."
+      },
+      {
+        "id": 122,
+        "text": "நான் ஊரில் இருந்து வந்தேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 123,
+        "text": "புத்தகம் மேசை மேல் இருக்கிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 124,
+        "text": "நேற்று மழை பெய்ததால் பள்ளி விடுமுறை.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 125,
+        "text": "அவன் வரமாட்டான் என்று கூறினான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 126,
+        "text": "நீ பொய் சொல்லக்கூடாது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 127,
+        "text": "பெரியவர்கள் மதிக்க வேண்டும்.",
+        "label": "incorrect",
+        "correction": "பெரியவர்களை மதிக்க வேண்டும்.",
+        "error_type": "Case Marker Error",
+        "diagnosis": "Missing accusative marker 'ai'. 'Respect elders' -> 'Periyavargalai'."
+      },
+      {
+        "id": 128,
+        "text": "காலை உணவு சாப்பிட்டாயா?",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 129,
+        "text": "அவன் நல்லவன் ஆனால் சோம்பேறி.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 130,
+        "text": "நான் கடைக்கு போறேன்.",
+        "label": "incorrect",
+        "correction": "நான் கடைக்குச் செல்கிறேன் (or போகிறேன்).",
+        "error_type": "Colloquialism",
+        "diagnosis": "'Poren' is spoken Tamil. 'Selgiren' or 'Pogiren' is written Tamil."
+      },
+      {
+        "id": 131,
+        "text": "அவன் எங்கே போனான்?",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 132,
+        "text": "இது என்ன விலை?",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 133,
+        "text": "அவள் வருவாள் என்று நான் நினைக்கிறேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 134,
+        "text": "நான் வருகிறேன் என்று சொன்னான்.",
+        "label": "incorrect",
+        "correction": "தான் வருவதாகச் சொன்னான். (Indirect Speech)",
+        "error_type": "Indirect Speech Error",
+        "diagnosis": "Direct to indirect translation error. 'Naan' should change to 'Thaan' in reflexive contexts, or structure must change."
+      },
+      {
+        "id": 135,
+        "text": "அவன் என்னிடம் பேசவில்லை.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 136,
+        "text": "வண்டி ஓட்டத் தெரியும்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 137,
+        "text": "எனக்கு காபி பிடிக்கும்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 138,
+        "text": "நான் அவரைப் பார்த்தது இல்லை.",
+        "label": "incorrect",
+        "correction": "நான் அவரைப் பார்த்ததில்லை.",
+        "error_type": "Spacing/Compound Word",
+        "diagnosis": "Commonly written as one word or with sandhi. Also 'Naan paarthathu illai' -> 'Naan paarthathillai'."
+      },
+      {
+        "id": 139,
+        "text": "அவர்கள் மைதானத்தில் விளையாடின.",
+        "label": "incorrect",
+        "correction": "அவர்கள் மைதானத்தில் விளையாடினார்கள்.",
+        "error_type": "Number/Rational Mismatch",
+        "diagnosis": "'Vilayaadina' is for plural irrational (Ahrinai). 'Avargal' is rational."
+      },
+      {
+        "id": 140,
+        "text": "பூக்கள் அழகாக இருக்கிறது.",
+        "label": "incorrect",
+        "correction": "பூக்கள் அழகாக இருக்கின்றன.",
+        "error_type": "Number Mismatch (Ahrinai)",
+        "diagnosis": "Plural flowers -> 'Irukkindrana' (or 'Ullana'), not singular 'Irukkirathu'."
+      },
+      {
+        "id": 141,
+        "text": "மாணவன் பாடம் படித்தான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 142,
+        "text": "ஆசிரியர் மாணவனைப் பாராட்டினார்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 143,
+        "text": "சூரியன் மேற்கில் மறையும்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 144,
+        "text": "அவன் வேகமாக ஓடினான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 145,
+        "text": "நீ வீட்டுக்கு போ.",
+        "label": "incorrect",
+        "correction": "நீ வீட்டுக்குப் போ.",
+        "error_type": "Sandhi Error",
+        "diagnosis": "Missing doubling of 'p' after 'ku'."
+      },
+      {
+        "id": 146,
+        "text": "அவள் தண்ணீர் குடித்தாள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 147,
+        "text": "குழந்தைகள் பூங்காவில் விளையாடினார்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 148,
+        "text": "நான் ஒரு கடிதம் எழுதினேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 149,
+        "text": "அவன் நல்லா பாடுவான்.",
+        "label": "incorrect",
+        "correction": "அவன் நன்றாகப் பாடுவான்.",
+        "error_type": "Colloquialism/Sandhi",
+        "diagnosis": "'Nalla' is colloquial. 'Nandraaga' is formal. Also missing 'p' (Nandraagap paaduvaan)."
+      },
+      {
+        "id": 150,
+        "text": "நீங்கள் எப்போது வருவீர்கள்?",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 151,
+        "text": "அவன் எனக்கு தம்பி.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 152,
+        "text": "நான் நேற்று வந்தேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 153,
+        "text": "அவன் பேசிக் கொண்டிருக்கிறான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 154,
+        "text": "மழை பெய்தது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 155,
+        "text": "அவன் வீட்டில் இல்லை.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 156,
+        "text": "நான் சாப்பிட்டாயா?",
+        "label": "incorrect",
+        "correction": "நான் சாப்பிட்டேனா? (or நீ சாப்பிட்டாயா?)",
+        "error_type": "Person Mismatch",
+        "diagnosis": "'Naan' (I) does not go with 'aaya' (2nd person question). It should be 'Did I eat?' or 'Did you eat?'."
+      },
+      {
+        "id": 157,
+        "text": "அவர்கள் வந்தார்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 158,
+        "text": "நான் அவனை அடிக்கிறேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 159,
+        "text": "அவன் என்ன செய்கிறான்?",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 160,
+        "text": "புத்தகம் படிப்பதற்கு நல்லது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 161,
+        "text": "எனக்கு பசிக்கிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 162,
+        "text": "தலை வலிக்கிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 163,
+        "text": "அவன் தூங்கினான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 164,
+        "text": "நான் வேலை செய்கிறேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 165,
+        "text": "அவள் சமைக்கிறாள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 166,
+        "text": "நாங்கள் பேசுகிறோம்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 167,
+        "text": "நீங்கள் கேட்கிறீர்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 168,
+        "text": "பறவைகள் பறக்கின்றன.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 169,
+        "text": "நாய் குரைக்கிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 170,
+        "text": "பூனை தூங்குகிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 171,
+        "text": "வண்டி ஓடுகிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 172,
+        "text": "விளக்கு எரிகிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 173,
+        "text": "காற்று வீசுகிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 174,
+        "text": "நீர் பாய்கிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 175,
+        "text": "அவன் பாட்டு பாடுகிறான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 176,
+        "text": "அவள் நடனம் ஆடுகிறாள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 177,
+        "text": "குழந்தை விளையாடுகிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 178,
+        "text": "நாங்கள் படிக்கிறோம்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 179,
+        "text": "நீங்கள் எழுதுகிறீர்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 180,
+        "text": "அவர்கள் சிரிக்கிறார்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 181,
+        "text": "நான் அவனை அடித்தேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 182,
+        "text": "அவள் கடைக்குச் சென்றாள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 183,
+        "text": "அவர் மேடையில் பேசினார்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 184,
+        "text": "நாங்கள் கடலுக்குச் சென்றோம்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 185,
+        "text": "நீ உண்மையைச் சொல்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 186,
+        "text": "அவன் பொய் சொன்னான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 187,
+        "text": "அவள் அழுகிறாள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 188,
+        "text": "அவர்கள் ஓடுகிறார்கள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 189,
+        "text": "நான் குளிக்கிறேன்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 190,
+        "text": "அவன் தூங்குகிறான்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 191,
+        "text": "அது ஒரு பெரிய மரம்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 192,
+        "text": "இந்த பூ அழகாக இருக்கிறது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 193,
+        "text": "அந்த பையன் புத்திசாலி.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 194,
+        "text": "வானம் மேகமூட்டமாக உள்ளது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 195,
+        "text": "ரயில் தாமதமாக வந்தது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 196,
+        "text": "பேருந்து நிலையத்தில் நின்றது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 197,
+        "text": "அவன் நேற்று வரவில்லை.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 198,
+        "text": "நாளை விடுமுறை.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 199,
+        "text": "இன்று நல்ல நாள்.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      },
+      {
+        "id": 200,
+        "text": "வாழ்க்கை அழகானது.",
+        "label": "correct",
+        "correction": null,
+        "error_type": null,
+        "diagnosis": null
+      }
+    ]
+  }
+]

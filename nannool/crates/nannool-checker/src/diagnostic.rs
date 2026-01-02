@@ -5,6 +5,7 @@
 use serde::{Deserialize, Serialize};
 use crate::tokenizer::Span;
 use std::fmt;
+use tamil_unicode::grapheme::get_graphemes;
 
 /// Diagnostic severity level
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -34,10 +35,10 @@ impl DiagnosticLevel {
     /// Get the label
     pub fn label(&self) -> &'static str {
         match self {
-            DiagnosticLevel::Error => "error",
-            DiagnosticLevel::Warning => "warning",
-            DiagnosticLevel::Info => "info",
-            DiagnosticLevel::Hint => "hint",
+            DiagnosticLevel::Error => "பிழை",
+            DiagnosticLevel::Warning => "எச்சரிக்கை",
+            DiagnosticLevel::Info => "தகவல்",
+            DiagnosticLevel::Hint => "குறிப்பு",
         }
     }
 }
@@ -128,11 +129,11 @@ impl Diagnostic {
                 ));
 
                 // The underline/pointer
-                let col = (self.span.column as usize).saturating_sub(1);
+                let col = (self.span.column as usize).saturating_sub(1).min(line.len());
                 let underline_start = " ".repeat(col);
 
-                // Calculate underline length (approximate for now)
-                let underline_len = self.source_text.chars().count().max(1);
+                // Calculate underline length based on grapheme clusters (visual units)
+                let underline_len = get_graphemes(&self.source_text).len().max(1);
                 let underline = "^".repeat(underline_len);
 
                 output.push_str(&format!(
@@ -147,7 +148,7 @@ impl Diagnostic {
                 // Label on underline
                 if let Some(ref suggestion) = self.suggestion {
                     output.push_str(&format!(
-                        " expected: {}",
+                        " எதிர்பார்ப்பு: {}",
                         suggestion.replacement
                     ));
                 }
@@ -157,7 +158,7 @@ impl Diagnostic {
 
         // Notes
         for note in &self.notes {
-            output.push_str(&format!("   {blue}={reset} {}: {}\n", "note", note));
+            output.push_str(&format!("   {blue}={reset} {}: {}\n", "குறிப்பு", note));
         }
 
         // Nannool reference
@@ -175,7 +176,7 @@ impl Diagnostic {
         // Suggestion
         if let Some(ref suggestion) = self.suggestion {
             output.push_str(&format!(
-                "   {blue}={reset} help: {}\n",
+                "   {blue}={reset} உதவி: {}\n",
                 suggestion.description
             ));
         }
@@ -386,7 +387,7 @@ mod tests {
         let source = "பாட்டு பாடினான்";
         let formatted = diag.format(source, Some("test.txt"));
 
-        assert!(formatted.contains("error"));
+        assert!(formatted.contains("பிழை"));
         assert!(formatted.contains("vallinam-miguthal-165"));
         assert!(formatted.contains("test.txt"));
     }
@@ -396,7 +397,7 @@ mod tests {
         let diag = sample_diagnostic();
         let formatted = diag.format_plain(Some("test.txt"));
 
-        assert!(formatted.contains("error"));
+        assert!(formatted.contains("பிழை"));
         assert!(formatted.contains("vallinam-miguthal-165"));
     }
 

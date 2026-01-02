@@ -1,63 +1,35 @@
 # நன்னூல் (Nannool) - Tamil Grammar Checker
 
-A Rust-based syntax/grammar checker for the Tamil language, modeled after how `rustc` reports errors. The checker validates Tamil text against the grammatical rules codified in Nannool (நன்னூல்), a 13th-century Tamil grammar text by Pavananthi Munivar.
+A Rust-based syntax/grammar checker for the Tamil language, modeled after how `rustc` reports errors. Validates Tamil text against the grammatical rules codified in **Nannool (நன்னூல்)**, a 13th-century Tamil grammar text by Pavananthi Munivar.
 
 ## Features
 
-- **Tamil Unicode Handling**: Proper grapheme cluster splitting and letter classification
-- **Sandhi (புணர்ச்சி) Checking**: Validates word boundaries against Nannool rules
-- **Morphological Analysis**: Basic word decomposition into root + features
-- **Rust-style Diagnostics**: Clear, colorful error messages with suggestions
-- **Multiple Output Formats**: Human-readable, JSON, and SARIF for IDE integration
+- **Sandhi checking** - Validates word boundaries against 77 Nannool புணர்ச்சி rules
+- **Morphological analysis** - Uses ThamizhiMorph FST models (80k+ nouns, 3.3k+ verbs)
+- **Rule-based Engine** - Rules are defined in a structured TOML format (`data/nannool/rules.toml`)
+- **Rust-style diagnostics** - Error messages with source context and precise fix suggestions
+- **Multiple output formats** - Human-readable, JSON, SARIF (for IDE integration)
 
-## Installation
+## Quick Start
 
 ```bash
-# From the nannool directory
+# Build
 cargo build --release
 
-# The binary will be at target/release/nannool
+# Download ThamizhiMorph FST models (required for analysis)
+git clone --depth 1 https://github.com/sarves/thamizhi-morph data/thamizhi-morph
+
+# Check a file
+./target/release/nannool check input.txt
+
+# Check inline text
+./target/release/nannool check --text "பாட்டு பாடினான்"
+
+# Analyze a word
+./target/release/nannool analyze வந்தான்
 ```
 
-## Usage
-
-### Check a file
-
-```bash
-nannool check input.txt
-```
-
-### Check inline text
-
-```bash
-nannool check --text "பாட்டு பாடினான்"
-```
-
-### Explain a rule
-
-```bash
-nannool explain vallinam-miguthal-165
-```
-
-### Analyze a word
-
-```bash
-nannool analyze பாடினான்
-```
-
-### Check a word pair
-
-```bash
-nannool pair பாட்டு பாடினான்
-```
-
-### List all rules
-
-```bash
-nannool rules
-```
-
-## Output Example
+## Example Output
 
 ```
 error[vallinam-miguthal-165]: புணர்ச்சி பிழை: வல்லினம் மிகுதல்
@@ -67,51 +39,86 @@ error[vallinam-miguthal-165]: புணர்ச்சி பிழை: வல�
  1 | பாட்டு பாடினான்
    | ^^^^^^^^^^^^^^^^ expected: பாட்டுப்பாடினான்
    |
-   = note: வல்லினம் மிகவேண்டும்
-   = நன்னூல்: 165
+   = note: நன்னூல் 165 - Hard consonants (க ச ட த ப ற) double after vowel endings
    = help: Apply வல்லினம் மிகுதல் (Vallinam doubling)
 ```
 
-## Strictness Levels
+## Morphological Analysis
 
-- `--level classical`: Strict classical Tamil rules
-- `--level standard` (default): Standard modern Tamil
-- `--level lenient`: Allow common deviations
+```
+$ nannool analyze மரத்தை
 
-## Architecture
+சொல்: மரத்தை
+
+பகுப்பாய்வு 1:
+  வேர்: மரம்
+  வகை: பெயர்ச்சொல் (noun)
+  அம்சங்கள்:
+    - Case(Accusative)
+  நம்பிக்கை: 100%
+```
+
+## Project Structure
 
 ```
 nannool/
 ├── crates/
-│   ├── tamil-unicode/    # Tamil Unicode handling
-│   ├── nannool-rules/    # Sandhi rule definitions
-│   ├── nannool-morph/    # Morphological analyzer
-│   ├── nannool-checker/  # Main checking logic
-│   └── nannool-cli/      # CLI binary
+│   ├── tamil-unicode/      # Tamil Unicode handling, grapheme clusters, NFC normalization
+│   ├── nannool-rules/      # Sandhi rule definitions & logic engine
+│   ├── nannool-morph/      # Morphological analysis (ThamizhiMorph wrapper)
+│   ├── nannool-checker/    # Main checking logic, diagnostics & tokenization
+│   └── nannool-cli/        # CLI binary
 └── data/
-    ├── nannool/          # Rule definitions
-    └── tests/            # Test cases
+    ├── nannool/            # Rule database (rules.toml)
+    └── thamizhi-morph/     # ThamizhiMorph FST models (external dependency)
+```
+
+## Requirements
+
+- Rust 1.70+
+- Foma FST toolkit (`flookup` binary) - `paru -S foma` on Arch
+- ThamizhiMorph FST models (placed in `data/thamizhi-morph`)
+
+## CLI Commands
+
+```bash
+# Check a file for sandhi errors
+nannool check <file>
+nannool check --text "..."
+nannool check --format json input.txt
+nannool check --level classical input.txt
+
+# Analyze word morphology
+nannool analyze <word>
+nannool analyze --format json வந்தான்
+
+# Check a word pair
+nannool pair பாட்டு பாடினான்
+
+# Explain a rule
+nannool explain vallinam-miguthal-165
+
+# List all rules
+nannool rules
+nannool rules --verse 165
 ```
 
 ## Implemented Rules
 
-Currently implements these key Nannool sandhi rules:
+The engine currently implements **77 rules** covering:
 
-| Verse | Tamil Name | English Name | Category |
-|-------|------------|--------------|----------|
-| 165 | வல்லினம் மிகுதல் | Vallinam doubling | தோன்றல் |
-| 162 | உடம்படுமெய் | Buffer consonant | தோன்றல் |
-| 204 | மெய்யும் உயிரும் புணர்தல் | Consonant-vowel combination | இயல்பு |
-| 205 | ஒற்று இரட்டல் | Consonant doubling | தோன்றல் |
-| 206 | குற்றியலுகரப் புணர்ச்சி | Kutriyalukaram sandhi | தோன்றல் |
-| 217 | மகர இறுதி புணர்ச்சி | Mam + vallinam sandhi | திரிதல் |
+- **உயிரீற்றுப் புணரியல் (Vowel-ending Sandhi)**: Buffer consonants (162), Short u elision (164), Vallinam doubling (165), etc.
+- **மெய்யீற்றுப் புணரியல் (Consonant-ending Sandhi)**: Consonant-vowel combination (204), Consonant doubling (205), Alveolar n assimilation (209), Mam ending (217), etc.
+- **உருபு புணரியல் (Case Marker Sandhi)**: Glide/epenthesis (243-244), Pronoun shortening (247), etc.
 
-## References
+See `data/nannool/rules.toml` for the full list of formalized rules.
 
-- [Nannool Full Text](https://www.projectmadurai.org/pm_etexts/utf8/pmuni0147.html) - Project Madurai
-- [Tamil Virtual Academy](https://www.tamilvu.org/) - Nannool with commentary
-- [Open-Tamil](https://github.com/Ezhil-Language-Foundation/open-tamil) - Python Tamil library
+## External Resources
+
+- **Nannool text**: [Project Madurai](https://www.projectmadurai.org/pm_etexts/utf8/pmuni0147.html)
+- **ThamizhiMorph**: [github.com/sarves/thamizhi-morph](https://github.com/sarves/thamizhi-morph) (Apache 2.0)
+- **Tamil Virtual Academy**: [tamilvu.org](https://www.tamilvu.org/library/l0900/html/l0900ind.htm)
 
 ## License
 
-MIT License
+AGPL-3.0

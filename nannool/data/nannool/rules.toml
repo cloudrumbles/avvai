@@ -6,24 +6,8 @@
 # உயிரீற்றுப் புணரியல் (Vowel-ending Sandhi) - Verses 151-203
 # =============================================================================
 
-[[rules]]
-id = "vallinam-miguthal-165"
-nannool_verses = [165]
-tamil_name = "வல்லினம் மிகுதல்"
-english_name = "Vallinam doubling"
-category = "thondral"
-priority = 50
-description = "Hard consonants (க ச ட த ப ற) double after vowel endings"
-
-[rules.left_context]
-type = "any_uyir"
-
-[rules.right_context]
-type = "vallinam"
-
-[rules.transformation]
-type = "double_initial"
-
+# -----------------------------------------------------------------------------
+# Core உடம்படுமெய் (Buffer Consonant) Rules - Verse 162
 # -----------------------------------------------------------------------------
 
 [[rules]]
@@ -68,9 +52,603 @@ type = "any_uyir"
 type = "insert"
 text = "வ்"
 
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "udampadumei-e-162"
+nannool_verses = [162]
+tamil_name = "உடம்படுமெய் - ஏகாரம்"
+english_name = "Buffer consonant - e variant"
+category = "thondral"
+priority = 59
+description = "After ஏ, either ய் or வ் can appear before a following vowel"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["ஏ"]
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "insert"
+text = "ய்"
+
+# -----------------------------------------------------------------------------
+# எகர வினா Rules - Verse 163
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ekara-vina-163"
+nannool_verses = [163]
+tamil_name = "எகர வினா புணர்ச்சி"
+english_name = "Interrogative e sandhi"
+category = "thondral"
+priority = 58
+description = "எ interrogative before vowel - ய் or வ் may appear"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["எ"]
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "insert"
+text = "வ்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "suttu-vina-163"
+nannool_verses = [163]
+tamil_name = "சுட்டு வினா புணர்ச்சி"
+english_name = "Demonstrative/Interrogative sandhi"
+category = "thondral"
+priority = 59
+description = "After demonstratives (அ, இ, உ) or interrogative 'e', if vowel/ya follows, va appears; others double"
+
+[rules.left_context]
+type = "specific_word"
+words = ["அ", "இ", "உ", "எ"]
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "insert"
+text = "வ்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "suttu-vina-consonant-163"
+nannool_verses = [163]
+tamil_name = "சுட்டு வினா மெய் புணர்ச்சி"
+english_name = "Demonstrative/Interrogative consonant sandhi"
+category = "thondral"
+priority = 59
+description = "After demonstratives (அ, இ, உ) or interrogative 'e', following consonants double"
+
+[rules.left_context]
+type = "specific_word"
+words = ["அ", "இ", "உ", "எ"]
+
+[rules.right_context]
+type = "any_mei"
+
+[rules.transformation]
+type = "double_initial"
+
+# -----------------------------------------------------------------------------
+# உக்குறள் Rules - Verse 164
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ukkural-164"
+nannool_verses = [164]
+tamil_name = "உக்குறள் கெடுதல்"
+english_name = "Short u elision"
+category = "keduthal"
+priority = 62
+description = "Short உ drops before a following vowel, leaving the consonant"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["உ"]
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "delete_from_first"
+count = 1
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ukkural-ya-164"
+nannool_verses = [164]
+tamil_name = "உக்குறள் இகரமாதல்"
+english_name = "Short u to i before y"
+category = "thirithal"
+priority = 61
+description = "Short உ becomes இ before a following ய"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["உ"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["ய்"]
+
+[rules.transformation]
+type = "replace_ending"
+old = "உ"
+new = "இ"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "mutrukural-164"
+nannool_verses = [164]
+tamil_name = "முற்றியலுகரப் புணர்ச்சி"
+english_name = "Mutriyalukaram sandhi"
+category = "keduthal"
+priority = 60
+description = "Mutriyalukaram (unshortened u) sometimes drops before a vowel like kutriyalukaram"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["உ"]
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "delete_from_first"
+count = 1
+
+# -----------------------------------------------------------------------------
+# வல்லினம் மிகுதல் (Vallinam Doubling) - Verse 165
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "vallinam-miguthal-165"
+nannool_verses = [165]
+tamil_name = "வல்லினம் மிகுதல்"
+english_name = "Vallinam doubling"
+category = "thondral"
+priority = 50
+description = "Hard consonants (க ச ட த ப ற) double after vowel endings"
+
+[rules.left_context]
+type = "any_uyir"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "double_initial"
+
+# -----------------------------------------------------------------------------
+# வல்லினம் மிகாமை Exceptions - Verses 166-171
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "marapeyar-exception-166"
+nannool_verses = [166]
+tamil_name = "மரப்பெயர் விலக்கு"
+english_name = "Tree name exception"
+relationship = "any"
+category = "iyalbu"
+priority = 85
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+left_class = ["noun"]
+conditions = ["tree"]
+description = "Tree names before case markers - mellinam may appear instead of vallinam doubling"
+
+[rules.left_context]
+type = "any_uyir"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "insert_mellinam"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "disai-peyar-186"
+nannool_verses = [186]
+tamil_name = "திசைப்பெயர் புணர்ச்சி"
+english_name = "Direction sandhi"
+category = "keduthal"
+priority = 80
+conditions = ["direction"]
+description = "When directions meet, the final consonant/vowel may drop (e.g., வடக்கு + கிழக்கு -> வடகிழக்கு)"
+
+[rules.left_context]
+type = "any_uyirmei"
+
+[rules.right_context]
+type = "any_uyirmei"
+
+[rules.transformation]
+type = "delete_from_first"
+count = 2
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "seyyiya-exception-167"
+nannool_verses = [167]
+tamil_name = "செய்யிய விலக்கு"
+english_name = "Verbal participle exception"
+category = "iyalbu"
+priority = 85
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+left_class = ["verbal_participle"]
+description = "செய்யிய verbal participle and similar forms - no vallinam doubling"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["அ"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "vazhiya-exception-168"
+nannool_verses = [168]
+tamil_name = "வாழிய விலக்கு"
+english_name = "Vazhiya exception"
+category = "iyalbu"
+priority = 85
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+left_class = ["verb"]
+description = "வாழிய optative forms - final உயிர்மெய் may drop, no vallinam doubling needed"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["அ"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "pala-sila-170"
+nannool_verses = [170]
+tamil_name = "பல/சில புணர்ச்சி"
+english_name = "Pala/Sila sandhi"
+category = "thirithal"
+priority = 75
+description = "பல/சில before themselves or others - அ may drop, ல may become ற"
+
+[rules.left_context]
+type = "specific_word"
+words = ["பல", "சில"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "aa-maa-miyaa-171"
+nannool_verses = [171]
+tamil_name = "ஆ/மா/மியா விலக்கு"
+english_name = "Aa/Maa/Miyaa exception"
+category = "iyalbu"
+priority = 80
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "ஆ, மா, மியா before vallinam - no doubling in அல்வழி"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஆ", "மா", "மியா"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# இகர வீற்று விதிகள் - Verses 172-174
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ikara-kurukkal-172"
+nannool_verses = [172]
+tamil_name = "இகரக் குறுக்கல்"
+english_name = "I-vowel shortening"
+category = "thirithal"
+priority = 65
+description = "After a short vowel, 'aa' may shorten or take 'u' suffix"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["ஆ"]
+
+[rules.right_context]
+type = "specific_uyir"
+letters = ["இ"]
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "andri-indri-173"
+nannool_verses = [173]
+tamil_name = "அன்றி/இன்றி புணர்ச்சி"
+english_name = "Andri/Indri sandhi"
+category = "thirithal"
+priority = 70
+description = "When andri/indri verbal participles are followed by other words, the final 'i' often becomes 'u'"
+
+[rules.left_context]
+type = "specific_word"
+words = ["அன்றி", "இன்றி"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "இ"
+new = "உ"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "naazhi-uri-174"
+nannool_verses = [174]
+tamil_name = "நாழி + உரி புணர்ச்சி"
+english_name = "Naazhi + uri sandhi"
+category = "thirithal"
+priority = 75
+description = "When 'naazhi' meets 'uri', the final 'li' is replaced by 'du'"
+
+[rules.left_context]
+type = "specific_word"
+words = ["நாழி"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["உரி"]
+
+[rules.transformation]
+type = "replace_ending"
+old = "ழி"
+new = "டு"
+
+# -----------------------------------------------------------------------------
+# ஈகார வீற்று விதிகள் - Verses 175-177
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "puli-175"
+nannool_verses = [175]
+tamil_name = "புளி புணர்ச்சி"
+english_name = "Puli sandhi"
+category = "thondral"
+priority = 72
+description = "After the word 'puli' (tamarind), the corresponding nasal (mellinam) may appear before vallinam"
+
+[rules.left_context]
+type = "specific_word"
+words = ["புளி"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "insert_mellinam"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "aa-before-pa-177"
+nannool_verses = [177]
+tamil_name = "ஆ முன் ப புணர்ச்சி"
+english_name = "Aa before pa sandhi"
+category = "thirithal"
+priority = 68
+description = "Preceding 'aa' shortens before following 'pa' in case-relational sandhi"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["ஆ"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["ப்"]
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# உகர வீற்று விதிகள் - Verses 178-180
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "nee-mee-178"
+nannool_verses = [178]
+tamil_name = "நீ/மீ புணர்ச்சி"
+english_name = "Nee/Mee sandhi"
+category = "iyalbu"
+priority = 70
+description = "பவ்வீ/நீ/மீ before அல்வழி - natural or with vallinam/mellinam"
+
+[rules.left_context]
+type = "specific_word"
+words = ["நீ", "மீ"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "muuru-aaru-179"
+nannool_verses = [179]
+tamil_name = "மூன்று/ஆறு புணர்ச்சி"
+english_name = "Three/Six sandhi"
+category = "iyalbu"
+priority = 68
+description = "மூன்று/ஆறு case markers, numbers - உகரம் ending, natural sandhi"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["உ"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# வன்தொடர், இடைத்தொடர் விதிகள் - Verses 181-184
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "non-vanthodar-181"
+nannool_verses = [181]
+tamil_name = "வன்தொடர் விலக்கு"
+english_name = "Hard cluster exception"
+category = "iyalbu"
+priority = 82
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Words not ending in hard cluster - no vallinam doubling in அல்வழி"
+
+[rules.left_context]
+type = "any_uyir"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "idaithodar-182"
+nannool_verses = [182]
+tamil_name = "இடைத்தொடர் விலக்கு"
+english_name = "Middle cluster exception"
+category = "iyalbu"
+priority = 81
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "இடைத்தொடர், ஆய்தத்தொடர் - no vallinam doubling in வேற்றுமை"
+
+[rules.left_context]
+type = "any_uyir"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "nedil-uyirthodar-183"
+nannool_verses = [183]
+tamil_name = "நெடில் உயிர்த்தொடர் புணர்ச்சி"
+english_name = "Long vowel cluster sandhi"
+category = "thondral"
+priority = 72
+description = "நெடில் உயிர்த்தொடர் + குற்றுகரம் with ட/ற - these double in வேற்றுமை"
+
+[rules.left_context]
+type = "nedil"
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["ட்", "ற்"]
+
+[rules.transformation]
+type = "double_initial"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "menthodar-184"
+nannool_verses = [184]
+tamil_name = "மென்தொடர் புணர்ச்சி"
+english_name = "Soft cluster sandhi"
+category = "thirithal"
+priority = 70
+description = "மென்தொடர் words in வேற்றுமை - may become corresponding வன்தொடர்"
+
+[rules.left_context]
+type = "mellinam"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "poo-peyar-200"
+nannool_verses = [200]
+tamil_name = "பூப்பெயர் புணர்ச்சி"
+english_name = "Poo-peyar sandhi"
+category = "thirithal"
+priority = 70
+description = "After the word 'poo', the corresponding nasal (mellinam) of the following hard consonant (vallinam) appears"
+
+[rules.left_context]
+type = "specific_word"
+words = ["பூ"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "insert_mellinam"
+
 # =============================================================================
 # மெய்யீற்றுப் புணரியல் (Consonant-ending Sandhi) - Verses 204-239
 # =============================================================================
+
+# -----------------------------------------------------------------------------
+# Core Consonant + Vowel Rules - Verses 204-206
+# -----------------------------------------------------------------------------
 
 [[rules]]
 id = "mei-uyir-combination-204"
@@ -111,19 +689,23 @@ type = "any_uyir"
 type = "double_initial"
 
 # -----------------------------------------------------------------------------
+# குற்றுகர வீற்று விதிகள் - Verses 181-184
+# -----------------------------------------------------------------------------
 
 [[rules]]
-id = "kutriyalukaram-206"
-nannool_verses = [206]
+id = "vanthodar-181"
+nannool_verses = [181]
 tamil_name = "குற்றியலுகரப் புணர்ச்சி"
-english_name = "Kutriyalukaram sandhi"
+english_name = "Vanthodar kutriyalukaram sandhi"
+relationship = "any"
 category = "thondral"
 priority = 65
-description = "Kutriyalukaram (short உ) followed by vallinam - the vallinam doubles"
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Vanthodar kutriyalukaram (hard cluster short u) followed by vallinam - doubling occurs in both alvazhi and vetrumai"
 
 [rules.left_context]
-type = "specific_uyir"
-letters = ["உ"]
+type = "vanthodar_kutriyalukaram"
 
 [rules.right_context]
 type = "vallinam"
@@ -132,10 +714,182 @@ type = "vallinam"
 type = "double_initial"
 
 # -----------------------------------------------------------------------------
+# ய் வருதல் Rules - Verse 206 (alternate interpretation)
+# -----------------------------------------------------------------------------
 
 [[rules]]
-id = "mam-vallinam-217"
-nannool_verses = [217]
+id = "mei-ya-ikaram-206b"
+nannool_verses = [206]
+tamil_name = "மெய் முன் ய - இகரம்"
+english_name = "Y before consonant - i insertion"
+category = "thondral"
+priority = 63
+description = "When ய் follows a consonant, இகரம் may be inserted"
+
+[rules.left_context]
+type = "any_mei"
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["ய்"]
+
+[rules.transformation]
+type = "insert"
+text = "இ"
+
+# -----------------------------------------------------------------------------
+# உவ்வுறும் Rules - Verse 207
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "tozhirpeyar-uvvurum-207"
+nannool_verses = [207]
+tamil_name = "தொழிற்பெயர் உவ்வுறும்"
+english_name = "Verbal noun u-insertion"
+category = "thondral"
+priority = 66
+left_class = ["noun"]
+description = "ஞ/ண/ந/ம/ல/வ/ள/ன ending verbal nouns - உ may be added before consonant"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ஞ்", "ண்", "ந்", "ம்", "ல்", "வ்", "ள்", "ன்"]
+
+[rules.right_context]
+type = "any_mei"
+
+[rules.transformation]
+type = "insert"
+text = "உ"
+
+# -----------------------------------------------------------------------------
+# ண/ன + வல்லினம் Rules - Verse 209
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "na-na-vallinam-209"
+nannool_verses = [209]
+tamil_name = "ண/ன + வல்லினம்"
+english_name = "Na/Na + vallinam"
+category = "thirithal"
+priority = 74
+description = "ண/ன before vallinam - become ட/ற respectively"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ண்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ண்"
+new = "ட்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "alveolar-n-vallinam-209"
+nannool_verses = [209]
+tamil_name = "ன் + வல்லினம்"
+english_name = "Alveolar n + vallinam"
+category = "thirithal"
+priority = 74
+description = "ன் before vallinam - becomes ற்"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ன்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ன்"
+new = "ற்"
+
+# -----------------------------------------------------------------------------
+# ண/ன + நகரம் Rules - Verse 210
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "na-na-nakaram-210"
+nannool_verses = [210]
+tamil_name = "ண/ன + நகரம்"
+english_name = "Na/Na + nakaram"
+category = "keduthal"
+priority = 73
+description = "Short-vowel-less ண/ன before ந - the ண/ன may drop"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ண்", "ன்"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["ந்"]
+
+[rules.transformation]
+type = "delete_from_first"
+count = 1
+
+# -----------------------------------------------------------------------------
+# மீன் + ற Rules - Verse 213
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "meen-ra-213"
+nannool_verses = [213]
+tamil_name = "மீன் + ற புணர்ச்சி"
+english_name = "Meen + ra sandhi"
+category = "thirithal"
+priority = 72
+description = "மீன் in வேற்றுமை context - combines with ற"
+
+[rules.left_context]
+type = "specific_word"
+words = ["மீன்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ன்"
+new = "ற்"
+
+# -----------------------------------------------------------------------------
+# தேன் Rules - Verse 214
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "then-214"
+nannool_verses = [214]
+tamil_name = "தேன் புணர்ச்சி"
+english_name = "Then (honey) sandhi"
+category = "thirithal"
+priority = 71
+description = "தேன் before consonant - natural; before mellinam - ending drops; before vallinam - ending drops + vallinam/mellinam doubles"
+
+[rules.left_context]
+type = "specific_word"
+words = ["தேன்"]
+
+[rules.right_context]
+type = "any_mei"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# மம் + வல்லினம் Rules - Verse 219
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "mam-vallinam-219"
+nannool_verses = [219]
 tamil_name = "மகர இறுதி வல்லின புணர்ச்சி"
 english_name = "Mam + vallinam sandhi"
 category = "thirithal"
@@ -153,10 +907,103 @@ type = "vallinam"
 type = "final_to_mellinam"
 
 # -----------------------------------------------------------------------------
+# மின்/பின்/பன்/கன் Rules - Verse 217 (extended)
+# -----------------------------------------------------------------------------
 
 [[rules]]
-id = "retroflex-assimilation-220"
-nannool_verses = [220]
+id = "min-pin-pan-kan-217"
+nannool_verses = [217]
+tamil_name = "மின்/பின்/பன்/கன் புணர்ச்சி"
+english_name = "Min/Pin/Pan/Kan sandhi"
+category = "thirithal"
+priority = 67
+description = "மின்/பின்/பன்/கன் verbal nouns - alternate with mellinam in வேற்றுமை"
+
+[rules.left_context]
+type = "specific_word"
+words = ["மின்", "பின்", "பன்", "கன்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# தன்/என் Rules - Verse 218
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "than-en-218"
+nannool_verses = [218]
+tamil_name = "தன்/என் புணர்ச்சி"
+english_name = "Than/En sandhi"
+category = "thirithal"
+priority = 68
+description = "தன்/என் - final ன் alternates with vallinam"
+
+[rules.left_context]
+type = "specific_word"
+words = ["தன்", "என்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "nin-218"
+nannool_verses = [218]
+tamil_name = "நின் புணர்ச்சி"
+english_name = "Nin sandhi"
+category = "iyalbu"
+priority = 68
+description = "நின் - natural sandhi when joining"
+
+[rules.left_context]
+type = "specific_word"
+words = ["நின்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# மவ்வீறு Rules - Verse 219
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "mam-uyir-219"
+nannool_verses = [219]
+tamil_name = "மவ்வீறு உயிர் ஒப்பு"
+english_name = "Mam ending like vowel"
+category = "keduthal"
+priority = 64
+description = "ம் ending - the ஒற்று drops making it like vowel ending, or changes to corresponding mellinam before vallinam"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ம்"]
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "delete_from_first"
+count = 1
+
+# -----------------------------------------------------------------------------
+# ன் + த Rules - Verse 237
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "retroflex-assimilation"
+nannool_verses = [237]
 tamil_name = "ன்-த புணர்ச்சி"
 english_name = "Retroflex assimilation"
 category = "thirithal"
@@ -176,6 +1023,2042 @@ type = "replace_beginning"
 old = "த"
 new = "ற"
 
+# -----------------------------------------------------------------------------
+# நும்/தம்/எம்/நம் Rules - Verse 221
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "num-tam-em-nam-221"
+nannool_verses = [221]
+tamil_name = "நும்/தம்/எம்/நம் புணர்ச்சி"
+english_name = "Num/Tam/Em/Nam sandhi"
+category = "thirithal"
+priority = 69
+description = "நும்/தம்/எம்/நம் - final ம் becomes ஞ் or ந் before certain consonants"
+
+[rules.left_context]
+type = "specific_word"
+words = ["நும்", "தம்", "எம்", "நம்"]
+
+[rules.right_context]
+type = "any_mei"
+
+[rules.transformation]
+type = "final_to_mellinam"
+
+# -----------------------------------------------------------------------------
+# ய/ர/ழ + வல்லினம் Rules - Verse 224
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ya-ra-zha-vallinam-224"
+nannool_verses = [224]
+tamil_name = "ய/ர/ழ + வல்லினம்"
+english_name = "Ya/Ra/Zha + vallinam"
+category = "thondral"
+priority = 71
+description = "ய்/ர்/ழ் before க/ச/த/ப - natural or doubled in அல்வழி; doubled or with corresponding nasal in வேற்றுமை"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ய்", "ர்", "ழ்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "double_initial"
+
+# -----------------------------------------------------------------------------
+# தமிழ் + அவ்வுறல் - Verse 225
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "tamizh-225"
+nannool_verses = [225]
+tamil_name = "தமிழ் புணர்ச்சி"
+english_name = "Tamizh sandhi"
+category = "thondral"
+priority = 70
+description = "தமிழ் in வேற்றுமை - may take அ suffix"
+
+[rules.left_context]
+type = "specific_word"
+words = ["தமிழ்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# ல/ள + வல்லினம் Rules - Verse 227
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "la-lla-vallinam-227"
+nannool_verses = [227]
+tamil_name = "ல/ள + வல்லினம்"
+english_name = "La/Lla + vallinam"
+category = "thirithal"
+priority = 72
+description = "ல்/ள் in வேற்றுமை before vallinam - become ற்/ட்; in அல்வழி - alternate with these; before mellinam - become ன்/ண்; before idaiyinam - natural"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ல்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ல்"
+new = "ற்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "lla-vallinam-227"
+nannool_verses = [227]
+tamil_name = "ள் + வல்லினம்"
+english_name = "Lla + vallinam"
+category = "thirithal"
+priority = 72
+description = "ள் before vallinam - becomes ட்"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ள்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ள்"
+new = "ட்"
+
+# -----------------------------------------------------------------------------
+# ல/ள + ஆய்தம் Rules - Verse 228
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "la-aaytham-228"
+nannool_verses = [228]
+tamil_name = "ல + ஆய்தம்"
+english_name = "La + aaytham"
+category = "thondral"
+priority = 70
+description = "Short-vowel + ல் in அல்வழி before த - may become ஆய்தம் + ற"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ல்"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["த்"]
+
+[rules.transformation]
+type = "replace_both"
+left_old = "ல்"
+left_new = "ஃ"
+right_old = "த"
+right_new = "ற"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "lla-aaytham-228"
+nannool_verses = [228]
+tamil_name = "ள + ஆய்தம்"
+english_name = "Lla + aaytham"
+category = "thondral"
+priority = 70
+description = "Short-vowel + ள் in அல்வழி before த - may become ஆய்தம் + ட"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ள்"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["த்"]
+
+[rules.transformation]
+type = "replace_both"
+left_old = "ள்"
+left_new = "ஃ"
+right_old = "த"
+right_new = "ட"
+
+# -----------------------------------------------------------------------------
+# நெல்/செல்/கொல்/சொல் Rules - Verse 232
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "nel-sel-kol-sol-232"
+nannool_verses = [232]
+tamil_name = "நெல்/செல்/கொல்/சொல் புணர்ச்சி"
+english_name = "Nel/Sel/Kol/Sol sandhi"
+category = "thirithal"
+priority = 73
+description = "நெல்/செல்/கொல்/சொல் in அல்வழி - ல் becomes ற்"
+
+[rules.left_context]
+type = "specific_word"
+words = ["நெல்", "செல்", "கொல்", "சொல்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ல்"
+new = "ற்"
+
+# -----------------------------------------------------------------------------
+# இல் Rules - Verse 233
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "il-233"
+nannool_verses = [233]
+tamil_name = "இல் புணர்ச்சி"
+english_name = "Il (negation) sandhi"
+category = "thirithal"
+priority = 71
+description = "இல் (negation word) + ஐ - vallinam alternates, or with ஆகாரம் + vallinam, or natural"
+
+[rules.left_context]
+type = "specific_word"
+words = ["இல்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# சுட்டு வகரம் Rules - Verse 235
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "suttu-vakaram-vallinam-235"
+nannool_verses = [235]
+tamil_name = "சுட்டு வகரம் - ஆய்தம்"
+english_name = "Demonstrative v to Aaytham"
+category = "thirithal"
+priority = 69
+description = "Demonstrative வ் before vallinam becomes ஆய்தம்"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["வ்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "replace_ending"
+old = "வ்"
+new = "ஃ"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "suttu-vakaram-mellinam-235"
+nannool_verses = [235]
+tamil_name = "சுட்டு வகரம் - மெல்லினம்"
+english_name = "Demonstrative v to Mellinam"
+category = "thirithal"
+priority = 69
+description = "Demonstrative வ் before mellinam becomes mellinam"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["வ்"]
+
+[rules.right_context]
+type = "mellinam"
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "delete_from_first", count = 1 },
+  { type = "double_initial" }
+]
+
+# -----------------------------------------------------------------------------
+# வருமொழி த/ந திரிபு Rules - Verse 237
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "varumozhi-thirippu-237"
+nannool_verses = [237]
+tamil_name = "வருமொழி த/ந திரிபு"
+english_name = "Following word t/n change"
+category = "thirithal"
+priority = 76
+description = "After ன்/ல் - த்/ந் become ற்/ன்; after ண்/ள் - த்/ந் become ட்/ண்"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ன்", "ல்"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["த்", "ந்"]
+
+[rules.transformation]
+type = "replace_beginning"
+old = "த"
+new = "ற"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "varumozhi-thirippu-237-na"
+nannool_verses = [237]
+tamil_name = "வருமொழி ந திரிபு"
+english_name = "Following word n change"
+category = "thirithal"
+priority = 76
+description = "After ன்/ல் - ந் becomes ன்"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ன்", "ல்"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["ந்"]
+
+[rules.transformation]
+type = "replace_beginning"
+old = "ந"
+new = "ன"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "varumozhi-thirippu-237b"
+nannool_verses = [237]
+tamil_name = "வருமொழி த/ந திரிபு - ண/ள"
+english_name = "Following word t/n change - retroflex"
+category = "thirithal"
+priority = 76
+description = "After ண்/ள் - த் becomes ட்"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ண்", "ள்"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["த்"]
+
+[rules.transformation]
+type = "replace_beginning"
+old = "த"
+new = "ட"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "varumozhi-thirippu-237b-na"
+nannool_verses = [237]
+tamil_name = "வருமொழி ந திரிபு - ண/ள"
+english_name = "Following word n change - retroflex"
+category = "thirithal"
+priority = 76
+description = "After ண்/ள் - ந் becomes ண"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ண்", "ள்"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["ந்"]
+
+[rules.transformation]
+type = "replace_beginning"
+old = "ந"
+new = "ண"
+
+# =============================================================================
+# உருபு புணரியல் (Case Marker Sandhi) - Verses 240-257
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# சாரியை Rules - Verses 243-244
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "saariyai-243"
+nannool_verses = [243]
+tamil_name = "சாரியை புணர்ச்சி"
+english_name = "Glide/epenthesis sandhi"
+category = "thondral"
+priority = 55
+description = "Between word and suffix/case marker - one or more glides may appear, may not appear, or alternate"
+
+[rules.left_context]
+type = "any"
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "common-saariyai-244"
+nannool_verses = [244]
+tamil_name = "பொதுச் சாரியை"
+english_name = "Common glides"
+category = "thondral"
+priority = 54
+description = "Common glide consonants: அன், ஆன், இன், அல், அற்று, இற்று, அத்து, அம், தம், நம், நும், ஏ, அ, உ, ஐ, கு, ன"
+
+[rules.left_context]
+type = "any"
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# எல்லாம் Rules - Verse 245
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ellaam-245"
+nannool_verses = [245]
+tamil_name = "எல்லாம் புணர்ச்சி"
+english_name = "Ellaam sandhi"
+category = "thondral"
+priority = 65
+description = "எல்லாம் with inanimate - takes அற்று + ஓடு case marker + உம்; otherwise - நம் in between + அற்று"
+
+[rules.left_context]
+type = "specific_word"
+words = ["எல்லாம்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ம்"
+new = "வற்று"
+
+# -----------------------------------------------------------------------------
+# எல்லாரும்/எல்லீரும் Rules - Verse 246
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ellaarum-elleerum-246"
+nannool_verses = [246]
+tamil_name = "எல்லாரும்/எல்லீரும் புணர்ச்சி"
+english_name = "Ellaarum/Elleerum sandhi"
+category = "thirithal"
+priority = 64
+description = "எல்லாரும்/எல்லீரும் - உம் drops, தம்/நும் is added, case marker follows, then உம்"
+
+[rules.left_context]
+type = "specific_word"
+words = ["எல்லாரும்", "எல்லீரும்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# Pronoun Rules - Verse 247
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "pronouns-247"
+nannool_verses = [247]
+tamil_name = "தான் திரிபு"
+english_name = "Thaan change"
+category = "thirithal"
+priority = 66
+description = "தான் becomes தன் before case markers"
+
+[rules.left_context]
+type = "specific_word"
+words = ["தான்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "தான்"
+new = "தன்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "pronouns-thaam-247"
+nannool_verses = [247]
+tamil_name = "தாம் திரிபு"
+english_name = "Thaam change"
+category = "thirithal"
+priority = 66
+description = "தாம் becomes தம் before case markers"
+
+[rules.left_context]
+type = "specific_word"
+words = ["தாம்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "தாம்"
+new = "தம்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "pronouns-naam-247"
+nannool_verses = [247]
+tamil_name = "நாம் திரிபு"
+english_name = "Naam change"
+category = "thirithal"
+priority = 66
+description = "நாம் becomes நம் before case markers"
+
+[rules.left_context]
+type = "specific_word"
+words = ["நாம்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "நாம்"
+new = "நம்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "pronouns-yaan-247"
+nannool_verses = [247]
+tamil_name = "யான் திரிபு"
+english_name = "Yaan change"
+category = "thirithal"
+priority = 66
+description = "யான் becomes என் before case markers"
+
+[rules.left_context]
+type = "specific_word"
+words = ["யான்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "யான்"
+new = "என்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "pronouns-yaam-247"
+nannool_verses = [247]
+tamil_name = "யாம் திரிபு"
+english_name = "Yaam change"
+category = "thirithal"
+priority = 66
+description = "யாம் becomes எம் before case markers"
+
+[rules.left_context]
+type = "specific_word"
+words = ["யாம்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "யாம்"
+new = "எம்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "pronouns-nee-247"
+nannool_verses = [247]
+tamil_name = "நீ திரிபு"
+english_name = "Nee change"
+category = "thirithal"
+priority = 66
+description = "நீ becomes நின் before case markers"
+
+[rules.left_context]
+type = "specific_word"
+words = ["நீ"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "நீ"
+new = "நின்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "pronouns-neer-247"
+nannool_verses = [247]
+tamil_name = "நீர் திரிபு"
+english_name = "Neer change"
+category = "thirithal"
+priority = 66
+description = "நீர் becomes நும் before case markers"
+
+[rules.left_context]
+type = "specific_word"
+words = ["நீர்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "நீர்"
+new = "நும்"
+
+# -----------------------------------------------------------------------------
+# ஆ/மா/கோ Rules - Verse 248
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "aa-maa-ko-248"
+nannool_verses = [248]
+tamil_name = "ஆ/மா/கோ புணர்ச்சி"
+english_name = "Aa/Maa/Ko sandhi"
+category = "thondral"
+priority = 63
+description = "Words like 'aa' (cow), 'maa' (animal), or 'ko' (king) may take a 'na' glide before case markers"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஆ", "மா", "கோ"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "insert"
+text = "ன்"
+
+# -----------------------------------------------------------------------------
+# Number + ஆன் Rules - Verse 249
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "number-aan-249"
+nannool_verses = [249]
+tamil_name = "எண் + ஆன் புணர்ச்சி"
+english_name = "Number + aan sandhi"
+category = "keduthal"
+priority = 67
+description = "Numbers 1-8 before பத்து + ஆன் - ப் drops, all above rules apply; ஒன்பது also follows"
+
+[rules.left_context]
+type = "any"
+
+[rules.right_context]
+type = "specific_word"
+words = ["ஆன்"]
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# சுட்டு + அற்று Rules - Verse 250
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "suttu-atru-250"
+nannool_verses = [250]
+tamil_name = "சுட்டு + அற்று"
+english_name = "Demonstrative + atru"
+category = "thondral"
+priority = 62
+description = "Demonstrative ending in வ் - takes அற்று glide when joining"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["வ்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "வ்"
+new = "வற்று"
+
+# -----------------------------------------------------------------------------
+# சுட்டு + ஆய்தம் கெடுதல் Rules - Verse 251
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "suttu-aaytham-251"
+nannool_verses = [251]
+tamil_name = "சுட்டு + ஆய்தம் கெடுதல்"
+english_name = "Demonstrative aaytham deletion"
+category = "keduthal"
+priority = 61
+description = "Before demonstrative, ஆய்தம் drops when அன் glide comes"
+
+[rules.left_context]
+type = "any"
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# ஐ உருபு விதிகள் - Verse 255
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ai-urupu-255"
+nannool_verses = [255]
+tamil_name = "ஐ உருபு புணர்ச்சி"
+english_name = "Accusative case sandhi"
+category = "thondral"
+priority = 60
+description = "ஐ case marker - natural in variation, variation in natural; expands and contracts with உயர்திணை; expands/stands with விரவுப் பெயர்"
+
+[rules.left_context]
+type = "any"
+
+[rules.right_context]
+type = "specific_uyir"
+letters = ["ஐ"]
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# புள்ளி/உயிர் ஈறு + தொழில் மொழி Rules - Verse 256
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "pulli-uyir-thozhil-256"
+nannool_verses = [256]
+tamil_name = "புள்ளி/உயிர் + தொழில் மொழி"
+english_name = "Consonant/vowel + verbal noun"
+category = "thondral"
+priority = 58
+description = "Consonant or vowel ending before related verbal noun - vallinam alternates or natural"
+
+[rules.left_context]
+type = "any"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# =============================================================================
+# HIGH PRIORITY SANDHI RULES - Verses 159, 161, 180, 201, 202, 208, 220, 252
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Verse 159: பொதுப்பெயர் உயர்திணை before vallinam
+# பொதுப்பெயர் உயர்திணைப் பெயர்கள் ஈற்றுமெய் வலிவரின் இயல்பாம்
+# Common nouns and உயர்திணை nouns before hard consonants - natural sandhi
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "pothuppeyar-uyarthinai-159"
+nannool_verses = [159]
+tamil_name = "பொதுப்பெயர் உயர்திணை வல்லின புணர்ச்சி"
+english_name = "Common/rational noun + vallinam"
+category = "iyalbu"
+priority = 78
+left_class = ["noun"]
+conditions = ["common_noun", "uyarthinai"]
+description = "Common nouns and உயர்திணை (rational class) nouns ending in consonant - natural sandhi (no doubling) before vallinam"
+
+[rules.left_context]
+type = "any_mei"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "pothuppeyar-uyir-159"
+nannool_verses = [159]
+tamil_name = "பொதுப்பெயர் உயிர் ய ர ஈறு"
+english_name = "Common noun vowel/ya/ra ending"
+category = "iyalbu"
+priority = 77
+left_class = ["noun"]
+conditions = ["common_noun", "uyarthinai"]
+description = "Common nouns ending in vowel, ய், or ர் before vallinam - no doubling (some variation allowed)"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ய்", "ர்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# Verse 161: ஆவி ய ர ழ இறுதி முன்னிலை வினை
+# Vowel/ya/ra/zha ending imperatives - natural or variation before vallinam
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "munnilai-vinai-uyir-161"
+nannool_verses = [161]
+tamil_name = "முன்னிலை வினை உயிர் ஈறு"
+english_name = "Imperative vowel ending sandhi"
+category = "iyalbu"
+priority = 76
+left_class = ["verb"]
+conditions = ["imperative", "munnilai"]
+description = "Second person (முன்னிலை) imperative verbs ending in vowel before vallinam - natural or variation"
+
+[rules.left_context]
+type = "any_uyir"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "munnilai-vinai-ya-ra-zha-161"
+nannool_verses = [161]
+tamil_name = "முன்னிலை வினை ய ர ழ ஈறு"
+english_name = "Imperative ya/ra/zha ending sandhi"
+category = "iyalbu"
+priority = 76
+left_class = ["verb"]
+conditions = ["imperative", "munnilai"]
+description = "Second person (முன்னிலை) imperative verbs ending in ய்/ர்/ழ் before vallinam - natural or variation"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ய்", "ர்", "ழ்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# Verse 180: அது முன் வரும் அன்று ஆன்று ஆம்
+# அது + அன்று → ஆன்று (demonstrative + negation sandhi)
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "athu-anru-180"
+nannool_verses = [180]
+tamil_name = "அது + அன்று புணர்ச்சி"
+english_name = "Athu + anru sandhi"
+category = "thirithal"
+priority = 79
+description = "அது before அன்று becomes ஆன்று - demonstrative + negation sandhi"
+
+[rules.left_context]
+type = "specific_word"
+words = ["அது"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["அன்று"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "delete_from_first", count = 2 },
+  { type = "replace_beginning", old = "அ", new = "ஆ" }
+]
+
+# -----------------------------------------------------------------------------
+# Verse 201: இடைச்சொல் ஏ ஓ முன்வரின் இயல்பே
+# Particles ஏ/ஓ - natural sandhi (no change)
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "idaisol-e-o-201"
+nannool_verses = [201]
+tamil_name = "இடைச்சொல் ஏ ஓ புணர்ச்சி"
+english_name = "Particle e/o sandhi"
+category = "iyalbu"
+priority = 80
+description = "When particles ஏ or ஓ follow a word - natural sandhi (iyalbu, no change)"
+
+[rules.left_context]
+type = "any"
+
+[rules.right_context]
+type = "specific_word"
+words = ["ஏ", "ஓ"]
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# Verse 202: வேற்றுமை ஆயின் ஐகான் இறுமொழி
+# ஐ-ending words in case context - ending drops, அம் may be added
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ai-vetrumai-drop-202"
+nannool_verses = [202]
+tamil_name = "ஐகார வேற்றுமை - ஈற்று அழிவு"
+english_name = "Ai-ending case - ending drop"
+category = "keduthal"
+priority = 81
+relationship = "vetrumai"
+description = "Words ending in ஐ in case (வேற்றுமை) context - the ஐ ending drops"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["ஐ"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "delete_from_first"
+count = 1
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ai-vetrumai-am-202"
+nannool_verses = [202]
+tamil_name = "ஐகார வேற்றுமை - அம் சேர்தல்"
+english_name = "Ai-ending case - am addition"
+category = "thondral"
+priority = 80
+relationship = "vetrumai"
+description = "Words ending in ஐ in case (வேற்றுமை) context - ஐ drops and அம் is added"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["ஐ"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "delete_from_first", count = 1 },
+  { type = "insert", text = "அம்" }
+]
+
+# -----------------------------------------------------------------------------
+# Verse 208: நவ்விறு தொழிற்பெயர்க்கு அவ்வுமாம் வேற்றுமை
+# ன்-ending verbal nouns + அ suffix in case context
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "nav-tozhirpeyar-208"
+nannool_verses = [208]
+tamil_name = "நவ்விறு தொழிற்பெயர் புணர்ச்சி"
+english_name = "Na-ending verbal noun sandhi"
+category = "thondral"
+priority = 75
+left_class = ["noun"]
+conditions = ["verbal_noun"]
+relationship = "vetrumai"
+description = "Verbal nouns ending in ன் (nav) in case context - அ (av) suffix may be added"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ன்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "insert"
+text = "அ"
+
+# -----------------------------------------------------------------------------
+# Verse 220: வேற்றுமை மப் போய் வலிமெலி உறழ்வும்
+# ம்-ending in case context - ம் drops, vallinam/mellinam alternates
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "mam-vetrumai-drop-220"
+nannool_verses = [220]
+tamil_name = "வேற்றுமை மகர கெடுதல்"
+english_name = "Case makaram drop"
+category = "keduthal"
+priority = 74
+relationship = "vetrumai"
+description = "In case (வேற்றுமை) context, ம் ending drops and vallinam/mellinam alternates"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ம்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "delete_from_first", count = 1 },
+  { type = "double_initial" }
+]
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "mam-alvazhi-iyalbu-220"
+nannool_verses = [220]
+tamil_name = "அல்வழி மகர இயல்பு"
+english_name = "Non-case makaram natural"
+category = "iyalbu"
+priority = 73
+relationship = "alvazhi"
+description = "In non-case (அல்வழி) context with vowel or idaiyinam following - natural sandhi"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ம்"]
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "no_change"
+
+# -----------------------------------------------------------------------------
+# Verse 252: அத்தின் அகரம் அகர முனை இல்லை
+# அத்து glide - அ doesn't appear before அ (no double அ)
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "attu-akaram-252"
+nannool_verses = [252]
+tamil_name = "அத்து அகரம் கெடுதல்"
+english_name = "Attu glide a-elision"
+category = "keduthal"
+priority = 82
+description = "When அத்து glide is followed by a word beginning with அ - the அ of அத்து does not appear (no double அ)"
+
+[rules.left_context]
+type = "specific_word"
+words = ["அத்து"]
+
+[rules.right_context]
+type = "specific_uyir"
+letters = ["அ"]
+
+[rules.transformation]
+type = "delete_from_first"
+count = 1
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "attu-saariyai-252"
+nannool_verses = [252]
+tamil_name = "அத்து சாரியை அகர முனை"
+english_name = "Attu glide before a-beginning"
+category = "keduthal"
+priority = 82
+description = "Words taking அத்து glide before அ-beginning words - the trailing அ is absorbed"
+
+[rules.left_context]
+type = "any_mei"
+
+[rules.right_context]
+type = "specific_word"
+words = ["அத்து"]
+
+[rules.transformation]
+type = "no_change"
+
+# =============================================================================
+# எண் புணரியல் (Numeral Sandhi) - Verses 188-199
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# எண் நிறை அளவு புணர்ச்சி - Verse 188
+# General number sandhi: when numbers (1-8) combine, 1,2 lengthen initially,
+# 3,6,7 shorten, all except 6,7 lose final uyirmei, 7 loses final uyir
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "en-nirai-alavu-188"
+nannool_verses = [188]
+tamil_name = "எண் நிறை அளவு புணர்ச்சி"
+english_name = "Number measure sandhi"
+category = "keduthal"
+priority = 85
+description = "When numbers 1-8 combine with measures/other words, vowel transformations occur: 1,2 lengthen; 3,6,7 shorten; final uyirmei drops except for 6,7"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஒன்று", "இரண்டு", "மூன்று", "நான்கு", "ஐந்து", "ஆறு", "ஏழு", "எட்டு"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "ஒன்று"
+second = "கிலோ"
+result = "ஒரு கிலோ"
+
+[[rules.examples]]
+first = "இரண்டு"
+second = "மாதம்"
+result = "இரு மாதம்"
+
+# -----------------------------------------------------------------------------
+# ஒன்றன் புள்ளி ரகரம் - Verse 189
+# ஒன்று -> ஒரு: pulli (ன்) becomes ர், final உ remains
+# இரண்டு -> இரு: ஒற்று drops, உயிர் drops, உ comes
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ondru-oru-189"
+nannool_verses = [189]
+tamil_name = "ஒன்றன் புள்ளி ரகரம்"
+english_name = "Ondru to oru"
+category = "thirithal"
+priority = 88
+description = "ஒன்று becomes ஒரு: the ன் (pulli) becomes ர்"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஒன்று"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ன்று"
+new = "ரு"
+
+[[rules.examples]]
+first = "ஒன்று"
+second = "நாள்"
+result = "ஒரு நாள்"
+
+[[rules.examples]]
+first = "ஒன்று"
+second = "வீடு"
+result = "ஒரு வீடு"
+
+[[rules]]
+id = "ondru-pattu-189"
+nannool_verses = [189]
+tamil_name = "ஒன்று + பத்து புணர்ச்சி"
+english_name = "Ondru + pattu sandhi"
+category = "thirithal"
+priority = 90
+description = "ஒன்று + பத்து -> ஒருபத்து (one-ten = ten)"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஒன்று"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "replace_ending", old = "ன்று", new = "ரு" }
+]
+
+[[rules.examples]]
+first = "ஒன்று"
+second = "பத்து"
+result = "ஒருபத்து"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "irandu-iru-189"
+nannool_verses = [189]
+tamil_name = "இரண்டு திரிபு"
+english_name = "Irandu to iru"
+category = "thirithal"
+priority = 88
+description = "இரண்டு becomes இரு: ஒற்று and உயிர் drop, உ comes"
+
+[rules.left_context]
+type = "specific_word"
+words = ["இரண்டு"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ண்டு"
+new = ""
+
+[[rules.examples]]
+first = "இரண்டு"
+second = "நாள்"
+result = "இரு நாள்"
+
+[[rules.examples]]
+first = "இரண்டு"
+second = "பேர்"
+result = "இரு பேர்"
+
+[[rules]]
+id = "irandu-pattu-189"
+nannool_verses = [189, 198]
+tamil_name = "இரண்டு + பத்து புணர்ச்சி"
+english_name = "Irandu + pattu sandhi"
+category = "thirithal"
+priority = 90
+description = "இரண்டு + பத்து -> இருபத்து (two-ten = twenty)"
+
+[rules.left_context]
+type = "specific_word"
+words = ["இரண்டு"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "replace_ending", old = "ண்டு", new = "" }
+]
+
+[[rules.examples]]
+first = "இரண்டு"
+second = "பத்து"
+result = "இருபத்து"
+
+[[rules.examples]]
+first = "இரண்டு"
+second = "பத்து + ஒன்று"
+result = "இருபத்தொன்று"
+
+# -----------------------------------------------------------------------------
+# மூன்றன் உறுப்பு அழிவு - Verse 190
+# மூன்று -> மு: the entire உறுப்பு (ஒன்று part) is destroyed, or வந்தது (doubling)
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "moondru-mu-190"
+nannool_verses = [190]
+tamil_name = "மூன்றன் உறுப்பு அழிவு"
+english_name = "Moondru destruction"
+category = "keduthal"
+priority = 88
+description = "மூன்று -> மு: the உறுப்பு (ஒன்று) is destroyed"
+
+[rules.left_context]
+type = "specific_word"
+words = ["மூன்று"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ூன்று"
+new = "ு"
+
+[[rules.examples]]
+first = "மூன்று"
+second = "நாள்"
+result = "மு நாள்"
+
+[[rules]]
+id = "moondru-pattu-190"
+nannool_verses = [190]
+tamil_name = "மூன்று + பத்து புணர்ச்சி"
+english_name = "Moondru + pattu sandhi"
+category = "thirithal"
+priority = 90
+description = "மூன்று + பத்து -> முப்பத்து (three-ten = thirty): மூன்று -> மு, ப doubles"
+
+[rules.left_context]
+type = "specific_word"
+words = ["மூன்று"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "replace_ending", old = "ூன்று", new = "ு" },
+  { type = "double_initial" }
+]
+
+[[rules.examples]]
+first = "மூன்று"
+second = "பத்து"
+result = "முப்பத்து"
+
+[[rules.examples]]
+first = "மூன்று"
+second = "பத்து + ஒன்று"
+result = "முப்பத்தொன்று"
+
+# -----------------------------------------------------------------------------
+# நான்கன் மெய் ல ற ஆகும் - Verse 191
+# நான்கு -> நாலு/நாற்: the மெய் (ன்) becomes ல் or ற்
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "naangu-naalu-191"
+nannool_verses = [191]
+tamil_name = "நான்கன் மெய் லகரம்"
+english_name = "Naangu to naalu"
+category = "thirithal"
+priority = 87
+description = "நான்கு -> நாலு: ன் becomes ல், final கு drops"
+
+[rules.left_context]
+type = "specific_word"
+words = ["நான்கு"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ன்கு"
+new = "லு"
+
+[[rules.examples]]
+first = "நான்கு"
+second = "நாள்"
+result = "நாலு நாள்"
+
+[[rules.examples]]
+first = "நான்கு"
+second = "பேர்"
+result = "நாலு பேர்"
+
+[[rules]]
+id = "naangu-naar-191"
+nannool_verses = [191]
+tamil_name = "நான்கன் மெய் றகரம்"
+english_name = "Naangu to naar"
+category = "thirithal"
+priority = 88
+description = "நான்கு -> நாற்: ன் becomes ற், final கு drops (before பத்து)"
+
+[rules.left_context]
+type = "specific_word"
+words = ["நான்கு"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "replace_ending"
+old = "ன்கு"
+new = "ற்"
+
+[[rules.examples]]
+first = "நான்கு"
+second = "பத்து"
+result = "நாற்பத்து"
+
+[[rules]]
+id = "naangu-pattu-191"
+nannool_verses = [191]
+tamil_name = "நான்கு + பத்து புணர்ச்சி"
+english_name = "Naangu + pattu sandhi"
+category = "thirithal"
+priority = 90
+description = "நான்கு + பத்து -> நாற்பத்து (four-ten = forty): நான்கு -> நாற், ப doubles"
+
+[rules.left_context]
+type = "specific_word"
+words = ["நான்கு"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "replace_ending", old = "ன்கு", new = "ற்" },
+  { type = "double_initial" }
+]
+
+[[rules.examples]]
+first = "நான்கு"
+second = "பத்து"
+result = "நாற்பத்து"
+
+[[rules.examples]]
+first = "நான்கு"
+second = "பத்து + ஐந்து"
+result = "நாற்பத்தைந்து"
+
+# -----------------------------------------------------------------------------
+# ஐந்தன் ஒற்று அடைதல் - Verse 192
+# ஐந்து -> ஐம்/ஐஞ்: ஒற்று (ந்) may take இனம் (ம்/ஞ்) or drop
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ainthu-aim-192"
+nannool_verses = [192]
+tamil_name = "ஐந்தன் ஒற்று இனம்"
+english_name = "Ainthu to aim"
+category = "thirithal"
+priority = 88
+description = "ஐந்து -> ஐம்: ந் becomes its இனம் (nasal pair) ம், final து drops"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஐந்து"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ந்து"
+new = "ம்"
+
+[[rules.examples]]
+first = "ஐந்து"
+second = "நாள்"
+result = "ஐம் நாள்"
+
+[[rules]]
+id = "ainthu-pattu-192"
+nannool_verses = [192]
+tamil_name = "ஐந்து + பத்து புணர்ச்சி"
+english_name = "Ainthu + pattu sandhi"
+category = "thirithal"
+priority = 90
+description = "ஐந்து + பத்து -> ஐம்பத்து (five-ten = fifty): ஐந்து -> ஐம், ப doubles"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஐந்து"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "replace_ending", old = "ந்து", new = "ம்" },
+  { type = "double_initial" }
+]
+
+[[rules.examples]]
+first = "ஐந்து"
+second = "பத்து"
+result = "ஐம்பத்து"
+
+[[rules.examples]]
+first = "ஐந்து"
+second = "பத்து + மூன்று"
+result = "ஐம்பத்துமூன்று"
+
+# -----------------------------------------------------------------------------
+# ஆறு/ஏழு sandhi (implied from verse 188)
+# ஆறு -> அறு (vowel shortens), ஏழு -> எழு (vowel shortens)
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "aaru-aru-188"
+nannool_verses = [188]
+tamil_name = "ஆறு குறுக்கல்"
+english_name = "Aaru shortening"
+category = "thirithal"
+priority = 87
+description = "ஆறு -> அறு: long vowel shortens before combination"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஆறு"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ஆறு"
+new = "அறு"
+
+[[rules.examples]]
+first = "ஆறு"
+second = "மாதம்"
+result = "அறு மாதம்"
+
+[[rules]]
+id = "aaru-pattu-188"
+nannool_verses = [188]
+tamil_name = "ஆறு + பத்து புணர்ச்சி"
+english_name = "Aaru + pattu sandhi"
+category = "thirithal"
+priority = 90
+description = "ஆறு + பத்து -> அறுபத்து (six-ten = sixty): ஆறு -> அறு, ப doubles"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஆறு"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "replace_ending", old = "ஆறு", new = "அறு" },
+  { type = "double_initial" }
+]
+
+[[rules.examples]]
+first = "ஆறு"
+second = "பத்து"
+result = "அறுபத்து"
+
+[[rules.examples]]
+first = "ஆறு"
+second = "பத்து + ஆறு"
+result = "அறுபத்தாறு"
+
+[[rules]]
+id = "ezhu-ezu-188"
+nannool_verses = [188]
+tamil_name = "ஏழு குறுக்கல்"
+english_name = "Ezhu shortening"
+category = "thirithal"
+priority = 87
+description = "ஏழு -> எழு: long vowel shortens before combination"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஏழு"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ஏழு"
+new = "எழு"
+
+[[rules.examples]]
+first = "ஏழு"
+second = "நாள்"
+result = "எழு நாள்"
+
+[[rules]]
+id = "ezhu-pattu-188"
+nannool_verses = [188]
+tamil_name = "ஏழு + பத்து புணர்ச்சி"
+english_name = "Ezhu + pattu sandhi"
+category = "thirithal"
+priority = 90
+description = "ஏழு + பத்து -> எழுபத்து (seven-ten = seventy): ஏழு -> எழு, ப doubles"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஏழு"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "replace_ending", old = "ஏழு", new = "எழு" },
+  { type = "double_initial" }
+]
+
+[[rules.examples]]
+first = "ஏழு"
+second = "பத்து"
+result = "எழுபத்து"
+
+[[rules.examples]]
+first = "ஏழு"
+second = "பத்து + ஏழு"
+result = "எழுபத்தேழு"
+
+# -----------------------------------------------------------------------------
+# எட்டன் உடம்பு ண ஆகும் - Verse 193
+# எட்டு -> எண்: the உடம்பு (ட்டு) becomes ண்
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ettu-en-193"
+nannool_verses = [193]
+tamil_name = "எட்டன் உடம்பு ணகரம்"
+english_name = "Ettu to en"
+category = "thirithal"
+priority = 88
+description = "எட்டு -> எண்: ட்டு (body) becomes ண்"
+
+[rules.left_context]
+type = "specific_word"
+words = ["எட்டு"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ட்டு"
+new = "ண்"
+
+[[rules.examples]]
+first = "எட்டு"
+second = "நாள்"
+result = "எண் நாள்"
+
+[[rules]]
+id = "ettu-pattu-193"
+nannool_verses = [193]
+tamil_name = "எட்டு + பத்து புணர்ச்சி"
+english_name = "Ettu + pattu sandhi"
+category = "thirithal"
+priority = 90
+description = "எட்டு + பத்து -> எண்பத்து (eight-ten = eighty): எட்டு -> எண், ப doubles"
+
+[rules.left_context]
+type = "specific_word"
+words = ["எட்டு"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "replace_ending", old = "ட்டு", new = "ண்" },
+  { type = "double_initial" }
+]
+
+[[rules.examples]]
+first = "எட்டு"
+second = "பத்து"
+result = "எண்பத்து"
+
+[[rules.examples]]
+first = "எட்டு"
+second = "பத்து + எட்டு"
+result = "எண்பத்தெட்டு"
+
+# -----------------------------------------------------------------------------
+# ஒன்பானொடு பத்தும் நூறும் - Verse 194
+# ஒன்பது -> தொண்ணூறு patterns, பத்து/நூறு combinations
+# Complex: differs from others with த insertion, ணள transformations
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "onpathu-194"
+nannool_verses = [194]
+tamil_name = "ஒன்பது புணர்ச்சி"
+english_name = "Onpathu sandhi"
+category = "thirithal"
+priority = 88
+description = "ஒன்பது special sandhi: differs from 1-8, uses தகரம் insertion and ணள changes"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஒன்பது"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "replace_ending"
+old = "ன்பது"
+new = "ன்பான்"
+
+[[rules.examples]]
+first = "ஒன்பது"
+second = "நாள்"
+result = "ஒன்பான் நாள்"
+
+[[rules]]
+id = "onpathu-pattu-194"
+nannool_verses = [194]
+tamil_name = "ஒன்பது + பத்து புணர்ச்சி"
+english_name = "Onpathu + pattu sandhi"
+category = "thirithal"
+priority = 90
+description = "ஒன்பது + பத்து -> தொண்ணூறு (nine-ten = ninety): complex transformation with த insertion"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஒன்பது"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "replace_ending"
+old = "ஒன்பது"
+new = "தொண்"
+
+[[rules.examples]]
+first = "ஒன்பது"
+second = "பத்து"
+result = "தொண்ணூறு"
+
+[[rules]]
+id = "pathu-nuuru-194"
+nannool_verses = [194]
+tamil_name = "பத்து + நூறு புணர்ச்சி"
+english_name = "Pattu + nuuru sandhi"
+category = "thirithal"
+priority = 89
+description = "பத்து + நூறு -> ஆயிரம் relationships, decade + hundred combinations"
+
+[rules.left_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["நூறு"]
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "பத்து"
+second = "நூறு"
+result = "ஆயிரம்"
+
+# -----------------------------------------------------------------------------
+# முதல் இரு நான்காம் எண் முனர் பத்தின் - Verse 195
+# 1, 2, 4 before பத்து: middle ஒற்று drops or becomes ஆய்தம்
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "mutal-iru-naangaam-195"
+nannool_verses = [195]
+tamil_name = "முதல் இரு நான்கு எண் முன் பத்து"
+english_name = "First, second, fourth before pattu"
+category = "keduthal"
+priority = 86
+description = "ஒன்று, இரண்டு, நான்கு before பத்து: middle consonant drops or becomes ஆய்தம்"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஒன்று", "இரண்டு", "நான்கு"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "ஒன்று"
+second = "பத்து"
+result = "ஒருபத்து"
+
+[[rules.examples]]
+first = "இரண்டு"
+second = "பத்து"
+result = "இருபத்து"
+
+[[rules.examples]]
+first = "நான்கு"
+second = "பத்து"
+result = "நாற்பத்து"
+
+# -----------------------------------------------------------------------------
+# ஒருபஃது ஆதி முன் - Verse 196
+# Decade sandhi: before 1-9, decades (ஒருபத்து etc.) + unit numbers
+# ஆய்தம் drops, த becomes the connector
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "orupathu-aathi-196"
+nannool_verses = [196]
+tamil_name = "ஒருபத்து ஆதி முன் எண்"
+english_name = "Decade before unit"
+category = "thirithal"
+priority = 85
+description = "Decades (பத்து forms) before 1-9: ஆய்தம் drops, த connects"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஒருபத்து", "இருபத்து", "முப்பத்து", "நாற்பத்து", "ஐம்பத்து", "அறுபத்து", "எழுபத்து", "எண்பத்து", "தொண்ணூற்று"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["ஒன்று", "இரண்டு", "மூன்று", "நான்கு", "ஐந்து", "ஆறு", "ஏழு", "எட்டு", "ஒன்பது"]
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "இருபத்து"
+second = "ஒன்று"
+result = "இருபத்தொன்று"
+
+[[rules.examples]]
+first = "முப்பத்து"
+second = "மூன்று"
+result = "முப்பத்துமூன்று"
+
+[[rules.examples]]
+first = "ஐம்பத்து"
+second = "ஐந்து"
+result = "ஐம்பத்தைந்து"
+
+# -----------------------------------------------------------------------------
+# ஒன்று முதல் ஈர் ஐந்து ஆயிரம் கோடி - Verse 197
+# Large numbers: 1-10 + ஆயிரம்/கோடி, பத்து loses final uyirmei
+# இன்/இற்று may be added
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "en-aayiram-197"
+nannool_verses = [197]
+tamil_name = "எண் + ஆயிரம் புணர்ச்சி"
+english_name = "Number + aayiram sandhi"
+category = "thirithal"
+priority = 87
+description = "Numbers 1-10 before ஆயிரம்: பத்து loses uyirmei, இன்/இற்று may be added"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஒன்று", "இரண்டு", "மூன்று", "நான்கு", "ஐந்து", "ஆறு", "ஏழு", "எட்டு", "ஒன்பது", "பத்து"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["ஆயிரம்"]
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "ஒன்று"
+second = "ஆயிரம்"
+result = "ஓராயிரம்"
+
+[[rules.examples]]
+first = "இரண்டு"
+second = "ஆயிரம்"
+result = "ஈராயிரம்"
+
+[[rules.examples]]
+first = "பத்து"
+second = "ஆயிரம்"
+result = "பத்தாயிரம்"
+
+[[rules]]
+id = "en-kodi-197"
+nannool_verses = [197]
+tamil_name = "எண் + கோடி புணர்ச்சி"
+english_name = "Number + kodi sandhi"
+category = "thirithal"
+priority = 87
+description = "Numbers before கோடி: similar sandhi rules apply"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஒன்று", "இரண்டு", "மூன்று", "நான்கு", "ஐந்து", "ஆறு", "ஏழு", "எட்டு", "ஒன்பது", "பத்து", "நூறு", "ஆயிரம்"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["கோடி"]
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "ஒன்று"
+second = "கோடி"
+result = "ஒரு கோடி"
+
+[[rules.examples]]
+first = "பத்து"
+second = "கோடி"
+result = "பத்துக்கோடி"
+
+[[rules]]
+id = "pathu-aayiram-197"
+nannool_verses = [197]
+tamil_name = "பத்து + ஆயிரம் புணர்ச்சி"
+english_name = "Pattu + aayiram sandhi"
+category = "keduthal"
+priority = 89
+description = "பத்து + ஆயிரம் -> பத்தாயிரம்: final உயிர்மெய் may drop"
+
+[rules.left_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["ஆயிரம்"]
+
+[rules.transformation]
+type = "delete_from_first"
+count = 1
+
+[[rules.examples]]
+first = "பத்து"
+second = "ஆயிரம்"
+result = "பத்தாயிரம்"
+
+# -----------------------------------------------------------------------------
+# இரண்டு முன்வரின் பத்தின் - Verse 198
+# இரண்டு + பத்து: final uyirmei drops, ஒற்று becomes ன
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "irandu-pattin-198"
+nannool_verses = [198]
+tamil_name = "இரண்டு முன் பத்து"
+english_name = "Irandu before pattu special"
+category = "thirithal"
+priority = 91
+description = "இரண்டு + பத்து -> இருபத்து: uyirmei hides, ஒற்று becomes ன"
+
+[rules.left_context]
+type = "specific_word"
+words = ["இரண்டு"]
+
+[rules.right_context]
+type = "specific_word"
+words = ["பத்து"]
+
+[rules.transformation]
+type = "replace_ending"
+old = "ண்டு"
+new = ""
+
+[[rules.examples]]
+first = "இரண்டு"
+second = "பத்து"
+result = "இருபத்து"
+
+# -----------------------------------------------------------------------------
+# ஒன்பது ஒழித்த எண் ஒன்பதும் இரட்டின் - Verse 199
+# Numbers except 9 before doubled (compound) numbers:
+# If vowel follows, வ் appears; if consonant follows, doubling occurs
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "en-iratti-uyir-199"
+nannool_verses = [199]
+tamil_name = "எண் இரட்டின் உயிர் வரின்"
+english_name = "Number compound vowel sandhi"
+category = "thondral"
+priority = 84
+description = "Numbers (except 9) in compounds: if vowel follows, வ் appears"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஒன்று", "இரண்டு", "மூன்று", "நான்கு", "ஐந்து", "ஆறு", "ஏழு", "எட்டு"]
+
+[rules.right_context]
+type = "any_uyir"
+
+[rules.transformation]
+type = "insert"
+text = "வ்"
+
+[[rules.examples]]
+first = "ஐந்து"
+second = "ஐந்து"
+result = "ஐந்துவைந்து"
+
+[[rules]]
+id = "en-iratti-mei-199"
+nannool_verses = [199]
+tamil_name = "எண் இரட்டின் மெய் வரின்"
+english_name = "Number compound consonant sandhi"
+category = "thondral"
+priority = 84
+description = "Numbers (except 9) in compounds: if consonant follows, doubling occurs"
+
+[rules.left_context]
+type = "specific_word"
+words = ["ஒன்று", "இரண்டு", "மூன்று", "நான்கு", "ஐந்து", "ஆறு", "ஏழு", "எட்டு"]
+
+[rules.right_context]
+type = "any_mei"
+
+[rules.transformation]
+type = "double_initial"
+
+[[rules.examples]]
+first = "மூன்று"
+second = "பத்து"
+result = "முப்பத்து"
+
+[[rules.examples]]
+first = "நான்கு"
+second = "பத்து"
+result = "நாற்பத்து"
+
 # =============================================================================
 # Additional Common Rules
 # =============================================================================
@@ -191,10 +3074,1005 @@ description = "Aaytham (ஃ) before vallinam follows special rules"
 
 [rules.left_context]
 type = "specific_word"
-words = ["அஃது"]
+words = ["அஃது", "இஃது", "உஃது"]
 
 [rules.right_context]
 type = "vallinam"
 
 [rules.transformation]
 type = "no_change"
+
+# =============================================================================
+# MEDIUM PRIORITY SANDHI RULES - Verses 160, 212, 215, 226, 229, 230
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Verse 160: ஈற்றுயா வினாவிளிப் பெயர்முன் வலி இயல்பே
+# Interrogatives/vocatives before vallinam - natural (no change)
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "vina-vili-iyalbu-160"
+nannool_verses = [160]
+tamil_name = "வினாவிளிப் பெயர் இயல்பு"
+english_name = "Interrogative/vocative natural sandhi"
+category = "iyalbu"
+priority = 45
+description = "Interrogative words (எங்கே, எப்படி, etc.) and vocative forms before vallinam - no change (natural sandhi)"
+
+[rules.left_context]
+type = "specific_word"
+words = ["எங்கே", "எப்படி", "எப்போது", "எது", "எவன்", "எவள்", "எவர்", "என்ன", "எந்த", "எதற்கு", "எங்கு", "எவ்வளவு", "யார்", "ஏன்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "எங்கே"
+second = "போவது"
+result = "எங்கே போவது"
+
+[[rules.examples]]
+first = "எப்படி"
+second = "செய்வது"
+result = "எப்படி செய்வது"
+
+[[rules.examples]]
+first = "யார்"
+second = "கேட்டார்"
+result = "யார் கேட்டார்"
+
+# -----------------------------------------------------------------------------
+# Verse 212: னஃகான் கிளைப்பெயர்
+# ன்-ending kinship terms
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "kilaipeyar-nakaan-212"
+nannool_verses = [212]
+tamil_name = "னஃகான் கிளைப்பெயர்"
+english_name = "Kinship terms with n-ending"
+category = "iyalbu"
+priority = 45
+left_class = ["noun"]
+conditions = ["kinship"]
+description = "Kinship terms ending in ன் - natural sandhi in vetrumai; with ஃகான் (க்) prefix in some compounds"
+
+[rules.left_context]
+type = "specific_word"
+words = ["மகன்", "மருமகன்", "தம்பன்", "அண்ணன்", "தாத்தன்", "அப்பன்", "ஐயன்", "சித்தன்", "பெரியப்பன்", "சிற்றப்பன்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "மகன்"
+second = "வீடு"
+result = "மகன் வீடு"
+
+[[rules.examples]]
+first = "அண்ணன்"
+second = "பெயர்"
+result = "அண்ணன் பெயர்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "kilaipeyar-akkaan-212"
+nannool_verses = [212]
+tamil_name = "அஃகான் கிளைப்பெயர்"
+english_name = "Kinship terms with k-suffix"
+category = "thondral"
+priority = 44
+left_class = ["noun"]
+conditions = ["kinship"]
+description = "Kinship terms in vetrumai context - may take அஃகான் (க்) as suffix/glide"
+
+[rules.left_context]
+type = "specific_word"
+words = ["மகன்", "மருமகன்", "தம்பன்", "அண்ணன்"]
+
+[rules.right_context]
+type = "any"
+
+[rules.transformation]
+type = "insert"
+text = "க்"
+
+[[rules.examples]]
+first = "மகன்"
+second = "ஐ"
+result = "மகனை"
+
+# -----------------------------------------------------------------------------
+# Verse 215: மரம் அல் எகின் மொழி
+# Tree names (not ending in மரம்) + vallinam
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "maram-al-ekin-215"
+nannool_verses = [215]
+tamil_name = "மரம் அல் எகின் மொழி"
+english_name = "Tree names without maram suffix"
+category = "iyalbu"
+priority = 45
+left_class = ["noun"]
+conditions = ["tree"]
+description = "Tree names not ending in 'maram' - natural sandhi; with அகரம் may take vallinam or mellinam"
+
+[rules.left_context]
+type = "specific_word"
+words = ["புளி", "வேம்பு", "ஆல்", "அரசு", "மா", "பலா", "தென்னை", "பனை", "வாழை", "கொய்யா", "நாவல்", "இலுப்பை", "ஆத்தி", "வேல்", "நெல்லி"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "புளி"
+second = "காய்"
+result = "புளிக்காய்"
+
+[[rules.examples]]
+first = "வேம்பு"
+second = "பூ"
+result = "வேம்புப்பூ"
+
+[[rules.examples]]
+first = "மா"
+second = "காய்"
+result = "மாங்காய்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "maram-al-ekin-mellinam-215"
+nannool_verses = [215]
+tamil_name = "மரம் அல் எகின் மொழி - மெல்லினம்"
+english_name = "Tree names with mellinam insertion"
+category = "thondral"
+priority = 46
+left_class = ["noun"]
+conditions = ["tree"]
+description = "Tree names - may insert corresponding mellinam before vallinam"
+
+[rules.left_context]
+type = "specific_word"
+words = ["மா", "பூ", "தேன்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "insert_mellinam"
+
+[[rules.examples]]
+first = "மா"
+second = "காய்"
+result = "மாங்காய்"
+
+[[rules.examples]]
+first = "பூ"
+second = "தோட்டம்"
+result = "பூந்தோட்டம்"
+
+# -----------------------------------------------------------------------------
+# Verse 226: கீழின்முன் வன்மை விகற்பமும்
+# கீழ் (direction word) before vallinam - optional doubling
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "kizh-vikarpam-226"
+nannool_verses = [226]
+tamil_name = "கீழின்முன் வன்மை விகற்பம்"
+english_name = "Kizh direction optional sandhi"
+category = "iyalbu"
+priority = 45
+conditions = ["direction"]
+description = "கீழ் (below/under) before vallinam - optional: either natural or vallinam doubles"
+
+[rules.left_context]
+type = "specific_word"
+words = ["கீழ்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "கீழ்"
+second = "பக்கம்"
+result = "கீழ்பக்கம்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "kizh-vikarpam-double-226"
+nannool_verses = [226]
+tamil_name = "கீழின்முன் வன்மை விகற்பம் - மிகுதல்"
+english_name = "Kizh direction with doubling"
+category = "iyalbu"
+priority = 44
+conditions = ["direction"]
+description = "கீழ் before vallinam - alternative: vallinam doubles"
+
+[rules.left_context]
+type = "specific_word"
+words = ["கீழ்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "double_initial"
+
+[[rules.examples]]
+first = "கீழ்"
+second = "பக்கம்"
+result = "கீழ்ப்பக்கம்"
+
+[[rules.examples]]
+first = "கீழ்"
+second = "தரம்"
+result = "கீழ்த்தரம்"
+
+# -----------------------------------------------------------------------------
+# Verse 229: குறில் செறியா ல ள அல்வழி
+# ல/ள without preceding kuril in அல்வழி context
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "kuril-seriya-la-229"
+nannool_verses = [229]
+tamil_name = "குறில் செறியா ல அல்வழி"
+english_name = "La without short vowel sandhi"
+category = "thirithal"
+priority = 45
+description = "ல் not preceded by short vowel in அல்வழி - when த follows: த becomes ற, then ல may drop; when ந follows after change: ந becomes ன then may drop; before vallinam: natural or with change"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ல்"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["த்"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "replace_beginning", old = "த", new = "ற" },
+  { type = "delete_from_first", count = 1 }
+]
+
+[[rules.examples]]
+first = "கோல்"
+second = "தச்சன்"
+result = "கோற்றச்சன்"
+
+[[rules.examples]]
+first = "பால்"
+second = "தாழி"
+result = "பாற்றாழி"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "kuril-seriya-lla-229"
+nannool_verses = [229]
+tamil_name = "குறில் செறியா ள அல்வழி"
+english_name = "Lla without short vowel sandhi"
+category = "thirithal"
+priority = 45
+description = "ள் not preceded by short vowel in அல்வழி before த - த becomes ட"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ள்"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["த்"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "replace_beginning", old = "த", new = "ட" },
+  { type = "delete_from_first", count = 1 }
+]
+
+[[rules.examples]]
+first = "வாள்"
+second = "தடி"
+result = "வாட்டடி"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "kuril-seriya-la-na-229"
+nannool_verses = [229]
+tamil_name = "குறில் செறியா ல + ந அல்வழி"
+english_name = "La + na without short vowel sandhi"
+category = "thirithal"
+priority = 45
+description = "ல் not preceded by short vowel before ந - ந becomes ன, then may drop"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ல்"]
+
+[rules.right_context]
+type = "specific_mei"
+letters = ["ந்"]
+
+[rules.transformation]
+type = "compound"
+steps = [
+  { type = "replace_beginning", old = "ந", new = "ன" },
+  { type = "delete_from_first", count = 1 }
+]
+
+[[rules.examples]]
+first = "கோல்"
+second = "நாடு"
+result = "கோன்னாடு"
+
+# -----------------------------------------------------------------------------
+# Verse 230: ல ள இறு தொழிற்பெயர்
+# ல/ள-ending verbal nouns
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "la-lla-thozhirpeyar-230"
+nannool_verses = [230]
+tamil_name = "ல ள இறு தொழிற்பெயர்"
+english_name = "La/Lla ending verbal nouns"
+category = "iyalbu"
+priority = 45
+left_class = ["verb"]
+description = "Verbal nouns ending in ல்/ள் in both vetrumai and alvazhi - do not take உ insertion; before vallinam in alvazhi: natural"
+
+[rules.left_context]
+type = "specific_mei"
+letters = ["ல்", "ள்"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "செய்தல்"
+second = "கடினம்"
+result = "செய்தல் கடினம்"
+
+[[rules.examples]]
+first = "வருதல்"
+second = "தெரியும்"
+result = "வருதல் தெரியும்"
+
+[[rules.examples]]
+first = "படித்தல்"
+second = "சிறந்தது"
+result = "படித்தல் சிறந்தது"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "la-lla-thozhirpeyar-no-uvvura-230"
+nannool_verses = [230]
+tamil_name = "ல ள இறு தொழிற்பெயர் - உவ்வுறாமை"
+english_name = "La/Lla verbal nouns no u-insertion"
+category = "iyalbu"
+priority = 46
+left_class = ["verb"]
+description = "Verbal nouns ending in ல்/ள் - unlike other consonant-ending words, do NOT take உ insertion in either vetrumai or alvazhi"
+
+[rules.left_context]
+type = "specific_word"
+words = ["செய்தல்", "வருதல்", "போதல்", "படித்தல்", "கற்றல்", "எழுதல்", "நடத்தல்", "பாடுதல்", "ஆடுதல்", "கொடுத்தல்", "பெறுதல்", "கொள்ளுதல்"]
+
+[rules.right_context]
+type = "any_mei"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "செய்தல்"
+second = "வேண்டும்"
+result = "செய்தல் வேண்டும்"
+
+[[rules.examples]]
+first = "கற்றல்"
+second = "நல்லது"
+result = "கற்றல் நல்லது"
+
+# =============================================================================
+# வல்லினம் மிகாமை விதிகள் (No-Doubling Rules) - Modern Usage Patterns
+# Based on tamilvu.org and practical grammar guides
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# சொல்லுருபு விலக்குகள் - Postposition/Suffix Exceptions
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "odu-suffix-miga"
+nannool_verses = []
+tamil_name = "ஒடு/ஓடு விலக்கு"
+english_name = "Sociative suffix exception"
+category = "iyalbu"
+priority = 88
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Words ending in -ஒடு/-ஓடு (sociative case) do not trigger vallinam doubling"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["உ", "ஓ"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "கத்தியோடு"
+second = "போனான்"
+result = "கத்தியோடு போனான்"
+
+[[rules.examples]]
+first = "நண்பனோடு"
+second = "சென்றான்"
+result = "நண்பனோடு சென்றான்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "kondu-suffix-miga"
+nannool_verses = []
+tamil_name = "கொண்டு விலக்கு"
+english_name = "Kondu suffix exception"
+category = "iyalbu"
+priority = 88
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Words ending in -கொண்டு do not trigger vallinam doubling"
+
+[rules.left_context]
+type = "specific_word"
+words = ["கொண்டு", "எடுத்துக்கொண்டு", "பார்த்துக்கொண்டு", "சென்றுகொண்டு", "வந்துகொண்டு"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "கத்திகொண்டு"
+second = "குத்தினான்"
+result = "கத்திகொண்டு குத்தினான்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "lirunthu-suffix-miga"
+nannool_verses = []
+tamil_name = "லிருந்து விலக்கு"
+english_name = "Lirunthu suffix exception"
+category = "iyalbu"
+priority = 88
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Words ending in -லிருந்து (from + place) do not trigger vallinam doubling"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["உ"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "வீட்டிலிருந்து"
+second = "சென்றான்"
+result = "வீட்டிலிருந்து சென்றான்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "ninru-suffix-miga"
+nannool_verses = []
+tamil_name = "னின்று விலக்கு"
+english_name = "Ninru suffix exception"
+category = "iyalbu"
+priority = 88
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Words ending in -னின்று do not trigger vallinam doubling"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["உ"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "வீட்டினின்று"
+second = "வெளியேறினான்"
+result = "வீட்டினின்று வெளியேறினான்"
+
+# -----------------------------------------------------------------------------
+# வினையெச்ச விலக்குகள் - Verbal Participle Exceptions
+# மென்தொடர்/இடைத்தொடர் குற்றியலுகர வினையெச்சங்கள்
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "vinaiechham-ndu-miga"
+nannool_verses = []
+tamil_name = "ண்டு/ந்து/ன்று வினையெச்ச விலக்கு"
+english_name = "Soft-cluster verbal participle exception"
+category = "iyalbu"
+priority = 87
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Verbal participles ending in -ண்டு, -ந்து, -ன்று (soft cluster + u) do not trigger doubling"
+
+[rules.left_context]
+type = "mellinthodar_kutriyalukaram"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "கண்டு"
+second = "பேசினார்"
+result = "கண்டு பேசினார்"
+
+[[rules.examples]]
+first = "சென்று"
+second = "பார்த்தான்"
+result = "சென்று பார்த்தான்"
+
+[[rules.examples]]
+first = "கொன்று"
+second = "குவித்தான்"
+result = "கொன்று குவித்தான்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "vinaiechham-ythu-miga"
+nannool_verses = []
+tamil_name = "ய்து வினையெச்ச விலக்கு"
+english_name = "Idaithodar verbal participle exception"
+category = "iyalbu"
+priority = 87
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Verbal participles ending in -ய்து (medial cluster + u) do not trigger doubling"
+
+[rules.left_context]
+type = "idaithodar_kutriyalukaram"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "செய்து"
+second = "தந்தான்"
+result = "செய்து தந்தான்"
+
+# -----------------------------------------------------------------------------
+# பெயரெச்ச விலக்குகள் - Relative Participle Exceptions
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "peyarechham-aatha-miga"
+nannool_verses = []
+tamil_name = "ஆத பெயரெச்ச விலக்கு"
+english_name = "Negative relative participle exception"
+category = "iyalbu"
+priority = 86
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Relative participles ending in -ஆத (negative) do not trigger doubling"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["அ"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "அழியாத"
+second = "கல்வி"
+result = "அழியாத கல்வி"
+
+[[rules.examples]]
+first = "மாறாத"
+second = "காதல்"
+result = "மாறாத காதல்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "peyarechham-iya-miga"
+nannool_verses = []
+tamil_name = "இய பெயரெச்ச விலக்கு"
+english_name = "Iya relative participle exception"
+category = "iyalbu"
+priority = 86
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Relative participles ending in -இய do not trigger doubling"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["அ"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "பெரிய"
+second = "பெண்"
+result = "பெரிய பெண்"
+
+[[rules.examples]]
+first = "சிறிய"
+second = "குழந்தை"
+result = "சிறிய குழந்தை"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "peyarechham-tra-lla-tta-miga"
+nannool_verses = []
+tamil_name = "ற்ற/ல்ல/ட்ட பெயரெச்ச விலக்கு"
+english_name = "Past relative participle exception"
+category = "iyalbu"
+priority = 86
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Relative participles ending in -ற்ற, -ல்ல, -ட்ட do not trigger doubling"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["அ"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "கற்ற"
+second = "சிறுவன்"
+result = "கற்ற சிறுவன்"
+
+[[rules.examples]]
+first = "சொல்ல"
+second = "போனான்"
+result = "சொல்ல போனான்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "peyarechham-kinra-miga"
+nannool_verses = []
+tamil_name = "கின்ற/கிற பெயரெச்ச விலக்கு"
+english_name = "Present relative participle exception"
+category = "iyalbu"
+priority = 86
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Relative participles ending in -கின்ற, -கிற do not trigger doubling"
+
+[rules.left_context]
+type = "specific_uyir"
+letters = ["அ"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "வருகின்ற"
+second = "பேருந்து"
+result = "வருகின்ற பேருந்து"
+
+# -----------------------------------------------------------------------------
+# எண்ணுப்பெயர் விலக்குகள் - Numeral Exceptions
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "numeral-exception-miga"
+nannool_verses = []
+tamil_name = "எண்ணுப்பெயர் விலக்கு"
+english_name = "Numeral exception"
+category = "iyalbu"
+priority = 85
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Cardinal numerals do not trigger vallinam doubling"
+
+[rules.left_context]
+type = "specific_word"
+words = [
+    "ஒன்று", "இரண்டு", "மூன்று", "நான்கு", "ஐந்து",
+    "ஆறு", "ஏழு", "எட்டு", "ஒன்பது", "பத்து",
+    "நூறு", "ஆயிரம்", "இலக்கம்", "கோடி",
+    "ஒரு", "இரு"
+]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "ஐந்து"
+second = "சிறுவர்கள்"
+result = "ஐந்து சிறுவர்கள்"
+
+[[rules.examples]]
+first = "பத்து"
+second = "பேர்"
+result = "பத்து பேர்"
+
+# -----------------------------------------------------------------------------
+# வியங்கோள் விலக்குகள் - Optative Exception
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "viyangol-exception-miga"
+nannool_verses = []
+tamil_name = "வியங்கோள் வினைமுற்று விலக்கு"
+english_name = "Optative verb exception"
+category = "iyalbu"
+priority = 85
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Optative verb forms (blessings/wishes) do not trigger vallinam doubling"
+
+[rules.left_context]
+type = "specific_word"
+words = [
+    "வாழ்க", "வாழி", "வாழிய", "வாழியர்",
+    "வெல்க", "வருக", "செல்க", "ஒழிக",
+    "உண்க", "அருள்க", "வீழ்க"
+]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "வருக"
+second = "புலவரே"
+result = "வருக புலவரே"
+
+[[rules.examples]]
+first = "வாழ்க"
+second = "தமிழ்"
+result = "வாழ்க தமிழ்"
+
+# -----------------------------------------------------------------------------
+# இரட்டைக்கிளவி விலக்கு - Reduplication Exception
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "irattaikilaivi-exception-miga"
+nannool_verses = []
+tamil_name = "இரட்டைக்கிளவி விலக்கு"
+english_name = "Reduplication exception"
+category = "iyalbu"
+priority = 89
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "When the same word is repeated (echo words), no vallinam doubling occurs"
+
+[rules.left_context]
+type = "any_uyir"
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+# Note: This rule requires semantic check - word1 == word2
+# Currently pattern-based; checker should verify word equality
+
+[[rules.examples]]
+first = "கல"
+second = "கல"
+result = "கல கல"
+
+[[rules.examples]]
+first = "சல"
+second = "சல"
+result = "சல சல"
+
+# -----------------------------------------------------------------------------
+# ஆறாம் வேற்றுமை விலக்கு - 6th Case Suffix Exception
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "sixth-case-athu-miga"
+nannool_verses = []
+tamil_name = "ஆறாம் வேற்றுமை அது விலக்கு"
+english_name = "Sixth case -athu exception"
+category = "iyalbu"
+priority = 85
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Possessive forms ending in -அது (எனது, உனது) do not trigger doubling"
+
+[rules.left_context]
+type = "specific_word"
+words = ["எனது", "உனது", "அவனது", "அவளது", "அதனது", "நமது", "எமது", "தனது"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "எனது"
+second = "புத்தகம்"
+result = "எனது புத்தகம்"
+
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "sixth-case-udaiya-miga"
+nannool_verses = []
+tamil_name = "உடைய விலக்கு"
+english_name = "Udaiya suffix exception"
+category = "iyalbu"
+priority = 85
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Possessive forms ending in -உடைய do not trigger doubling"
+
+[rules.left_context]
+type = "specific_word"
+words = ["என்னுடைய", "உன்னுடைய", "அவனுடைய", "அவளுடைய", "நம்முடைய", "எம்முடைய", "தன்னுடைய"]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "என்னுடைய"
+second = "புத்தகம்"
+result = "என்னுடைய புத்தகம்"
+
+# -----------------------------------------------------------------------------
+# சுட்டு/வினா விலக்கு - Demonstrative/Interrogative-derived Exception
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "suttu-derived-exception-miga"
+nannool_verses = []
+tamil_name = "சுட்டு/வினா வழி விலக்கு"
+english_name = "Demonstrative/Interrogative derived exception"
+category = "iyalbu"
+priority = 84
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Words derived from demonstratives/interrogatives do not trigger doubling"
+
+[rules.left_context]
+type = "specific_word"
+words = [
+    # Place deictics
+    "அந்த", "இந்த", "எந்த",
+    "அங்கு", "இங்கு", "எங்கு",
+    # Manner
+    "அப்படி", "இப்படி", "எப்படி",
+    "அவ்வாறு", "இவ்வாறு", "எவ்வாறு",
+    # Quantity
+    "அத்தனை", "இத்தனை", "எத்தனை",
+    "அவ்வளவு", "இவ்வளவு", "எவ்வளவு"
+]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "எத்தனை"
+second = "பழங்கள்"
+result = "எத்தனை பழங்கள்"
+
+[[rules.examples]]
+first = "அப்படி"
+second = "செய்யாதே"
+result = "அப்படி செய்யாதே"
+
+# -----------------------------------------------------------------------------
+# பொது விலக்குகள் - Common No-Doubling Patterns
+# -----------------------------------------------------------------------------
+
+[[rules]]
+id = "common-particle-exception-miga"
+nannool_verses = []
+tamil_name = "பொதுச்சொல் விலக்கு"
+english_name = "Common particle exception"
+category = "iyalbu"
+priority = 83
+is_exception = true
+exception_of = ["vallinam-miguthal-165"]
+description = "Common particles and conjunctions do not trigger doubling"
+
+[rules.left_context]
+type = "specific_word"
+words = [
+    "என்று", "என்ற", "என்னும்", "என்பது",
+    "ஆனால்", "ஆகவே", "ஆதலால்", "எனவே",
+    "மிக", "மிகவும்", "நன்கு"
+]
+
+[rules.right_context]
+type = "vallinam"
+
+[rules.transformation]
+type = "no_change"
+
+[[rules.examples]]
+first = "மிகவும்"
+second = "சிறந்த"
+result = "மிகவும் சிறந்த"
+
+[[rules.examples]]
+first = "ஆனால்"
+second = "போனான்"
+result = "ஆனால் போனான்"

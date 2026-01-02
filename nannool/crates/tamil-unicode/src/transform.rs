@@ -5,7 +5,7 @@
 //! - Combining mei and uyir into uyirmei
 //! - Letter class determination
 
-use crate::grapheme::{TamilGrapheme, get_graphemes};
+use crate::grapheme::{TamilGrapheme, get_graphemes, graphemes_to_string};
 use crate::letters::*;
 use crate::unicode_ranges::PULLI;
 
@@ -93,7 +93,7 @@ pub fn classify_grapheme(grapheme: &TamilGrapheme) -> LetterClass {
             LetterClass::UyirMei { consonant, vowel }
         }
         TamilGrapheme::Aaytham => LetterClass::Aaytham,
-        TamilGrapheme::Grantha { base, vowel } => {
+        TamilGrapheme::Grantha { base: _, vowel } => {
             if let Some(v) = vowel {
                 let vowel_len = get_vowel_length(*v).unwrap_or(VowelLength::Short);
                 LetterClass::UyirMei {
@@ -296,6 +296,38 @@ pub fn remove_final_letter(word: &str) -> Option<String> {
 /// Append a letter/grapheme to a word
 pub fn append_letter(word: &str, letter: &str) -> String {
     format!("{}{}", word, letter)
+}
+
+/// Combine two words, joining final consonant and initial vowel if applicable
+pub fn combine_words(word1: &str, word2: &str) -> String {
+    let graphemes1 = get_graphemes(word1);
+    let graphemes2 = get_graphemes(word2);
+
+    if graphemes1.is_empty() {
+        return word2.to_string();
+    }
+    if graphemes2.is_empty() {
+        return word1.to_string();
+    }
+
+    let last = &graphemes1[graphemes1.len() - 1];
+    let first = &graphemes2[0];
+
+    if last.ends_with_consonant() {
+        if let TamilGrapheme::Uyir(v) = first {
+            if let Some(base) = last.consonant_base() {
+                let mei = format!("{}்", base);
+                if let Some(combined) = join_mei_uyir(&mei, *v) {
+                    let mut result = graphemes_to_string(&graphemes1[..graphemes1.len() - 1]);
+                    result.push_str(&combined);
+                    result.push_str(&graphemes_to_string(&graphemes2[1..]));
+                    return result;
+                }
+            }
+        }
+    }
+
+    format!("{}{}", word1, word2)
 }
 
 #[cfg(test)]
