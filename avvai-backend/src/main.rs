@@ -4,7 +4,10 @@ use axum::Router;
 
 #[tokio::main]
 async fn main() {
-    let app = Router::new().nest("/dictionary", routes::dictionary::router());
+    let app = Router::new()
+        .nest("/dictionary", routes::dictionary::router())
+        .nest("/lesson", routes::lesson::router())
+        .nest("/progress", routes::progress::router());
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3001")
         .await

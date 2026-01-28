@@ -2,7 +2,7 @@ import { env } from '$env/dynamic/private';
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-const BASE = env.DICTIONARY_API_URL ?? 'http://localhost:3001';
+const BASE = env.BACKEND_URL ?? 'http://localhost:3001';
 
 export const GET: RequestHandler = async ({ url }) => {
 	const word = url.searchParams.get('word');
