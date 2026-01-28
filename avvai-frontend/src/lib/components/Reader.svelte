@@ -4,7 +4,29 @@
 		title?: string;
 	}
 
+	import DictionaryPopup from './DictionaryPopup.svelte';
+
 	let { text, title }: Props = $props();
+
+	/* ── dictionary popup state ── */
+	let popupWord = $state('');
+	let popupAnchor = $state({ x: 0, y: 0, bottom: 0 });
+	let popupVisible = $state(false);
+
+	function handleWordTap(word: string, event: MouseEvent) {
+		const clean = word.replace(/^[\s\p{P}]+|[\s\p{P}]+$/gu, '');
+		if (!clean) return;
+
+		const rect = (event.target as HTMLElement).getBoundingClientRect();
+		popupAnchor = { x: rect.left + rect.width / 2, y: rect.top, bottom: rect.bottom };
+		popupWord = clean;
+		popupVisible = true;
+	}
+
+	function closePopup() {
+		popupVisible = false;
+		popupWord = '';
+	}
 
 	const FONTS = [
 		{ label: 'Mukta Malar', value: "'Mukta Malar', sans-serif" },
@@ -126,15 +148,32 @@
 		style="font-family: {fontFamily}; font-size: {fontSize}px; line-height: {lineHeight}px;"
 	>
 		<div class="reading-content">
+			{#snippet words(text: string)}
+				{#each text.split(/(\s+)/) as token, ti (ti)}
+					{#if /^\s+$/.test(token)}
+						{token}
+					{:else}
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<span
+							class="word"
+							role="button"
+							tabindex="-1"
+							onclick={(e) => handleWordTap(token, e)}
+							onkeydown={(e) => { if (e.key === 'Enter') handleWordTap(token, e as unknown as MouseEvent); }}
+						>{token}</span>
+					{/if}
+				{/each}
+			{/snippet}
+
 			{#each segments as seg, i (i)}
 				{#if seg.kind === 'heading'}
-					<p class="seg heading" class:after-gap={seg.afterGap}>{seg.text}</p>
+					<p class="seg heading" class:after-gap={seg.afterGap}>{@render words(seg.text)}</p>
 				{:else if seg.kind === 'verse'}
-					<p class="seg verse" class:after-gap={seg.afterGap}>{seg.text}</p>
+					<p class="seg verse" class:after-gap={seg.afterGap}>{@render words(seg.text)}</p>
 				{:else if seg.kind === 'paragraph'}
-					<p class="seg paragraph" class:after-gap={seg.afterGap}>{seg.text}</p>
+					<p class="seg paragraph" class:after-gap={seg.afterGap}>{@render words(seg.text)}</p>
 				{:else}
-					<p class="seg explanation" class:after-gap={seg.afterGap}>{seg.text}</p>
+					<p class="seg explanation" class:after-gap={seg.afterGap}>{@render words(seg.text)}</p>
 				{/if}
 			{/each}
 
@@ -146,7 +185,7 @@
 	<!-- controls — sticky bottom bar -->
 	<div class="controls" role="toolbar" aria-label="Reading controls">
 		<select class="font-select" bind:value={fontFamily} aria-label="Choose font">
-			{#each FONTS as font}
+			{#each FONTS as font (font.value)}
 				<option value={font.value}>{font.label}</option>
 			{/each}
 		</select>
@@ -180,6 +219,8 @@
 			</svg>
 		</button>
 	</div>
+
+	<DictionaryPopup word={popupWord} anchor={popupAnchor} visible={popupVisible} onclose={closePopup} />
 </article>
 
 <style>
@@ -480,4 +521,23 @@
 			padding: 12px 36px;
 		}
 	}
+
+	/* ========================================
+	   CLICKABLE WORDS
+	   ======================================== */
+	.word {
+		cursor: pointer;
+		border-radius: 3px;
+		transition: background 0.1s ease;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	.word:hover {
+		background: var(--red-faint);
+	}
+
+	.word:active {
+		background: rgba(139, 26, 26, 0.14);
+	}
+
 </style>
