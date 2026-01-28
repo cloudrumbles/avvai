@@ -43,6 +43,17 @@
 	let fontSize = $state(16);
 	let lineHeight = $derived(fontSize * 2);
 
+	/* ── settings menu ── */
+	let menuOpen = $state(false);
+
+	function toggleMenu() {
+		menuOpen = !menuOpen;
+	}
+
+	function closeMenu() {
+		menuOpen = false;
+	}
+
 	const MIN_FONT = 16;
 	const MAX_FONT = 32;
 	const STEP = 2;
@@ -133,12 +144,66 @@
 		<div class="progress-fill" style="width: {scrollProgress * 100}%;"></div>
 	</div>
 
-	<!-- title -->
-	{#if title}
-		<header class="reader-header">
+	<!-- header with title + settings menu -->
+	<header class="reader-header">
+		{#if title}
 			<h2 class="reader-title">{title}</h2>
-		</header>
-	{/if}
+		{:else}
+			<div></div>
+		{/if}
+
+		<div class="menu-container">
+			<button class="menu-btn" onclick={toggleMenu} aria-label="Reading settings" aria-expanded={menuOpen}>
+				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+					<circle cx="10" cy="4" r="1.5" fill="currentColor"/>
+					<circle cx="10" cy="10" r="1.5" fill="currentColor"/>
+					<circle cx="10" cy="16" r="1.5" fill="currentColor"/>
+				</svg>
+			</button>
+
+			{#if menuOpen}
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<div class="menu-backdrop" onclick={closeMenu}></div>
+				<div class="menu-dropdown" role="menu">
+					<label class="menu-label">Font</label>
+					<select class="font-select" bind:value={fontFamily} aria-label="Choose font">
+						{#each FONTS as font (font.value)}
+							<option value={font.value}>{font.label}</option>
+						{/each}
+					</select>
+
+					<label class="menu-label">Size</label>
+					<div class="size-controls">
+						<button
+							class="ctrl-btn"
+							onclick={decrease}
+							disabled={fontSize <= MIN_FONT}
+							aria-label="Decrease font size"
+						>
+							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+								<line x1="2" y1="7" x2="12" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							</svg>
+						</button>
+
+						<span class="size-label" aria-live="polite">{fontSize}</span>
+
+						<button
+							class="ctrl-btn"
+							onclick={increase}
+							disabled={fontSize >= MAX_FONT}
+							aria-label="Increase font size"
+						>
+							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+								<line x1="2" y1="7" x2="12" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+								<line x1="7" y1="2" x2="7" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+							</svg>
+						</button>
+					</div>
+				</div>
+			{/if}
+		</div>
+	</header>
 
 	<!-- reading surface -->
 	<div
@@ -180,44 +245,6 @@
 			<!-- end mark -->
 			<div class="end-mark" aria-hidden="true">&#xB83;</div>
 		</div>
-	</div>
-
-	<!-- controls — sticky bottom bar -->
-	<div class="controls" role="toolbar" aria-label="Reading controls">
-		<select class="font-select" bind:value={fontFamily} aria-label="Choose font">
-			{#each FONTS as font (font.value)}
-				<option value={font.value}>{font.label}</option>
-			{/each}
-		</select>
-
-		<button
-			class="ctrl-btn"
-			onclick={decrease}
-			disabled={fontSize <= MIN_FONT}
-			aria-label="Decrease font size"
-		>
-			<span class="ctrl-label">அ</span>
-			<svg class="ctrl-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-				<line x1="2" y1="7" x2="12" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-			</svg>
-		</button>
-
-		<span class="size-label" aria-live="polite" aria-atomic="true">
-			{fontSize}
-		</span>
-
-		<button
-			class="ctrl-btn"
-			onclick={increase}
-			disabled={fontSize >= MAX_FONT}
-			aria-label="Increase font size"
-		>
-			<span class="ctrl-label">அ</span>
-			<svg class="ctrl-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-				<line x1="2" y1="7" x2="12" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-				<line x1="7" y1="2" x2="7" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-			</svg>
-		</button>
 	</div>
 
 	<DictionaryPopup word={popupWord} anchor={popupAnchor} visible={popupVisible} onclose={closePopup} />
@@ -273,19 +300,88 @@
 	   HEADER
 	   ======================================== */
 	.reader-header {
-		padding: 24px 24px 20px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 12px 16px;
 		border-bottom: 1px solid var(--cream-mid);
 		flex-shrink: 0;
 	}
 
 	.reader-title {
 		font-family: 'Catamaran', sans-serif;
-		font-size: 17px;
+		font-size: 15px;
 		font-weight: 700;
 		color: var(--red-deep);
 		margin: 0;
-		line-height: 1.5;
-		text-align: center;
+		line-height: 1.4;
+	}
+
+	/* ========================================
+	   SETTINGS MENU
+	   ======================================== */
+	.menu-container {
+		position: relative;
+	}
+
+	.menu-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		border: none;
+		border-radius: 8px;
+		background: transparent;
+		color: var(--stone);
+		cursor: pointer;
+		transition: background 0.15s ease, color 0.15s ease;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	.menu-btn:hover {
+		background: var(--red-faint);
+		color: var(--red);
+	}
+
+	.menu-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 50;
+	}
+
+	.menu-dropdown {
+		position: absolute;
+		top: calc(100% + 8px);
+		right: 0;
+		z-index: 51;
+		min-width: 200px;
+		padding: 12px;
+		background: var(--cream);
+		border: 1.5px solid var(--cream-mid);
+		border-radius: 12px;
+		box-shadow: 0 8px 32px rgba(26, 14, 6, 0.12);
+	}
+
+	.menu-label {
+		display: block;
+		font-family: 'Catamaran', sans-serif;
+		font-size: 11px;
+		font-weight: 600;
+		color: var(--stone);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin-bottom: 6px;
+	}
+
+	.menu-label:not(:first-child) {
+		margin-top: 12px;
+	}
+
+	.size-controls {
+		display: flex;
+		align-items: center;
+		gap: 8px;
 	}
 
 	/* ========================================
@@ -392,40 +488,21 @@
 	}
 
 	/* ========================================
-	   CONTROLS
+	   MENU CONTROLS
 	   ======================================== */
-	.controls {
-		position: sticky;
-		bottom: 0;
-		z-index: 10;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 6px;
-		padding: 8px 24px;
-		padding-bottom: max(8px, env(safe-area-inset-bottom));
-		background: var(--cream);
-		border-top: 1px solid var(--cream-mid);
-		flex-shrink: 0;
-		box-shadow: 0 -4px 20px rgba(26, 14, 6, 0.05);
-	}
-
 	.ctrl-btn {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 2px;
-		min-width: 56px;
-		height: 48px;
-		padding: 0 12px;
-		border-radius: 12px;
+		width: 36px;
+		height: 36px;
+		border-radius: 8px;
 		border: 1.5px solid var(--cream-mid);
 		background: transparent;
 		color: var(--red);
 		cursor: pointer;
 		transition: all 0.15s ease;
 		-webkit-tap-highlight-color: transparent;
-		touch-action: manipulation;
 	}
 
 	.ctrl-btn:hover:not(:disabled) {
@@ -443,40 +520,27 @@
 		cursor: not-allowed;
 	}
 
-	.ctrl-label {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 18px;
-		font-weight: 600;
-		line-height: 1;
-	}
-
-	.ctrl-icon {
-		flex-shrink: 0;
-	}
-
 	.size-label {
 		font-family: 'Catamaran', sans-serif;
-		font-size: 13px;
+		font-size: 14px;
 		font-weight: 600;
-		color: var(--stone);
-		min-width: 32px;
+		color: var(--ink);
+		min-width: 28px;
 		text-align: center;
 		font-variant-numeric: tabular-nums;
-		user-select: none;
 	}
 
 	.font-select {
-		flex: 1;
-		min-width: 0;
+		width: 100%;
 		font-family: 'Catamaran', sans-serif;
 		font-size: 13px;
 		font-weight: 600;
 		color: var(--red);
 		background: transparent;
 		border: 1.5px solid var(--cream-mid);
-		border-radius: 12px;
+		border-radius: 8px;
 		padding: 0 10px;
-		height: 48px;
+		height: 36px;
 		cursor: pointer;
 		transition: all 0.15s ease;
 		-webkit-tap-highlight-color: transparent;
@@ -504,21 +568,15 @@
 		}
 
 		.reader-header {
-			padding: 28px 36px 24px;
+			padding: 16px 24px;
 		}
 
 		.reader-title {
-			font-size: 19px;
+			font-size: 17px;
 		}
 
 		.reading-surface {
 			max-height: 78vh;
-		}
-
-		.controls {
-			position: static;
-			box-shadow: none;
-			padding: 12px 36px;
 		}
 	}
 
