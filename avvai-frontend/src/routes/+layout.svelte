@@ -1,5 +1,7 @@
 <script lang="ts">
+	import '$lib/styles/tokens.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import DictionaryPopup from '$lib/components/DictionaryPopup.svelte';
 
 	let { children } = $props();
 </script>
@@ -8,16 +10,17 @@
 	<link rel="icon" href={favicon} />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-	<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;500;600;700&display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;500;600;700&family=Tiro+Tamil:ital@0;1&display=swap" rel="stylesheet" />
 </svelte:head>
 
 {@render children()}
+<DictionaryPopup />
 
 <style>
 	:global(html, body) {
 		margin: 0;
 		padding: 0;
-		background: #faf3e6;
+		background: var(--cream);
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 	}

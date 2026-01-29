@@ -1,14 +1,8 @@
 <script lang="ts">
 	import { lookup, type DictionaryEntry } from '$lib/services/dictionary';
+	import { getDictionaryState, hideDictionary } from '$lib/stores/dictionary.svelte';
 
-	interface Props {
-		word: string;
-		anchor: { x: number; y: number; bottom: number };
-		visible: boolean;
-		onclose: () => void;
-	}
-
-	let { word, anchor, visible, onclose }: Props = $props();
+	const popup = getDictionaryState();
 
 	let entry: DictionaryEntry | null = $state(null);
 	let loading = $state(false);
@@ -24,11 +18,11 @@
 		const vw = window.innerWidth;
 		const vh = window.innerHeight;
 
-		let x = anchor.x - pw / 2;
-		let y = anchor.y - ph - PAD;
+		let x = popup.anchor.x - pw / 2;
+		let y = popup.anchor.y - ph - PAD;
 
 		if (y < PAD) {
-			y = anchor.bottom + PAD;
+			y = popup.anchor.bottom + PAD;
 		}
 
 		x = Math.max(PAD, Math.min(x, vw - pw - PAD));
@@ -38,13 +32,13 @@
 	}
 
 	$effect(() => {
-		if (!visible || !word) return;
+		if (!popup.visible || !popup.word) return;
 
 		loading = true;
 		entry = null;
 		requestAnimationFrame(reposition);
 
-		lookup(word).then((result) => {
+		lookup(popup.word).then((result) => {
 			entry = result;
 			loading = false;
 			requestAnimationFrame(reposition);
@@ -52,10 +46,10 @@
 	});
 </script>
 
-{#if visible}
+{#if popup.visible}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<div class="popup-overlay" onclick={onclose} onkeydown={(e) => e.key === 'Escape' && onclose()}>
+	<div class="popup-overlay" onclick={hideDictionary} onkeydown={(e) => e.key === 'Escape' && hideDictionary()}>
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div
@@ -64,7 +58,7 @@
 			{style}
 			onclick={(e) => e.stopPropagation()}
 		>
-			<p class="popup-word">{word}</p>
+			<p class="popup-word">{popup.word}</p>
 			{#if loading}
 				<p class="popup-body">Looking up…</p>
 			{:else if entry}

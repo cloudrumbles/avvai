@@ -96,17 +96,6 @@
 
 <style>
 	.flashcards {
-		--ink: #1a0e06;
-		--ink-soft: #3a2a1a;
-		--cream: #faf3e6;
-		--cream-mid: #f0e4cc;
-		--red: #8b1a1a;
-		--red-deep: #5c0e0e;
-		--red-faint: rgba(139, 26, 26, 0.08);
-		--gold: #c5941a;
-		--stone: #6b5a48;
-		--green: #2d6a4f;
-
 		min-height: 100dvh;
 		background: var(--cream);
 		font-family: 'Catamaran', sans-serif;

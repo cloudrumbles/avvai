@@ -1,0 +1,35 @@
+/* ============================================
+   DESIGN TOKENS
+
+   Palette inspired by traditional Tamil
+   palm-leaf manuscripts (ஓலைச்சுவடி)
+   ============================================ */
+
+:root {
+	/* ── Text ── */
+	--ink: #1a0e06;           /* deep brown-black - primary text */
+	--ink-soft: #3a2a1a;      /* softer brown - secondary text */
+
+	/* ── Backgrounds ── */
+	--cream: #faf3e6;         /* warm off-white - background */
+	--cream-mid: #f0e4cc;     /* slightly darker - borders, dividers */
+	--cream-dark: #e8dcc0;    /* darker cream - pressed states */
+
+	/* ── Accent: Red/Maroon ── */
+	--red: #8b1a1a;           /* deep maroon - interactive elements */
+	--red-deep: #5c0e0e;      /* darker red - hover states */
+	--red-faint: rgba(139, 26, 26, 0.08);  /* subtle red tint */
+	--red-subtle: rgba(139, 26, 26, 0.04); /* very subtle red */
+
+	/* ── Accent: Gold ── */
+	--gold: #c5941a;          /* warm gold - poetry, highlights */
+	--gold-dim: rgba(197, 148, 26, 0.3);
+	--gold-faint: rgba(197, 148, 26, 0.1);
+
+	/* ── Neutral ── */
+	--stone: #6b5a48;         /* muted brown - labels, hints */
+
+	/* ── Feedback ── */
+	--green: #1a6b4a;         /* deep green - correct/success */
+	--green-faint: rgba(26, 107, 74, 0.1);
+}
