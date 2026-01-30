@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { LessonSummary } from '$lib/types/lesson';
+	import type { LessonSummary } from 'avvai-frontend/types/lesson';
 
 	interface Props {
 		lessons: LessonSummary[];

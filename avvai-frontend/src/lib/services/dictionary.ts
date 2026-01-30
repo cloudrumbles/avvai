@@ -4,8 +4,75 @@ export interface DictionaryEntry {
 	examples?: string[];
 }
 
+const CACHE_KEY = 'dictionary-cache-v1';
+const MAX_ENTRIES = 500;
+
+type CacheEntry = {
+	value: DictionaryEntry | null;
+	time: number;
+};
+
+type DictionaryCache = Record<string, CacheEntry>;
+
+let inMemoryCache: DictionaryCache | null = null;
+
+function normalise(word: string) {
+	return word.trim().toLowerCase();
+}
+
+function loadCache(): DictionaryCache {
+	if (inMemoryCache) return inMemoryCache;
+	if (typeof localStorage === 'undefined') return {};
+
+	try {
+		const raw = localStorage.getItem(CACHE_KEY);
+		inMemoryCache = raw ? (JSON.parse(raw) as DictionaryCache) : {};
+	} catch {
+		inMemoryCache = {};
+	}
+
+	return inMemoryCache;
+}
+
+function saveCache(cache: DictionaryCache) {
+	if (typeof localStorage === 'undefined') return;
+
+	try {
+		localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+	} catch {
+		// ignore storage errors (quota, privacy mode)
+	}
+}
+
+function enforceLimit(cache: DictionaryCache) {
+	const entries = Object.entries(cache);
+	if (entries.length <= MAX_ENTRIES) return;
+
+	entries.sort((a, b) => a[1].time - b[1].time);
+	const toRemove = entries.length - MAX_ENTRIES;
+	for (let i = 0; i < toRemove; i += 1) {
+		delete cache[entries[i][0]];
+	}
+}
+
 export async function lookup(word: string): Promise<DictionaryEntry | null> {
-	const res = await fetch(`/api/dictionary?word=${encodeURIComponent(word)}`);
-	if (!res.ok) return null;
-	return res.json();
+	const key = normalise(word);
+	if (!key) return null;
+
+	const cache = loadCache();
+	const cached = cache[key];
+	if (cached) return cached.value;
+
+	const res = await fetch('/api/dictionary', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ word: key })
+	});
+	const value = res.ok ? ((await res.json()) as DictionaryEntry) : null;
+
+	cache[key] = { value, time: Date.now() };
+	enforceLimit(cache);
+	saveCache(cache);
+
+	return value;
 }

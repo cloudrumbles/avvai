@@ -3,6 +3,22 @@
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
+	"exports": {
+		".": "./src/lib/index.ts",
+		"./components/sections": "./src/lib/components/sections/index.ts",
+		"./components/lesson": "./src/lib/components/lesson/index.ts",
+		"./components/ClickableText": "./src/lib/components/ClickableText.svelte",
+		"./components/TableOfContents": "./src/lib/components/TableOfContents.svelte",
+		"./components/Drawer": "./src/lib/components/Drawer.svelte",
+		"./components/IconButton": "./src/lib/components/IconButton.svelte",
+		"./components/ReadingSettingsMenu": "./src/lib/components/ReadingSettingsMenu.svelte",
+		"./components/DictionaryPopup": "./src/lib/components/DictionaryPopup.svelte",
+		"./stores/dictionary": "./src/lib/stores/dictionary.svelte.ts",
+		"./services/dictionary": "./src/lib/services/dictionary.ts",
+		"./config/fonts": "./src/lib/config/fonts.ts",
+		"./types/lesson": "./src/lib/types/lesson.ts",
+		"./styles/tokens": "./src/lib/styles/tokens.css"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",

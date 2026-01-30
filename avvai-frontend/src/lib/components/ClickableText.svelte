@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { showDictionary } from '$lib/stores/dictionary.svelte';
+	import { showDictionary } from 'avvai-frontend/stores/dictionary';
 
 	interface Props {
 		text: string;

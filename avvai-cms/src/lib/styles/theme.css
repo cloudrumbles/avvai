@@ -1,0 +1,238 @@
+:root {
+	/* ========================================
+	   Typography
+	   ======================================== */
+	--font-serif: 'Cormorant Garamond', Georgia, serif;
+	--font-heading: 'Eczar', Georgia, serif;
+	--font-tamil: 'Noto Serif Tamil', serif;
+	--font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+
+	/* ========================================
+	   Colors - Editorial Tamil Palette
+	   ======================================== */
+	/* Primary - Deep Terracotta/Ochre */
+	--c-terracotta: #B8533D;
+	--c-terracotta-light: #D4715C;
+	--c-terracotta-dark: #8F3F2E;
+	--c-ochre: #D4A373;
+
+	/* Accent - Gold for completed/valid states */
+	--c-gold: #C99A2E;
+	--c-gold-light: #E8C76B;
+	--c-gold-dark: #9A7A1F;
+
+	/* Secondary - Muted Sage */
+	--c-sage: #5F7A61;
+	--c-sage-light: #7A9A7C;
+	--c-sage-dark: #4A5F4C;
+
+	/* Background - Warm Cream/Parchment */
+	--c-cream: #FAF6F0;
+	--c-cream-dark: #F0E9DF;
+	--c-parchment: #F5EFE6;
+	--c-cream-warm: #F7F3EC;
+
+	/* Text - Deep Brown */
+	--c-brown-dark: #3D2B1F;
+	--c-brown: #5C4A3D;
+	--c-brown-light: #8B7355;
+	--c-brown-muted: #A89580;
+	--c-brown-subtle: #C4B5A5;
+
+	/* Neutral */
+	--c-dark: #1c1c1c;
+	--c-ink: #2b211c;
+	--c-white: #FFFFFF;
+
+	/* ========================================
+	   Section Type Colors
+	   ======================================== */
+	--c-prose: #2B6CB0;
+	--c-prose-bg: #EBF8FF;
+	--c-poetry: #805AD5;
+	--c-poetry-bg: #FAF5FF;
+	--c-vocabulary: #2F855A;
+	--c-vocabulary-bg: #F0FFF4;
+	--c-exercises: #B8533D;
+	--c-exercises-bg: #FEF3F0;
+	--c-media: #B7791F;
+	--c-media-bg: #FFFFF0;
+	--c-dialogue: #D53F8C;
+	--c-dialogue-bg: #FFF5F7;
+
+	/* ========================================
+	   Status Colors
+	   ======================================== */
+	--c-success: #2F855A;
+	--c-success-bg: #F0FFF4;
+	--c-warning: #C99A2E;
+	--c-warning-bg: #FFF8E1;
+	--c-error: #B8533D;
+	--c-error-bg: #FEF3F0;
+	--c-info: #2B6CB0;
+	--c-info-bg: #EBF8FF;
+
+	/* ========================================
+	   Elevation & Shadows
+	   ======================================== */
+	--shadow-sm: 0 1px 2px rgba(61, 43, 31, 0.04);
+	--shadow-md: 0 4px 12px rgba(61, 43, 31, 0.08);
+	--shadow-lg: 0 8px 24px rgba(61, 43, 31, 0.12);
+	--shadow-xl: 0 12px 32px rgba(61, 43, 31, 0.16);
+	--shadow-elevated: 0 16px 48px rgba(61, 43, 31, 0.2);
+	--shadow-inner: inset 0 2px 4px rgba(61, 43, 31, 0.04);
+
+	/* ========================================
+	   Border Radius
+	   ======================================== */
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 14px;
+	--radius-xl: 20px;
+	--radius-full: 9999px;
+
+	/* ========================================
+	   Transitions
+	   ======================================== */
+	--transition-fast: 0.15s ease;
+	--transition-base: 0.2s ease;
+	--transition-slow: 0.3s ease;
+	--transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+	/* ========================================
+	   Spacing Scale
+	   ======================================== */
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-5: 1.25rem;
+	--space-6: 1.5rem;
+	--space-8: 2rem;
+	--space-10: 2.5rem;
+	--space-12: 3rem;
+	--space-16: 4rem;
+
+	/* ========================================
+	   Layout
+	   ======================================== */
+	--header-height: 64px;
+	--sidebar-width: 320px;
+	--max-content-width: 1600px;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background: var(--c-cream);
+	color: var(--c-brown-dark);
+	font-family: var(--font-body);
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* ========================================
+   Texture Overlays
+   ======================================== */
+.texture-overlay {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	opacity: 0.04;
+	mix-blend-mode: multiply;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ========================================
+   Selection Styles
+   ======================================== */
+::selection {
+	background: rgba(184, 83, 61, 0.2);
+	color: var(--c-brown-dark);
+}
+
+/* ========================================
+   Scrollbar Styles
+   ======================================== */
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--c-cream-dark);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--c-brown-subtle);
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--c-brown-light);
+}
+
+/* ========================================
+   Focus Styles
+   ======================================== */
+:focus-visible {
+	outline: 2px solid var(--c-terracotta);
+	outline-offset: 2px;
+}
+
+/* ========================================
+   Animation Keyframes
+   ======================================== */
+@keyframes pulse-glow {
+	0%, 100% {
+		opacity: 1;
+		box-shadow: 0 0 0 0 rgba(201, 154, 46, 0.4);
+	}
+	50% {
+		opacity: 0.8;
+		box-shadow: 0 0 0 6px rgba(201, 154, 46, 0);
+	}
+}
+
+@keyframes pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.4; }
+}
+
+@keyframes spin {
+	to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-4px); }
+}
+
+@keyframes shimmer {
+	0% { background-position: -200% 0; }
+	100% { background-position: 200% 0; }
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

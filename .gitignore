@@ -1,0 +1,13 @@
+pdf-bench/
+.env
+.env.*
+!.env.example
+node_modules/
+**/node_modules/
+target/
+**/target/
+data/
+**/data/
+.sisyphus/
+tamilvu_pdf/
+test-media.txt

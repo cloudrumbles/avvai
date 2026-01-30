@@ -1,20 +1,299 @@
 use axum::{extract::Query, http::StatusCode, response::IntoResponse, routing::get, Json, Router};
 use serde::{Deserialize, Serialize};
+use std::fs;
+use std::path::Path;
 
-#[derive(Serialize)]
+// =============================================================================
+// LESSON SUMMARY (for list view)
+// =============================================================================
+
+#[derive(Serialize, Deserialize)]
 struct LessonSummary {
     id: String,
     title: String,
     description: String,
 }
 
-#[derive(Serialize)]
-struct Lesson {
-    id: String,
-    title: String,
-    description: String,
-    content: String,
+// =============================================================================
+// FULL LESSON STRUCTURE
+// =============================================================================
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct Lesson {
+    pub id: String,
+    pub title: String,
+    pub description: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub source: Option<SourceMetadata>,
+    pub sections: Vec<ContentSection>,
 }
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct SourceMetadata {
+    pub title: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub author: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub period: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub verse_count: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub poetic_form: Option<String>,
+}
+
+// =============================================================================
+// CONTENT SECTION ENUM
+// =============================================================================
+
+#[derive(Serialize, Deserialize, Clone)]
+#[serde(tag = "type", rename_all = "snake_case")]
+pub enum ContentSection {
+    Prose(ProseSection),
+    Poetry(PoetrySection),
+    Vocabulary(VocabularySection),
+    Exercises(ExercisesSection),
+    Media(MediaSection),
+    Dialogue(DialogueSection),
+}
+
+// =============================================================================
+// PROSE SECTION
+// =============================================================================
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct ProseSection {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title: Option<String>,
+    pub paragraphs: Vec<String>,
+}
+
+// =============================================================================
+// POETRY SECTION
+// =============================================================================
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct PoetrySection {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title: Option<String>,
+    pub verses: Vec<Verse>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct Verse {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub number: Option<u32>,
+    pub lines: Vec<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub translation: Option<String>,
+}
+
+// =============================================================================
+// VOCABULARY SECTION
+// =============================================================================
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct VocabularySection {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title: Option<String>,
+    pub entries: Vec<VocabularyEntry>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct VocabularyEntry {
+    pub word: String,
+    pub meaning: String,
+}
+
+// =============================================================================
+// DIALOGUE SECTION (for drama/plays)
+// =============================================================================
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct DialogueSection {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub scene: Option<SceneInfo>,
+    pub lines: Vec<DialogueLine>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct SceneInfo {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub location: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub time: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub characters: Option<Vec<String>>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct DialogueLine {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub character: Option<String>,
+    pub text: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub direction: Option<bool>,
+}
+
+// =============================================================================
+// EXERCISES SECTION
+// =============================================================================
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct ExercisesSection {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title: Option<String>,
+    pub exercise_groups: Vec<ExerciseGroup>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct ExerciseGroup {
+    pub group_type: ExerciseGroupType,
+    pub instructions: String,
+    pub exercises: Vec<Exercise>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+#[serde(rename_all = "snake_case")]
+pub enum ExerciseGroupType {
+    MultipleChoice,
+    FillInBlank,
+    ShortAnswer,
+    LongAnswer,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct Exercise {
+    pub id: String,
+    pub content: ExerciseContent,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+#[serde(tag = "exercise_type", rename_all = "snake_case")]
+pub enum ExerciseContent {
+    MultipleChoice(MultipleChoiceExercise),
+    FillInBlank(FillInBlankExercise),
+    ShortAnswer(ShortAnswerExercise),
+    LongAnswer(LongAnswerExercise),
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct MultipleChoiceExercise {
+    pub question: String,
+    pub options: Vec<ChoiceOption>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct ChoiceOption {
+    pub id: String,
+    pub text: String,
+    pub correct: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct FillInBlankExercise {
+    pub text_before: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub text_after: Option<String>,
+    pub accepted_answers: Vec<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub hint: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct ShortAnswerExercise {
+    pub question: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub model_answer: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct LongAnswerExercise {
+    pub question: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub model_answer: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub min_words: Option<u32>,
+}
+
+// =============================================================================
+// MEDIA SECTION
+// =============================================================================
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct MediaSection {
+    pub media_type: MediaType,
+    pub url: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub caption: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+#[serde(rename_all = "snake_case")]
+pub enum MediaType {
+    Image,
+    Audio,
+    Video,
+}
+
+// =============================================================================
+// FILE LOADING
+// =============================================================================
+
+fn lessons_dir() -> std::path::PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("data/lessons")
+}
+
+fn load_lesson_from_file(id: &str) -> Option<Lesson> {
+    // Scan all JSON files and find the one with matching id
+    let lessons_path = lessons_dir();
+    let lessons_path = lessons_path.as_path();
+    if let Ok(entries) = fs::read_dir(lessons_path) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.extension().map_or(false, |ext| ext == "json") {
+                if let Ok(content) = fs::read_to_string(&path) {
+                    if let Ok(lesson) = serde_json::from_str::<Lesson>(&content) {
+                        if lesson.id == id {
+                            return Some(lesson);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    None
+}
+
+fn get_all_lesson_summaries() -> Vec<LessonSummary> {
+    let mut summaries = Vec::new();
+
+    let lessons_path = lessons_dir();
+    let lessons_path = lessons_path.as_path();
+    if let Ok(entries) = fs::read_dir(lessons_path) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.extension().map_or(false, |ext| ext == "json") {
+                if let Ok(content) = fs::read_to_string(&path) {
+                    if let Ok(lesson) = serde_json::from_str::<Lesson>(&content) {
+                        summaries.push(LessonSummary {
+                            id: lesson.id,
+                            title: lesson.title,
+                            description: lesson.description,
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    summaries
+}
+
+// =============================================================================
+// REQUEST/RESPONSE HANDLERS
+// =============================================================================
 
 #[derive(Deserialize)]
 struct GetParams {
@@ -22,25 +301,7 @@ struct GetParams {
 }
 
 async fn list() -> impl IntoResponse {
-    // Mock data - replace with database later
-    let lessons = vec![
-        LessonSummary {
-            id: "thirukkural-intro".into(),
-            title: "திருக்குறள் அறிமுகம்".into(),
-            description: "Introduction to Thirukkural".into(),
-        },
-        LessonSummary {
-            id: "kural-1".into(),
-            title: "குறள் 1: அகர முதல".into(),
-            description: "The first Kural about the primacy of 'A'".into(),
-        },
-        LessonSummary {
-            id: "kural-2".into(),
-            title: "குறள் 2: கற்றதனால்".into(),
-            description: "The second Kural about learning".into(),
-        },
-    ];
-
+    let lessons = get_all_lesson_summaries();
     Json(lessons)
 }
 
@@ -53,36 +314,14 @@ async fn get_lesson(Query(params): Query<GetParams>) -> impl IntoResponse {
             .into_response();
     };
 
-    // Mock data - replace with database later
-    let lesson = match id.as_str() {
-        "thirukkural-intro" => Lesson {
-            id: id.clone(),
-            title: "திருக்குறள் அறிமுகம்".into(),
-            description: "Introduction to Thirukkural".into(),
-            content: "திருக்குறள் பற்றிய அறிமுகம்\n\nதிருக்குறள், சுருக்கமாக குறள், ஒரு தொன்மையான தமிழ் நூலாகும். இது திருவள்ளுவர் என்ற புலவரால் இயற்றப்பட்டது.\n\nஅறத்துப்பால்\nபொருட்பால்\nஇன்பத்துப்பால்\n\nஎன மூன்று பகுதிகளாகப் பிரிக்கப்பட்டுள்ளது.".into(),
-        },
-        "kural-1" => Lesson {
-            id: id.clone(),
-            title: "குறள் 1: அகர முதல".into(),
-            description: "The first Kural".into(),
-            content: "குறள் 1\n\nஅகர முதல எழுத்தெல்லாம் ஆதி\nபகவன் முதற்றே உலகு.\n\nபொருள்: எழுத்துக்கள் எல்லாம் அகரத்தை அடிப்படையாகக் கொண்டிருக்கின்றன. அதுபோல், உலகம் கடவுளை அடிப்படையாகக் கொண்டிருக்கிறது.".into(),
-        },
-        "kural-2" => Lesson {
-            id: id.clone(),
-            title: "குறள் 2: கற்றதனால்".into(),
-            description: "The second Kural".into(),
-            content: "குறள் 2\n\nகற்றதனால் ஆய பயனென்கொல் வாலறிவன்\nநற்றாள் தொழாஅர் எனின்.\n\nபொருள்: தூய அறிவு வடிவான இறைவனின் திருவடிகளை வணங்காதவர்களுக்கு கல்வியால் என்ன பயன்?".into(),
-        },
-        _ => {
-            return (
-                StatusCode::NOT_FOUND,
-                Json(serde_json::json!({"error": "Lesson not found"})),
-            )
-                .into_response();
-        }
-    };
-
-    Json(lesson).into_response()
+    match load_lesson_from_file(&id) {
+        Some(lesson) => Json(lesson).into_response(),
+        None => (
+            StatusCode::NOT_FOUND,
+            Json(serde_json::json!({"error": "Lesson not found"})),
+        )
+            .into_response(),
+    }
 }
 
 pub fn router() -> Router {

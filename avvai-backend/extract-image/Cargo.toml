@@ -1,0 +1,15 @@
+[package]
+name = "extract-image"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+pdfium-render = "0.8"
+image = "0.25"
+
+[profile.dev]
+opt-level = 0
+debug = 0
+
+[profile.dev.package."*"]
+opt-level = 3

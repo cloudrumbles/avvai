@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ClickableText from '$lib/components/ClickableText.svelte';
+	import ClickableText from 'avvai-frontend/components/ClickableText';
 
 	interface Verse {
 		number?: number;

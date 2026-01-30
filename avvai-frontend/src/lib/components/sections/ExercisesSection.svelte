@@ -3,7 +3,7 @@
 		ExercisesSection as ExercisesSectionData,
 		Exercise,
 		ExerciseContent
-	} from '$lib/types/lesson';
+	} from 'avvai-frontend/types/lesson';
 
 	interface Props {
 		data: ExercisesSectionData;
@@ -50,6 +50,20 @@
 
 	function toggleLongAnswer(exerciseId: string) {
 		longAnswerRevealed[exerciseId] = !longAnswerRevealed[exerciseId];
+	}
+
+	function autoResize(event: Event) {
+		const textarea = event.target as HTMLTextAreaElement;
+		textarea.style.height = 'auto';
+		textarea.style.height = textarea.scrollHeight + 'px';
+	}
+
+	// Parse hint like "(option1, option2, option3)" into dropdown options
+	function parseHintOptions(hint?: string): string[] | null {
+		if (!hint) return null;
+		const match = hint.match(/^\s*\((.+)\)\s*$/);
+		if (!match) return null;
+		return match[1].split(',').map(s => s.trim()).filter(s => s.length > 0);
 	}
 </script>
 
@@ -102,19 +116,33 @@
 							{@const content = exercise.content}
 							{@const isChecked = fillBlankChecked[exercise.id]}
 							{@const isCorrect = fillBlankCorrect[exercise.id]}
+							{@const dropdownOptions = content.options ?? parseHintOptions(content.hint)}
 							<div class="fill-blank">
 								<p class="question">
 									<span class="q-number">{exerciseIndex + 1}.</span>
 									<span class="fill-sentence">
 										{content.text_before}
 										<span class="input-wrapper" class:correct={isChecked && isCorrect} class:incorrect={isChecked && !isCorrect}>
-											<input
-												type="text"
-												class="fill-input"
-												placeholder="______"
-												bind:value={fillBlankAnswers[exercise.id]}
-												disabled={isChecked && isCorrect}
-											/>
+											{#if dropdownOptions && dropdownOptions.length > 0}
+												<select
+													class="fill-select"
+													bind:value={fillBlankAnswers[exercise.id]}
+													disabled={isChecked && isCorrect}
+												>
+													<option value="" disabled selected>தேர்வு செய்க</option>
+													{#each dropdownOptions as option}
+														<option value={option}>{option}</option>
+													{/each}
+												</select>
+											{:else}
+												<input
+													type="text"
+													class="fill-input"
+													placeholder="______"
+													bind:value={fillBlankAnswers[exercise.id]}
+													disabled={isChecked && isCorrect}
+												/>
+											{/if}
 											{#if isChecked}
 												<span class="input-icon">{isCorrect ? '✓' : '✗'}</span>
 											{/if}
@@ -124,7 +152,7 @@
 										{/if}
 									</span>
 								</p>
-								{#if content.hint}
+								{#if content.hint && !parseHintOptions(content.hint)}
 									<p class="hint">{content.hint}</p>
 								{/if}
 								<div class="actions">
@@ -152,6 +180,7 @@
 									class="answer-input"
 									placeholder="உங்கள் பதிலை இங்கே எழுதுங்கள்..."
 									bind:value={shortAnswers[exercise.id]}
+									oninput={autoResize}
 								></textarea>
 								{#if content.model_answer}
 									<div class="actions">
@@ -183,6 +212,7 @@
 									class="answer-input large"
 									placeholder="உங்கள் பதிலை இங்கே எழுதுங்கள்..."
 									bind:value={longAnswers[exercise.id]}
+									oninput={autoResize}
 								></textarea>
 								{#if content.model_answer}
 									<div class="actions">
@@ -350,26 +380,50 @@
 	.input-wrapper {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.3em;
 		position: relative;
+		background: white;
+		border: 1.5px solid var(--cream-mid);
+		border-radius: 6px;
+		padding: 0.25em 0.5em;
+		transition: border-color 0.15s ease;
 	}
 
-	.fill-input {
-		width: 7em;
-		padding: 0.2em 0.4em;
+	.input-wrapper:focus-within {
+		border-color: var(--red);
+	}
+
+	.input-wrapper.correct {
+		border-color: var(--green);
+		background: var(--green-faint);
+	}
+
+	.input-wrapper.incorrect {
+		border-color: var(--red);
+		background: var(--red-faint);
+	}
+
+	.fill-input,
+	.fill-select {
+		padding: 0.1em 0.2em;
 		border: none;
-		border-bottom: 2px solid var(--cream-mid);
 		background: transparent;
 		font-family: inherit;
 		font-size: inherit;
 		color: var(--ink);
-		text-align: center;
-		transition: border-color 0.15s ease;
+		min-width: 5em;
 	}
 
-	.fill-input:focus {
+	.fill-input {
+		text-align: center;
+	}
+
+	.fill-select {
+		cursor: pointer;
+	}
+
+	.fill-input:focus,
+	.fill-select:focus {
 		outline: none;
-		border-color: var(--red);
 	}
 
 	.fill-input::placeholder {
@@ -377,19 +431,20 @@
 		opacity: 0.5;
 	}
 
-	.input-wrapper.correct .fill-input {
-		border-color: var(--green);
+	.input-wrapper.correct .fill-input,
+	.input-wrapper.correct .fill-select {
 		color: var(--green);
 	}
 
-	.input-wrapper.incorrect .fill-input {
-		border-color: var(--red);
+	.input-wrapper.incorrect .fill-input,
+	.input-wrapper.incorrect .fill-select {
 		color: var(--red);
 	}
 
 	.input-icon {
 		font-weight: 700;
-		font-size: 0.9em;
+		font-size: 0.85em;
+		margin-left: 0.3em;
 	}
 
 	.input-wrapper.correct .input-icon {
@@ -453,7 +508,8 @@
 		font-family: inherit;
 		font-size: 0.95em;
 		color: var(--ink);
-		resize: vertical;
+		resize: none;
+		overflow: hidden;
 		transition: border-color 0.15s ease;
 	}
 
