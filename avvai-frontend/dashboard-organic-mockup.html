@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Avvai Dashboard — Organic Nature Design</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Mukta+Malar:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<style>
+		/* ============================================
+		   ORGANIC NATURE-INSPIRED DESIGN SYSTEM
+		   Based on Thinai - Five Landscapes of Tamil Sangam Poetry
+		   ============================================ */
+		
+		:root {
+			/* Core Palette - Warm Manuscript Tones */
+			--cream: #f5f0e6;
+			--cream-warm: #f0e8d8;
+			--cream-deep: #e8dcc0;
+			--parchment: #faf6ed;
+			
+			/* Ink Colors */
+			--ink-deep: #1a0e06;
+			--ink: #2d2418;
+			--ink-soft: #5c4d3a;
+			--ink-faint: #8a7a62;
+			
+			/* Nature Accents - Thinai Landscapes */
+			--kurinji-mountain: #5c7a6e;      /* mountains - sage green */
+			--mullai-forest: #4a6b4a;         /* forests - deep forest green */
+			--marudam-farm: #c65d3b;          /* farmland - terracotta/rust */
+			--neytal-sea: #4a7c7e;            /* seashore - muted teal */
+			--palai-desert: #c9a86c;          /* desert - warm sand/gold */
+			
+			/* Warm Highlights */
+			--warm-glow: rgba(198, 93, 59, 0.15);
+			--teal-glow: rgba(74, 124, 126, 0.15);
+			--green-glow: rgba(92, 122, 110, 0.15);
+			
+			/* Typography */
+			--font-serif: 'Cormorant Garamond', Georgia, serif;
+			--font-tamil: 'Mukta Malar', 'Noto Sans Tamil', sans-serif;
+		}
+		
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		
+		body {
+			font-family: var(--font-serif);
+			background: var(--cream);
+			color: var(--ink);
+			min-height: 100vh;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+		
+		/* Mobile-first container */
+		.dashboard {
+			max-width: 420px;
+			margin: 0 auto;
+			padding: 24px 20px 40px;
+			position: relative;
+		}
+		
+		/* Subtle organic texture overlay */
+		.dashboard::before {
+			content: '';
+			position: fixed;
+			inset: 0;
+			pointer-events: none;
+			opacity: 0.02;
+			background-image: 
+				radial-gradient(ellipse at 20% 30%, rgba(92, 122, 110, 0.3) 0%, transparent 50%),
+				radial-gradient(ellipse at 80% 70%, rgba(198, 93, 59, 0.2) 0%, transparent 40%);
+			z-index: 0;
+		}
+		
+		/* ============================================
+		   HEADER
+		   ============================================ */
+		.header {
+			position: relative;
+			z-index: 1;
+			margin-bottom: 28px;
+		}
+		
+		.logo {
+			font-family: var(--font-serif);
+			font-size: 1.5rem;
+			font-weight: 700;
+			color: var(--ink);
+			text-decoration: none;
+			letter-spacing: 0.02em;
+		}
+		
+		/* ============================================
+		   GREETING SECTION
+		   ============================================ */
+		.greeting-section {
+			position: relative;
+			z-index: 1;
+			margin-bottom: 24px;
+		}
+		
+		.greeting-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+		}
+		
+		.greeting-text {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+		}
+		
+		.greeting-tamil {
+			font-family: var(--font-tamil);
+			font-size: 14px;
+			font-weight: 500;
+			color: var(--neytal-sea);
+			letter-spacing: 0.02em;
+		}
+		
+		.greeting-english {
+			font-family: var(--font-serif);
+			font-size: 28px;
+			font-weight: 600;
+			color: var(--ink);
+			line-height: 1.2;
+		}
+		
+		/* Streak badge - organic droplet shape */
+		.streak-badge {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 12px 16px;
+			background: linear-gradient(135deg, var(--cream-warm) 0%, var(--parchment) 100%);
+			border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+			box-shadow: 
+				0 2px 8px rgba(26, 14, 6, 0.06),
+				inset 0 1px 0 rgba(255, 255, 255, 0.5);
+			position: relative;
+		}
+		
+		.streak-badge::after {
+			content: '';
+			position: absolute;
+			bottom: -4px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 20px;
+			height: 8px;
+			background: var(--marudam-farm);
+			border-radius: 50%;
+			opacity: 0.3;
+			filter: blur(4px);
+		}
+		
+		.streak-number {
+			font-family: var(--font-serif);
+			font-size: 32px;
+			font-weight: 700;
+			color: var(--marudam-farm);
+			line-height: 1;
+		}
+		
+		.streak-label {
+			font-size: 10px;
+			font-weight: 600;
+			color: var(--ink-faint);
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			margin-top: 2px;
+		}
+		
+		/* ============================================
+		   WEEKLY STREAK TRACKER - Organic Leaf Shapes
+		   ============================================ */
+		.streak-section {
+			position: relative;
+			z-index: 1;
+			margin-bottom: 24px;
+		}
+		
+		.streak-container {
+			background: linear-gradient(180deg, var(--parchment) 0%, var(--cream-warm) 100%);
+			border-radius: 24px 24px 28px 28px;
+			padding: 20px 16px 24px;
+			box-shadow: 
+				0 4px 20px rgba(26, 14, 6, 0.04),
+				0 1px 3px rgba(26, 14, 6, 0.02);
+			position: relative;
+		}
+		
+		/* Organic bottom edge like a leaf */
+		.streak-container::after {
+			content: '';
+			position: absolute;
+			bottom: -8px;
+			left: 10%;
+			right: 10%;
+			height: 16px;
+			background: var(--cream-warm);
+			border-radius: 50%;
+			filter: blur(8px);
+			opacity: 0.5;
+		}
+		
+		.streak-header {
+			text-align: center;
+			margin-bottom: 16px;
+		}
+		
+		.streak-title {
+			font-size: 12px;
+			font-weight: 600;
+			color: var(--ink-faint);
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+		}
+		
+		/* Leaf/Droplet days arranged in gentle curve */
+		.days-container {
+			display: flex;
+			justify-content: center;
+			align-items: flex-end;
+			gap: 8px;
+			padding: 0 4px;
+		}
+		
+		.day-leaf {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 6px;
+			position: relative;
+			transition: transform 0.3s ease;
+		}
+		
+		.day-leaf:hover {
+			transform: translateY(-2px);
+		}
+		
+		/* Individual leaf positioning for gentle curve */
+		.day-leaf:nth-child(1) { transform: translateY(4px); }
+		.day-leaf:nth-child(2) { transform: translateY(2px); }
+		.day-leaf:nth-child(3) { transform: translateY(0); }
+		.day-leaf:nth-child(4) { transform: translateY(2px); }
+		.day-leaf:nth-child(5) { transform: translateY(4px); }
+		.day-leaf:nth-child(6) { transform: translateY(2px); }
+		.day-leaf:nth-child(7) { transform: translateY(0); }
+		
+		.day-leaf:hover:nth-child(1),
+		.day-leaf:hover:nth-child(2),
+		.day-leaf:hover:nth-child(3),
+		.day-leaf:hover:nth-child(4),
+		.day-leaf:hover:nth-child(5),
+		.day-leaf:hover:nth-child(6),
+		.day-leaf:hover:nth-child(7) {
+			transform: translateY(-4px);
+		}
+		
+		/* Leaf shape container */
+		.leaf-shape {
+			width: 40px;
+			height: 52px;
+			background: linear-gradient(145deg, var(--cream) 0%, var(--cream-deep) 100%);
+			border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 4px;
+			box-shadow: 
+				0 2px 6px rgba(26, 14, 6, 0.06),
+				inset 0 1px 0 rgba(255, 255, 255, 0.6);
+			position: relative;
+			transition: all 0.3s ease;
+		}
+		
+		/* Leaf vein line */
+		.leaf-shape::before {
+			content: '';
+			position: absolute;
+			top: 8px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 1px;
+			height: 20px;
+			background: linear-gradient(180deg, var(--cream-deep) 0%, transparent 100%);
+			opacity: 0.5;
+		}
+		
+		/* Day label inside leaf */
+		.day-label {
+			font-size: 10px;
+			font-weight: 700;
+			color: var(--ink-faint);
+			letter-spacing: 0.05em;
+		}
+		
+		/* Seed/dot inside leaf */
+		.day-seed {
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: var(--cream-deep);
+			transition: all 0.3s ease;
+		}
+		
+		/* Completed day styling */
+		.day-leaf.completed .leaf-shape {
+			background: linear-gradient(145deg, var(--kurinji-mountain) 0%, var(--mullai-forest) 100%);
+			box-shadow: 
+				0 3px 10px rgba(92, 122, 110, 0.25),
+				inset 0 1px 0 rgba(255, 255, 255, 0.2);
+		}
+		
+		.day-leaf.completed .day-label {
+			color: rgba(255, 255, 255, 0.9);
+		}
+		
+		.day-leaf.completed .day-seed {
+			background: rgba(255, 255, 255, 0.9);
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		}
+		
+		/* Current day (Sunday) - warm accent */
+		.day-leaf.current .leaf-shape {
+			background: linear-gradient(145deg, var(--marudam-farm) 0%, #a84d2f 100%);
+			box-shadow: 
+				0 4px 12px rgba(198, 93, 59, 0.35),
+				inset 0 1px 0 rgba(255, 255, 255, 0.25);
+			transform: scale(1.08);
+		}
+		
+		.day-leaf.current .day-label {
+			color: rgba(255, 255, 255, 0.95);
+			font-weight: 700;
+		}
+		
+		.day-leaf.current .day-seed {
+			background: #fff;
+			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+			width: 10px;
+			height: 10px;
+		}
+		
+		/* Day name below leaf */
+		.day-name-below {
+			font-size: 9px;
+			font-weight: 600;
+			color: var(--ink-faint);
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+		}
+		
+		.day-leaf.current .day-name-below {
+			color: var(--marudam-farm);
+			font-weight: 700;
+		}
+		
+		/* ============================================
+		   CONTINUE LESSON CARD - Palm Leaf Shape
+		   ============================================ */
+		.continue-section {
+			position: relative;
+			z-index: 1;
+			margin-bottom: 24px;
+		}
+		
+		.continue-card {
+			display: block;
+			text-decoration: none;
+			color: inherit;
+			background: linear-gradient(165deg, var(--parchment) 0%, var(--cream-warm) 50%, var(--cream-deep) 100%);
+			border-radius: 24px 24px 32px 32px;
+			padding: 24px;
+			position: relative;
+			box-shadow: 
+				0 6px 24px rgba(26, 14, 6, 0.06),
+				0 2px 8px rgba(26, 14, 6, 0.03);
+			transition: all 0.3s ease;
+			overflow: hidden;
+		}
+		
+		/* Asymmetrical bottom edge - palm leaf effect */
+		.continue-card::before {
+			content: '';
+			position: absolute;
+			bottom: -12px;
+			left: 5%;
+			right: 5%;
+			height: 24px;
+			background: var(--cream-deep);
+			border-radius: 50%;
+			filter: blur(12px);
+			opacity: 0.4;
+		}
+		
+		/* Organic texture overlay */
+		.continue-card::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: 
+				radial-gradient(ellipse at 90% 10%, rgba(198, 93, 59, 0.05) 0%, transparent 30%),
+				radial-gradient(ellipse at 10% 90%, rgba(74, 124, 126, 0.05) 0%, transparent 25%);
+			pointer-events: none;
+			border-radius: inherit;
+		}
+		
+		.continue-card:hover {
+			transform: translateY(-3px);
+			box-shadow: 
+				0 10px 32px rgba(26, 14, 6, 0.08),
+				0 4px 12px rgba(26, 14, 6, 0.04);
+		}
+		
+		.continue-content {
+			position: relative;
+			z-index: 1;
+		}
+		
+		.continue-label {
+			font-size: 11px;
+			font-weight: 700;
+			color: var(--ink-faint);
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			margin-bottom: 8px;
+		}
+		
+		.lesson-source {
+			display: flex;
+			align-items: baseline;
+			gap: 10px;
+			margin-bottom: 6px;
+		}
+		
+		.source-tamil {
+			font-family: var(--font-tamil);
+			font-size: 15px;
+			font-weight: 600;
+			color: var(--neytal-sea);
+		}
+		
+		.source-english {
+			font-size: 13px;
+			font-weight: 500;
+			font-style: italic;
+			color: var(--ink-soft);
+		}
+		
+		.lesson-title {
+			font-family: var(--font-serif);
+			font-size: 22px;
+			font-weight: 600;
+			color: var(--ink);
+			line-height: 1.3;
+			margin-bottom: 16px;
+		}
+		
+		/* Organic progress indicator */
+		.progress-container {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+		
+		.progress-track {
+			flex: 1;
+			height: 10px;
+			background: var(--cream-deep);
+			border-radius: 20px;
+			overflow: hidden;
+			position: relative;
+			box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+		}
+		
+		.progress-fill {
+			height: 100%;
+			width: 65%;
+			background: linear-gradient(90deg, var(--kurinji-mountain) 0%, var(--neytal-sea) 100%);
+			border-radius: 20px;
+			position: relative;
+			transition: width 0.5s ease;
+		}
+		
+		/* Soft glow on progress bar */
+		.progress-fill::after {
+			content: '';
+			position: absolute;
+			right: -2px;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 16px;
+			height: 16px;
+			background: var(--neytal-sea);
+			border-radius: 50%;
+			filter: blur(4px);
+			opacity: 0.5;
+		}
+		
+		/* Progress badge - organic pebble shape */
+		.progress-badge {
+			background: linear-gradient(135deg, var(--cream) 0%, var(--parchment) 100%);
+			padding: 6px 14px;
+			border-radius: 20px;
+			font-family: var(--font-serif);
+			font-size: 13px;
+			font-weight: 700;
+			color: var(--neytal-sea);
+			box-shadow: 
+				0 2px 6px rgba(26, 14, 6, 0.06),
+				inset 0 1px 0 rgba(255, 255, 255, 0.6);
+		}
+		
+		/* Arrow indicator */
+		.continue-arrow {
+			position: absolute;
+			right: 24px;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 36px;
+			height: 36px;
+			background: var(--cream);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 8px rgba(26, 14, 6, 0.08);
+			transition: all 0.3s ease;
+		}
+		
+		.continue-arrow svg {
+			width: 18px;
+			height: 18px;
+			stroke: var(--ink-faint);
+			transition: all 0.3s ease;
+		}
+		
+		.continue-card:hover .continue-arrow {
+			background: var(--neytal-sea);
+			transform: translateY(-50%) translateX(4px);
+		}
+		
+		.continue-card:hover .continue-arrow svg {
+			stroke: white;
+		}
+		
+		/* ============================================
+		   NAVIGATION BUTTONS - Organic Pills
+		   ============================================ */
+		.nav-section {
+			position: relative;
+			z-index: 1;
+			margin-bottom: 24px;
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+		
+		.nav-button {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 18px 22px;
+			background: linear-gradient(135deg, var(--parchment) 0%, var(--cream-warm) 100%);
+			border-radius: 50px;
+			text-decoration: none;
+			color: inherit;
+			box-shadow: 
+				0 3px 12px rgba(26, 14, 6, 0.04),
+				0 1px 4px rgba(26, 14, 6, 0.02);
+			transition: all 0.3s ease;
+			position: relative;
+			overflow: hidden;
+		}
+		
+		.nav-button::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+			transform: translateX(-100%);
+			transition: transform 0.5s ease;
+		}
+		
+		.nav-button:hover {
+			transform: translateX(4px);
+			box-shadow: 
+				0 5px 16px rgba(26, 14, 6, 0.06),
+				0 2px 6px rgba(26, 14, 6, 0.03);
+		}
+		
+		.nav-button:hover::before {
+			transform: translateX(100%);
+		}
+		
+		.nav-left {
+			display: flex;
+			align-items: center;
+			gap: 14px;
+		}
+		
+		/* Icon container - organic circle */
+		.nav-icon {
+			width: 40px;
+			height: 40px;
+			background: linear-gradient(135deg, var(--cream) 0%, var(--parchment) 100%);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 
+				0 2px 6px rgba(26, 14, 6, 0.06),
+				inset 0 1px 0 rgba(255, 255, 255, 0.6);
+		}
+		
+		.nav-icon svg {
+			width: 20px;
+			height: 20px;
+			stroke: var(--neytal-sea);
+		}
+		
+		.nav-text {
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+		}
+		
+		.nav-label {
+			font-family: var(--font-serif);
+			font-size: 17px;
+			font-weight: 600;
+			color: var(--ink);
+		}
+		
+		.nav-subtitle {
+			font-size: 12px;
+			color: var(--ink-faint);
+		}
+		
+		/* Badge - organic pebble/droplet */
+		.nav-badge {
+			background: linear-gradient(135deg, var(--marudam-farm) 0%, #a84d2f 100%);
+			color: white;
+			font-size: 11px;
+			font-weight: 700;
+			padding: 5px 12px;
+			border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+			box-shadow: 0 2px 8px rgba(198, 93, 59, 0.3);
+		}
+		
+		/* Arrow */
+		.nav-arrow {
+			width: 28px;
+			height: 28px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		.nav-arrow svg {
+			width: 18px;
+			height: 18px;
+			stroke: var(--ink-faint);
+			transition: all 0.3s ease;
+		}
+		
+		.nav-button:hover .nav-arrow svg {
+			stroke: var(--neytal-sea);
+			transform: translateX(3px);
+		}
+		
+		/* ============================================
+		   STATS ROW - River Stone Pebbles
+		   ============================================ */
+		.stats-section {
+			position: relative;
+			z-index: 1;
+		}
+		
+		.stats-container {
+			display: flex;
+			justify-content: center;
+			gap: 16px;
+			padding: 8px 0;
+		}
+		
+		/* Pebble stat container */
+		.pebble-stat {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: 20px 16px;
+			min-width: 100px;
+			background: linear-gradient(145deg, var(--parchment) 0%, var(--cream-warm) 100%);
+			border-radius: 50px;
+			box-shadow: 
+				0 4px 16px rgba(26, 14, 6, 0.05),
+				0 2px 6px rgba(26, 14, 6, 0.02),
+				inset 0 1px 0 rgba(255, 255, 255, 0.6);
+			position: relative;
+			transition: all 0.3s ease;
+		}
+		
+		/* Organic variation in pebble shapes */
+		.pebble-stat:nth-child(1) {
+			border-radius: 45% 55% 50% 50% / 55% 45% 55% 45%;
+			transform: rotate(-2deg);
+		}
+		
+		.pebble-stat:nth-child(2) {
+			border-radius: 50% 50% 45% 55% / 50% 55% 45% 55%;
+			transform: rotate(1deg);
+		}
+		
+		.pebble-stat:nth-child(3) {
+			border-radius: 55% 45% 50% 50% / 45% 50% 55% 50%;
+			transform: rotate(-1deg);
+		}
+		
+		.pebble-stat:hover {
+			transform: rotate(0deg) translateY(-4px);
+			box-shadow: 
+				0 8px 24px rgba(26, 14, 6, 0.08),
+				0 3px 10px rgba(26, 14, 6, 0.04);
+		}
+		
+		/* Subtle depth shadow beneath pebble */
+		.pebble-stat::after {
+			content: '';
+			position: absolute;
+			bottom: -6px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 60%;
+			height: 12px;
+			background: var(--cream-deep);
+			border-radius: 50%;
+			filter: blur(8px);
+			opacity: 0.4;
+			z-index: -1;
+		}
+		
+		.pebble-value {
+			font-family: var(--font-serif);
+			font-size: 32px;
+			font-weight: 700;
+			line-height: 1;
+			margin-bottom: 4px;
+		}
+		
+		/* Color variations for each stat */
+		.pebble-stat:nth-child(1) .pebble-value {
+			color: var(--neytal-sea);
+		}
+		
+		.pebble-stat:nth-child(2) .pebble-value {
+			color: var(--marudam-farm);
+		}
+		
+		.pebble-stat:nth-child(3) .pebble-value {
+			color: var(--kurinji-mountain);
+		}
+		
+		.pebble-label {
+			font-size: 11px;
+			font-weight: 600;
+			color: var(--ink-faint);
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+		}
+		
+		/* ============================================
+		   RESPONSIVE ADJUSTMENTS
+		   ============================================ */
+		@media (max-width: 380px) {
+			.dashboard {
+				padding: 20px 16px 32px;
+			}
+			
+			.greeting-english {
+				font-size: 24px;
+			}
+			
+			.streak-number {
+				font-size: 28px;
+			}
+			
+			.leaf-shape {
+				width: 36px;
+				height: 46px;
+			}
+			
+			.day-label {
+				font-size: 9px;
+			}
+			
+			.lesson-title {
+				font-size: 20px;
+			}
+			
+			.pebble-stat {
+				min-width: 90px;
+				padding: 16px 12px;
+			}
+			
+			.pebble-value {
+				font-size: 28px;
+			}
+			
+			.nav-button {
+				padding: 16px 18px;
+			}
+			
+			.nav-label {
+				font-size: 16px;
+			}
+		}
+		
+		/* Animation for page load */
+		@keyframes gentleFloat {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(-3px); }
+		}
+		
+		.day-leaf.current .leaf-shape {
+			animation: gentleFloat 3s ease-in-out infinite;
+		}
+	</style>
+</head>
+<body>
+	<div class="dashboard">
+		<!-- Header -->
+		<header class="header">
+			<a href="/" class="logo">avvai</a>
+		</header>
+		
+		<!-- Greeting Section -->
+		<section class="greeting-section">
+			<div class="greeting-container">
+				<div class="greeting-text">
+					<span class="greeting-tamil">வணக்கம்</span>
+					<h1 class="greeting-english">Welcome back</h1>
+				</div>
+				<div class="streak-badge">
+					<span class="streak-number">7</span>
+					<span class="streak-label">day streak</span>
+				</div>
+			</div>
+		</section>
+		
+		<!-- Weekly Streak Tracker - Organic Leaf Shapes -->
+		<section class="streak-section">
+			<div class="streak-container">
+				<div class="streak-header">
+					<span class="streak-title">This Week</span>
+				</div>
+				<div class="days-container">
+					<!-- Monday - completed -->
+					<div class="day-leaf completed">
+						<div class="leaf-shape">
+							<span class="day-label">M</span>
+							<span class="day-seed"></span>
+						</div>
+						<span class="day-name-below">Mon</span>
+					</div>
+					
+					<!-- Tuesday - completed -->
+					<div class="day-leaf completed">
+						<div class="leaf-shape">
+							<span class="day-label">T</span>
+							<span class="day-seed"></span>
+						</div>
+						<span class="day-name-below">Tue</span>
+					</div>
+					
+					<!-- Wednesday - completed -->
+					<div class="day-leaf completed">
+						<div class="leaf-shape">
+							<span class="day-label">W</span>
+							<span class="day-seed"></span>
+						</div>
+						<span class="day-name-below">Wed</span>
+					</div>
+					
+					<!-- Thursday - not completed -->
+					<div class="day-leaf">
+						<div class="leaf-shape">
+							<span class="day-label">T</span>
+							<span class="day-seed"></span>
+						</div>
+						<span class="day-name-below">Thu</span>
+					</div>
+					
+					<!-- Friday - completed -->
+					<div class="day-leaf completed">
+						<div class="leaf-shape">
+							<span class="day-label">F</span>
+							<span class="day-seed"></span>
+						</div>
+						<span class="day-name-below">Fri</span>
+					</div>
+					
+					<!-- Saturday - completed -->
+					<div class="day-leaf completed">
+						<div class="leaf-shape">
+							<span class="day-label">S</span>
+							<span class="day-seed"></span>
+						</div>
+						<span class="day-name-below">Sat</span>
+					</div>
+					
+					<!-- Sunday - current day (warm accent) -->
+					<div class="day-leaf completed current">
+						<div class="leaf-shape">
+							<span class="day-label">S</span>
+							<span class="day-seed"></span>
+						</div>
+						<span class="day-name-below">Sun</span>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<!-- Continue Lesson Card - Palm Leaf Shape -->
+		<section class="continue-section">
+			<a href="/lesson/lesson-3" class="continue-card">
+				<div class="continue-content">
+					<span class="continue-label">Continue</span>
+					<div class="lesson-source">
+						<span class="source-tamil">குறுந்தொகை</span>
+						<span class="source-english">Kuruntokai</span>
+					</div>
+					<h2 class="lesson-title">Poem 40: The Jasmine Speaks</h2>
+					<div class="progress-container">
+						<div class="progress-track">
+							<div class="progress-fill"></div>
+						</div>
+						<span class="progress-badge">65%</span>
+					</div>
+				</div>
+				<div class="continue-arrow">
+					<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M5 12h14M12 5l7 7-7 7"/>
+					</svg>
+				</div>
+			</a>
+		</section>
+		
+		<!-- Navigation Buttons - Organic Pills -->
+		<section class="nav-section">
+			<!-- Flashcards Button -->
+			<a href="/flashcards" class="nav-button">
+				<div class="nav-left">
+					<div class="nav-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<rect x="3" y="3" width="18" height="18" rx="2"/>
+							<path d="M3 9h18M9 21V9"/>
+						</svg>
+					</div>
+					<div class="nav-text">
+						<span class="nav-label">Flashcards</span>
+						<span class="nav-subtitle">Spaced repetition practice</span>
+					</div>
+				</div>
+				<span class="nav-badge">12 due</span>
+				<div class="nav-arrow">
+					<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M5 12h14M12 5l7 7-7 7"/>
+					</svg>
+				</div>
+			</a>
+			
+			<!-- All Lessons Button -->
+			<a href="/lesson" class="nav-button">
+				<div class="nav-left">
+					<div class="nav-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+							<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+						</svg>
+					</div>
+					<div class="nav-text">
+						<span class="nav-label">All Lessons</span>
+						<span class="nav-subtitle">Browse the collection</span>
+					</div>
+				</div>
+				<div class="nav-arrow">
+					<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M5 12h14M12 5l7 7-7 7"/>
+					</svg>
+				</div>
+			</a>
+		</section>
+		
+		<!-- Stats Row - River Stone Pebbles -->
+		<section class="stats-section">
+			<div class="stats-container">
+				<div class="pebble-stat">
+					<span class="pebble-value">3</span>
+					<span class="pebble-label">lessons</span>
+				</div>
+				<div class="pebble-stat">
+					<span class="pebble-value">47</span>
+					<span class="pebble-label">words</span>
+				</div>
+				<div class="pebble-stat">
+					<span class="pebble-value">124</span>
+					<span class="pebble-label">reviews</span>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

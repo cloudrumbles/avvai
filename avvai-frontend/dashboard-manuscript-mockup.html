@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Avvai Dashboard — Manuscript Authentic Design</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Eczar:wght@400;500;600;700&family=Mukta+Malar:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<style>
+		/* ============================================
+		   MANUSCRIPT AUTHENTIC DESIGN SYSTEM
+		   Palm-leaf manuscript (olaichuvadi) aesthetic
+		   ============================================ */
+		
+		:root {
+			/* Authentic Manuscript Color Palette */
+			--parchment: #f4e4bc;              /* Aged palm leaf base */
+			--parchment-light: #f8efd4;        /* Lighter leaf center */
+			--parchment-dark: #e8d4a8;         /* Aged edges */
+			--parchment-shadow: #d4c494;       /* Shadow tones */
+			
+			--ink-primary: #3d2817;            /* Iron-gall ink dark brown */
+			--ink-faded: #5c4a3a;              /* Faded ink */
+			--ink-light: #8a7a62;              /* Very faded/pencil marks */
+			
+			--copper-teal: #5d7c76;            /* Oxidized copper accent */
+			--copper-dark: #4a635e;            /* Darker teal */
+			--copper-light: #7a9a94;           /* Lighter teal */
+			
+			--saffron: #d4a373;                /* Saffron/ochre highlight */
+			--saffron-dark: #b8825c;           /* Darker saffron */
+			--terracotta: #c45c3e;             /* Terracotta accent */
+			
+			--thread: #8b6914;                 /* Binding thread gold-brown */
+			--thread-light: #a67c2e;           /* Lighter thread */
+			
+			/* Typography */
+			--font-tamil: 'Noto Serif Tamil', 'Mukta Malar', serif;
+			--font-serif: 'Cormorant Garamond', Georgia, serif;
+			--font-heading: 'Eczar', Georgia, serif;
+			
+			/* Spacing */
+			--space-xs: 4px;
+			--space-sm: 8px;
+			--space-md: 16px;
+			--space-lg: 24px;
+			--space-xl: 32px;
+		}
+		
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		
+		body {
+			font-family: var(--font-serif);
+			background: var(--parchment);
+			color: var(--ink-primary);
+			min-height: 100vh;
+			line-height: 1.6;
+			/* Base parchment texture */
+			background-image: 
+				/* Horizontal striations like palm leaf fibers */
+				repeating-linear-gradient(
+					0deg,
+					transparent 0px,
+					transparent 2px,
+					rgba(61, 40, 23, 0.02) 2px,
+					rgba(61, 40, 23, 0.02) 3px,
+					transparent 3px,
+					transparent 14px
+				),
+				/* Subtle grain texture */
+				url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+		}
+		
+		/* ============================================
+		   MAIN CONTAINER
+		   ============================================ */
+		.dashboard {
+			max-width: 420px;
+			margin: 0 auto;
+			padding: var(--space-md) var(--space-md) var(--space-xl);
+			position: relative;
+		}
+		
+		/* ============================================
+		   HEADER
+		   ============================================ */
+		.header {
+			text-align: center;
+			margin-bottom: var(--space-lg);
+			padding-bottom: var(--space-md);
+			border-bottom: 1px solid var(--parchment-shadow);
+			position: relative;
+		}
+		
+		.header::after {
+			content: '';
+			position: absolute;
+			bottom: -3px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 60px;
+			height: 3px;
+			background: var(--copper-teal);
+			border-radius: 2px;
+		}
+		
+		.logo {
+			font-family: var(--font-heading);
+			font-size: 1.6rem;
+			font-weight: 700;
+			color: var(--ink-primary);
+			letter-spacing: 0.15em;
+			text-decoration: none;
+			display: inline-block;
+		}
+		
+		.logo-tamil {
+			font-family: var(--font-tamil);
+			font-size: 0.7rem;
+			color: var(--copper-teal);
+			display: block;
+			margin-top: 2px;
+			letter-spacing: 0.1em;
+		}
+		
+		/* ============================================
+		   GREETING SECTION
+		   ============================================ */
+		.greeting-section {
+			text-align: center;
+			margin-bottom: var(--space-lg);
+		}
+		
+		.greeting-tamil {
+			font-family: var(--font-tamil);
+			font-size: 0.85rem;
+			color: var(--copper-teal);
+			display: block;
+			margin-bottom: var(--space-xs);
+		}
+		
+		.greeting-main {
+			font-family: var(--font-heading);
+			font-size: 1.5rem;
+			font-weight: 600;
+			color: var(--ink-primary);
+			margin-bottom: var(--space-xs);
+		}
+		
+		.streak-display {
+			display: inline-flex;
+			align-items: baseline;
+			gap: var(--space-xs);
+			background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment) 100%);
+			padding: var(--space-sm) var(--space-md);
+			border-radius: 20px;
+			box-shadow: 
+				inset 0 1px 2px rgba(255,255,255,0.5),
+				0 2px 4px rgba(61, 40, 23, 0.08);
+		}
+		
+		.streak-number {
+			font-family: var(--font-heading);
+			font-size: 1.4rem;
+			font-weight: 700;
+			color: var(--terracotta);
+		}
+		
+		.streak-text {
+			font-size: 0.8rem;
+			color: var(--ink-faded);
+		}
+		
+		/* ============================================
+		   WEEKLY STREAK TRACKER
+		   Binding holes with thread aesthetic
+		   ============================================ */
+		.streak-tracker {
+			margin-bottom: var(--space-lg);
+			padding: var(--space-md);
+			background: linear-gradient(180deg, var(--parchment-light) 0%, var(--parchment) 100%);
+			border-radius: 12px;
+			box-shadow: 
+				0 2px 8px rgba(61, 40, 23, 0.06),
+				inset 0 1px 0 rgba(255,255,255,0.6);
+			position: relative;
+			/* Deckled edge effect using clip-path */
+			clip-path: polygon(
+				0% 2%, 2% 0%, 5% 1%, 8% 0%, 12% 1%, 15% 0%, 20% 1%, 25% 0%,
+				30% 1%, 35% 0%, 40% 1%, 45% 0%, 50% 1%, 55% 0%, 60% 1%, 65% 0%,
+				70% 1%, 75% 0%, 80% 1%, 85% 0%, 90% 1%, 95% 0%, 98% 1%, 100% 2%,
+				100% 98%, 98% 100%, 95% 99%, 90% 100%, 85% 99%, 80% 100%, 75% 99%,
+				70% 100%, 65% 99%, 60% 100%, 55% 99%, 50% 100%, 45% 99%, 40% 100%,
+				35% 99%, 30% 100%, 25% 99%, 20% 100%, 15% 99%, 10% 100%, 5% 99%, 2% 100%, 0% 98%
+			);
+		}
+		
+		/* Binding thread line */
+		.streak-tracker::before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 8%;
+			right: 8%;
+			height: 2px;
+			background: linear-gradient(90deg, 
+				transparent 0%, 
+				var(--thread) 5%, 
+				var(--thread-light) 50%, 
+				var(--thread) 95%, 
+				transparent 100%
+			);
+			transform: translateY(-50%);
+			opacity: 0.6;
+		}
+		
+		.tracker-header {
+			text-align: center;
+			margin-bottom: var(--space-md);
+		}
+		
+		.tracker-label {
+			font-size: 0.7rem;
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+			color: var(--ink-light);
+		}
+		
+		.days-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			position: relative;
+			padding: 0 var(--space-xs);
+		}
+		
+		.day-marker {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: var(--space-xs);
+			position: relative;
+			z-index: 1;
+		}
+		
+		/* Binding hole - the circle representing manuscript hole */
+		.day-hole {
+			width: 14px;
+			height: 14px;
+			border-radius: 50%;
+			background: var(--parchment-shadow);
+			border: 2px solid var(--parchment-dark);
+			box-shadow: 
+				inset 0 2px 4px rgba(61, 40, 23, 0.2),
+				0 1px 2px rgba(255,255,255,0.5);
+			transition: all 0.3s ease;
+			position: relative;
+		}
+		
+		/* Thread passing through - filled circle */
+		.day-marker.completed .day-hole {
+			background: var(--copper-teal);
+			border-color: var(--copper-dark);
+			box-shadow: 
+				inset 0 1px 3px rgba(255,255,255,0.3),
+				0 2px 4px rgba(93, 124, 118, 0.3);
+		}
+		
+		/* Thread passing through animation effect */
+		.day-marker.completed .day-hole::after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 6px;
+			height: 6px;
+			background: var(--thread-light);
+			border-radius: 50%;
+			box-shadow: 0 0 4px var(--thread);
+		}
+		
+		/* Current day - distinctive treatment */
+		.day-marker.current .day-hole {
+			background: var(--terracotta);
+			border-color: var(--terracotta);
+			box-shadow: 
+				0 0 0 3px rgba(196, 92, 62, 0.2),
+				inset 0 1px 3px rgba(255,255,255,0.3);
+			animation: pulse-current 2s ease-in-out infinite;
+		}
+		
+		@keyframes pulse-current {
+			0%, 100% { transform: scale(1); }
+			50% { transform: scale(1.1); }
+		}
+		
+		.day-marker.current .day-hole::after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 4px;
+			height: 4px;
+			background: white;
+			border-radius: 50%;
+		}
+		
+		.day-label {
+			font-size: 0.65rem;
+			font-weight: 600;
+			color: var(--ink-light);
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+		}
+		
+		.day-marker.completed .day-label {
+			color: var(--copper-dark);
+		}
+		
+		.day-marker.current .day-label {
+			color: var(--terracotta);
+			font-weight: 700;
+		}
+		
+		/* ============================================
+		   CONTINUE LESSON CARD
+		   Palm leaf fragment aesthetic
+		   ============================================ */
+		.continue-card {
+			margin-bottom: var(--space-lg);
+			position: relative;
+		}
+		
+		/* Main palm leaf fragment container */
+		.leaf-fragment {
+			display: block;
+			text-decoration: none;
+			color: inherit;
+			background: linear-gradient(135deg, 
+				rgba(244, 228, 188, 0.95) 0%, 
+				rgba(232, 212, 168, 0.9) 50%,
+				rgba(244, 228, 188, 0.95) 100%
+			);
+			padding: var(--space-lg);
+			position: relative;
+			/* Organic torn edges using multiple clip-path points */
+			clip-path: polygon(
+				2% 0%, 5% 2%, 10% 0%, 15% 3%, 20% 1%, 25% 4%, 30% 0%, 35% 2%,
+				40% 0%, 45% 3%, 50% 1%, 55% 2%, 60% 0%, 65% 3%, 70% 1%, 75% 2%,
+				80% 0%, 85% 3%, 90% 1%, 95% 2%, 98% 0%, 100% 3%,
+				100% 15%, 98% 20%, 100% 25%, 99% 30%, 100% 35%, 98% 40%, 100% 45%,
+				99% 50%, 100% 55%, 98% 60%, 100% 65%, 99% 70%, 100% 75%, 98% 80%,
+				100% 85%, 99% 90%, 100% 95%, 98% 100%,
+				95% 98%, 90% 100%, 85% 97%, 80% 100%, 75% 98%, 70% 100%, 65% 97%,
+				60% 100%, 55% 98%, 50% 100%, 45% 97%, 40% 100%, 35% 98%, 30% 100%,
+				25% 97%, 20% 100%, 15% 98%, 10% 100%, 5% 97%, 0% 100%,
+				0% 95%, 2% 90%, 0% 85%, 1% 80%, 0% 75%, 2% 70%, 0% 65%, 1% 60%,
+				0% 55%, 2% 50%, 0% 45%, 1% 40%, 0% 35%, 2% 30%, 0% 25%, 1% 20%,
+				0% 15%, 2% 10%, 0% 5%
+			);
+			/* Palm leaf striation texture */
+			background-image: 
+				repeating-linear-gradient(
+					0deg,
+					transparent 0px,
+					transparent 8px,
+					rgba(61, 40, 23, 0.03) 8px,
+					rgba(61, 40, 23, 0.03) 9px
+				);
+			box-shadow: 
+				0 4px 12px rgba(61, 40, 23, 0.1),
+				0 1px 3px rgba(61, 40, 23, 0.08),
+				inset 0 1px 0 rgba(255,255,255,0.4);
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+		}
+		
+		.leaf-fragment:hover {
+			transform: translateY(-2px);
+			box-shadow: 
+				0 6px 20px rgba(61, 40, 23, 0.12),
+				0 2px 6px rgba(61, 40, 23, 0.1),
+				inset 0 1px 0 rgba(255,255,255,0.4);
+		}
+		
+		/* Binding thread decoration at top */
+		.leaf-fragment::before {
+			content: '';
+			position: absolute;
+			top: 12px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 40px;
+			height: 3px;
+			background: linear-gradient(90deg, 
+				transparent 0%,
+				var(--thread) 20%,
+				var(--thread-light) 50%,
+				var(--thread) 80%,
+				transparent 100%
+			);
+			border-radius: 2px;
+			opacity: 0.7;
+		}
+		
+		/* Binding holes at top */
+		.leaf-fragment::after {
+			content: '';
+			position: absolute;
+			top: 10px;
+			left: 30%;
+			width: 6px;
+			height: 6px;
+			background: var(--parchment-shadow);
+			border-radius: 50%;
+			box-shadow: 
+				inset 0 1px 2px rgba(61, 40, 23, 0.3),
+				140px 0 0 var(--parchment-shadow);
+		}
+		
+		.continue-label {
+			font-size: 0.65rem;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: var(--ink-light);
+			margin-bottom: var(--space-sm);
+			display: block;
+		}
+		
+		.lesson-source {
+			display: flex;
+			align-items: baseline;
+			gap: var(--space-sm);
+			margin-bottom: var(--space-xs);
+		}
+		
+		.source-tamil {
+			font-family: var(--font-tamil);
+			font-size: 0.9rem;
+			font-weight: 600;
+			color: var(--copper-teal);
+		}
+		
+		.source-english {
+			font-size: 0.75rem;
+			font-style: italic;
+			color: var(--ink-faded);
+		}
+		
+		.lesson-title {
+			font-family: var(--font-heading);
+			font-size: 1.25rem;
+			font-weight: 600;
+			color: var(--ink-primary);
+			margin: var(--space-sm) 0 var(--space-md);
+			line-height: 1.3;
+		}
+		
+		/* Ink-fill progress indicator */
+		.progress-ink {
+			display: flex;
+			align-items: center;
+			gap: var(--space-sm);
+		}
+		
+		.ink-container {
+			flex: 1;
+			height: 8px;
+			background: var(--parchment-shadow);
+			border-radius: 4px;
+			overflow: hidden;
+			position: relative;
+			box-shadow: inset 0 1px 3px rgba(61, 40, 23, 0.2);
+		}
+		
+		.ink-fill {
+			height: 100%;
+			background: linear-gradient(90deg, 
+				var(--copper-dark) 0%, 
+				var(--copper-teal) 50%,
+				var(--copper-light) 100%
+			);
+			border-radius: 4px;
+			position: relative;
+			transition: width 0.5s ease;
+		}
+		
+		/* Ink bleed effect at the edge */
+		.ink-fill::after {
+			content: '';
+			position: absolute;
+			right: -2px;
+			top: 0;
+			bottom: 0;
+			width: 8px;
+			background: radial-gradient(ellipse at center, 
+				var(--copper-teal) 0%, 
+				transparent 70%
+			);
+			opacity: 0.6;
+		}
+		
+		.progress-text {
+			font-family: var(--font-heading);
+			font-size: 0.85rem;
+			font-weight: 600;
+			color: var(--copper-dark);
+			min-width: 36px;
+			text-align: right;
+		}
+		
+		/* ============================================
+		   NAVIGATION ITEMS
+		   Manuscript strip aesthetic
+		   ============================================ */
+		.nav-section {
+			margin-bottom: var(--space-lg);
+		}
+		
+		.nav-list {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-sm);
+		}
+		
+		.nav-item {
+			display: flex;
+			align-items: center;
+			gap: var(--space-md);
+			padding: var(--space-md) var(--space-lg);
+			background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment) 100%);
+			text-decoration: none;
+			color: inherit;
+			position: relative;
+			/* Slight organic shape */
+			clip-path: polygon(
+				0% 5%, 3% 0%, 97% 0%, 100% 5%,
+				100% 95%, 97% 100%, 3% 100%, 0% 95%
+			);
+			box-shadow: 
+				0 2px 6px rgba(61, 40, 23, 0.06),
+				inset 0 1px 0 rgba(255,255,255,0.5);
+			transition: all 0.3s ease;
+		}
+		
+		.nav-item:hover {
+			transform: translateX(4px);
+			background: linear-gradient(135deg, var(--parchment) 0%, var(--parchment-light) 100%);
+			box-shadow: 
+				0 4px 12px rgba(61, 40, 23, 0.1),
+				inset 0 1px 0 rgba(255,255,255,0.5);
+		}
+		
+		/* Small binding hole decoration */
+		.nav-item::before {
+			content: '';
+			width: 8px;
+			height: 8px;
+			background: var(--parchment-shadow);
+			border-radius: 50%;
+			box-shadow: inset 0 1px 2px rgba(61, 40, 23, 0.3);
+			flex-shrink: 0;
+		}
+		
+		.nav-content {
+			flex: 1;
+		}
+		
+		.nav-title {
+			font-family: var(--font-heading);
+			font-size: 1rem;
+			font-weight: 600;
+			color: var(--ink-primary);
+		}
+		
+		.nav-subtitle {
+			font-size: 0.75rem;
+			color: var(--ink-light);
+			margin-top: 2px;
+		}
+		
+		/* Wax seal / ink stamp badge */
+		.nav-badge {
+			background: linear-gradient(135deg, var(--terracotta) 0%, var(--saffron-dark) 100%);
+			color: white;
+			font-size: 0.7rem;
+			font-weight: 700;
+			padding: var(--space-xs) var(--space-sm);
+			border-radius: 12px;
+			box-shadow: 
+				0 2px 4px rgba(196, 92, 62, 0.3),
+				inset 0 1px 0 rgba(255,255,255,0.3);
+			/* Slight organic shape like a wax seal */
+			clip-path: polygon(
+				10% 0%, 90% 0%, 100% 20%, 100% 80%, 
+				90% 100%, 10% 100%, 0% 80%, 0% 20%
+			);
+		}
+		
+		.nav-arrow {
+			font-size: 1.2rem;
+			color: var(--ink-light);
+			transition: transform 0.3s ease;
+		}
+		
+		.nav-item:hover .nav-arrow {
+			transform: translateX(4px);
+			color: var(--copper-teal);
+		}
+		
+		/* ============================================
+		   STATS SECTION
+		   Parchment scroll segments
+		   ============================================ */
+		.stats-section {
+			display: flex;
+			gap: var(--space-sm);
+			justify-content: space-between;
+		}
+		
+		.stat-scroll {
+			flex: 1;
+			text-align: center;
+			padding: var(--space-md) var(--space-sm);
+			background: linear-gradient(180deg, 
+				var(--parchment-light) 0%, 
+				var(--parchment) 50%,
+				var(--parchment-dark) 100%
+			);
+			position: relative;
+			/* Scroll segment shape with curved top/bottom */
+			clip-path: polygon(
+				5% 0%, 95% 0%, 100% 10%, 100% 90%, 
+				95% 100%, 5% 100%, 0% 90%, 0% 10%
+			);
+			box-shadow: 
+				0 2px 8px rgba(61, 40, 23, 0.08),
+				inset 0 1px 0 rgba(255,255,255,0.4);
+		}
+		
+		/* Decorative binding holes on scroll segments */
+		.stat-scroll::before,
+		.stat-scroll::after {
+			content: '';
+			position: absolute;
+			width: 5px;
+			height: 5px;
+			background: var(--parchment-shadow);
+			border-radius: 50%;
+			box-shadow: inset 0 1px 2px rgba(61, 40, 23, 0.3);
+		}
+		
+		.stat-scroll::before {
+			top: 8px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		
+		.stat-scroll::after {
+			bottom: 8px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		
+		.stat-value {
+			font-family: var(--font-heading);
+			font-size: 1.6rem;
+			font-weight: 700;
+			color: var(--copper-teal);
+			display: block;
+			line-height: 1;
+			text-shadow: 0 1px 2px rgba(61, 40, 23, 0.1);
+		}
+		
+		.stat-label {
+			font-size: 0.7rem;
+			color: var(--ink-faded);
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+			margin-top: var(--space-xs);
+			display: block;
+		}
+		
+		/* ============================================
+		   DECORATIVE ELEMENTS
+		   ============================================ */
+		.section-divider {
+			height: 1px;
+			background: linear-gradient(90deg, 
+				transparent 0%, 
+				var(--parchment-shadow) 20%, 
+				var(--copper-teal) 50%, 
+				var(--parchment-shadow) 80%, 
+				transparent 100%
+			);
+			margin: var(--space-lg) 0;
+			opacity: 0.5;
+		}
+		
+		/* Ornamental flourish */
+		.flourish {
+			text-align: center;
+			margin: var(--space-md) 0;
+			color: var(--copper-teal);
+			opacity: 0.4;
+			font-size: 1.2rem;
+			letter-spacing: 0.3em;
+		}
+		
+		/* ============================================
+		   RESPONSIVE ADJUSTMENTS
+		   ============================================ */
+		@media (max-width: 380px) {
+			.dashboard {
+				padding: var(--space-sm) var(--space-sm) var(--space-lg);
+			}
+			
+			.greeting-main {
+				font-size: 1.25rem;
+			}
+			
+			.lesson-title {
+				font-size: 1.1rem;
+			}
+			
+			.stat-value {
+				font-size: 1.4rem;
+			}
+			
+			.day-hole {
+				width: 12px;
+				height: 12px;
+			}
+			
+			.day-label {
+				font-size: 0.6rem;
+			}
+		}
+		
+		/* ============================================
+		   ANIMATION KEYFRAMES
+		   ============================================ */
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+		
+		.streak-tracker,
+		.continue-card,
+		.nav-section,
+		.stats-section {
+			animation: fadeInUp 0.6s ease-out forwards;
+		}
+		
+		.continue-card {
+			animation-delay: 0.1s;
+		}
+		
+		.nav-section {
+			animation-delay: 0.2s;
+		}
+		
+		.stats-section {
+			animation-delay: 0.3s;
+		}
+	</style>
+</head>
+<body>
+	<div class="dashboard">
+		<!-- Header -->
+		<header class="header">
+			<a href="/" class="logo">
+				avvai
+				<span class="logo-tamil">அவ்வை</span>
+			</a>
+		</header>
+		
+		<!-- Greeting Section -->
+		<section class="greeting-section">
+			<span class="greeting-tamil">வணக்கம்</span>
+			<h1 class="greeting-main">Welcome back</h1>
+			<div class="streak-display">
+				<span class="streak-number">7</span>
+				<span class="streak-text">day streak</span>
+			</div>
+		</section>
+		
+		<!-- Weekly Streak Tracker -->
+		<section class="streak-tracker">
+			<div class="tracker-header">
+				<span class="tracker-label">This Week</span>
+			</div>
+			<div class="days-container">
+				<div class="day-marker completed">
+					<div class="day-hole"></div>
+					<span class="day-label">Mo</span>
+				</div>
+				<div class="day-marker completed">
+					<div class="day-hole"></div>
+					<span class="day-label">Tu</span>
+				</div>
+				<div class="day-marker completed">
+					<div class="day-hole"></div>
+					<span class="day-label">We</span>
+				</div>
+				<div class="day-marker">
+					<div class="day-hole"></div>
+					<span class="day-label">Th</span>
+				</div>
+				<div class="day-marker completed">
+					<div class="day-hole"></div>
+					<span class="day-label">Fr</span>
+				</div>
+				<div class="day-marker completed">
+					<div class="day-hole"></div>
+					<span class="day-label">Sa</span>
+				</div>
+				<div class="day-marker current completed">
+					<div class="day-hole"></div>
+					<span class="day-label">Su</span>
+				</div>
+			</div>
+		</section>
+		
+		<div class="flourish">❦ ❦ ❦</div>
+		
+		<!-- Continue Learning Card -->
+		<section class="continue-card">
+			<a href="/lesson/lesson-3" class="leaf-fragment">
+				<span class="continue-label">Continue</span>
+				<div class="lesson-source">
+					<span class="source-tamil">குறுந்தொகை</span>
+					<span class="source-english">Kuruntokai</span>
+				</div>
+				<h2 class="lesson-title">Poem 40: The Jasmine Speaks</h2>
+				<div class="progress-ink">
+					<div class="ink-container">
+						<div class="ink-fill" style="width: 65%"></div>
+					</div>
+					<span class="progress-text">65%</span>
+				</div>
+			</a>
+		</section>
+		
+		<div class="section-divider"></div>
+		
+		<!-- Navigation Items -->
+		<section class="nav-section">
+			<div class="nav-list">
+				<a href="/flashcards" class="nav-item">
+					<div class="nav-content">
+						<span class="nav-title">Flashcards</span>
+						<span class="nav-subtitle">Spaced repetition practice</span>
+					</div>
+					<span class="nav-badge">12 due</span>
+					<span class="nav-arrow">→</span>
+				</a>
+				
+				<a href="/lesson" class="nav-item">
+					<div class="nav-content">
+						<span class="nav-title">All Lessons</span>
+						<span class="nav-subtitle">Browse the curriculum</span>
+					</div>
+					<span class="nav-arrow">→</span>
+				</a>
+			</div>
+		</section>
+		
+		<div class="flourish">❦ ❦ ❦</div>
+		
+		<!-- Stats Section -->
+		<section class="stats-section">
+			<div class="stat-scroll">
+				<span class="stat-value">3</span>
+				<span class="stat-label">lessons</span>
+			</div>
+			<div class="stat-scroll">
+				<span class="stat-value">47</span>
+				<span class="stat-label">words</span>
+			</div>
+			<div class="stat-scroll">
+				<span class="stat-value">124</span>
+				<span class="stat-label">reviews</span>
+			</div>
+		</section>
+	</div>
+</body>
+</html>
