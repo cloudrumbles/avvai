@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { showDictionaryAtElement } from '$lib/actions/dictionary-lookup';
+	import ClickableText from '$lib/components/ClickableText.svelte';
 
 	interface VocabularyEntry {
 		word: string;
@@ -102,7 +103,7 @@
 						onkeydown={(e) => handleKeydown(entry.word, i, e)}
 					>{entry.word}</span>
 				</dt>
-				<dd class="meaning">{entry.meaning}</dd>
+				<dd class="meaning"><ClickableText text={entry.meaning} /></dd>
 			</div>
 		{/each}
 	</dl>
