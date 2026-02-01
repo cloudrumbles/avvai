@@ -147,12 +147,23 @@
 	-webkit-tap-highlight-color: transparent;
 }
 
-.interactive-text:hover {
-	background: var(--color-accent-tint);
+@media (hover: hover) {
+	.interactive-text:hover {
+		background: var(--color-accent-tint);
+	}
 }
 
 .interactive-text:active {
 	background: var(--overlay-red-soft);
+}
+
+.interactive-text:focus {
+	outline: none;
+}
+
+.interactive-text:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 1px;
 }
 
 /* ── Section Titles ── */

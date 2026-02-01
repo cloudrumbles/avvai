@@ -110,13 +110,23 @@
 
 <style>
 	.vocabulary-section {
-		font-family: var(--font-sans);
-		color: var(--color-text);
-		background: var(--color-bg);
-		border: 2px solid var(--color-bg-soft);
+		background: linear-gradient(180deg, var(--color-bg-soft) 0%, var(--color-bg) 100%);
+		border: 1px solid var(--color-bg-soft);
 		border-radius: var(--radius-3);
 		padding: var(--space-7) var(--space-7);
-		box-shadow: var(--shadow-inset);
+		box-shadow: var(--shadow-warm);
+		position: relative;
+	}
+
+	.vocabulary-section::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: var(--space-6);
+		right: var(--space-6);
+		height: 3px;
+		background: linear-gradient(90deg, transparent, var(--color-highlight), transparent);
+		border-radius: 0 0 var(--radius-0-5) var(--radius-0-5);
 	}
 
 	@media (max-width: 640px) {
@@ -124,43 +134,41 @@
 			padding: var(--space-5) var(--space-6);
 			border-radius: var(--radius-2);
 		}
+
+		.vocabulary-section::before {
+			left: var(--space-4);
+			right: var(--space-4);
+		}
 	}
 
 	.definition-list {
 		margin: 0;
 		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-		gap: var(--space-4);
-	}
-
-	@media (max-width: 640px) {
-		.definition-list {
-			grid-template-columns: 1fr;
-		}
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-5);
 	}
 
 	.entry {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-2);
-		padding: var(--space-4) var(--space-5);
-		background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-accent-tint) 100%);
-		border: 1px solid var(--color-bg-soft);
-		border-radius: var(--radius-2-5);
-		border-left: 3px solid var(--color-accent);
-		transition: all 0.15s ease;
+		padding-left: var(--space-3);
+		border-left: 2px solid var(--color-bg-soft);
+		padding-bottom: var(--space-5);
+		border-bottom: 1px solid var(--color-bg-soft);
 	}
 
-	.entry:hover {
-		border-color: var(--color-accent);
-		box-shadow: var(--shadow-red);
+	.entry:last-child {
+		padding-bottom: 0;
+		border-bottom: none;
 	}
 
 	.word {
 		margin: 0;
-		font-weight: 700;
-		color: var(--color-accent-strong);
+		font-family: var(--font-serif);
+		font-weight: 500;
+		color: var(--color-text);
 		font-size: var(--font-size-4);
 	}
 
@@ -171,7 +179,8 @@
 
 	.meaning {
 		margin: 0;
-		color: var(--color-text);
-		line-height: var(--line-height-1-6);
+		font-size: var(--font-size-2);
+		color: var(--color-text-muted);
+		line-height: var(--line-height-3);
 	}
 </style>
