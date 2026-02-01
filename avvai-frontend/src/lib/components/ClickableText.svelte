@@ -36,7 +36,7 @@
 		{token}
 	{:else}
 		<span
-			class="clickable-word"
+			class="clickable-word interactive-text"
 			role="button"
 			tabindex="-1"
 			onclick={(e) => handleClick(token, e)}
@@ -44,20 +44,3 @@
 		>{token}</span>
 	{/if}
 {/each}
-
-<style>
-	.clickable-word {
-		cursor: pointer;
-		border-radius: 3px;
-		transition: background 0.1s ease;
-		-webkit-tap-highlight-color: transparent;
-	}
-
-	.clickable-word:hover {
-		background: var(--red-faint);
-	}
-
-	.clickable-word:active {
-		background: rgba(139, 26, 26, 0.14);
-	}
-</style>

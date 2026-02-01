@@ -49,11 +49,11 @@
 
 <style>
 	.poetry-section {
-		background: linear-gradient(180deg, var(--gold-faint) 0%, var(--cream) 100%);
-		border: 1px solid var(--gold-dim);
-		border-radius: 12px;
-		padding: 28px 32px;
-		box-shadow: 0 2px 12px rgba(197, 148, 26, 0.08);
+		background: linear-gradient(180deg, var(--color-bg-soft) 0%, var(--color-bg) 100%);
+		border: 1px solid var(--color-bg-soft);
+		border-radius: var(--radius-3);
+		padding: var(--space-7) var(--space-7);
+		box-shadow: var(--shadow-warm);
 		position: relative;
 	}
 
@@ -61,58 +61,58 @@
 		content: '';
 		position: absolute;
 		top: 0;
-		left: 24px;
-		right: 24px;
+		left: var(--space-6);
+		right: var(--space-6);
 		height: 3px;
-		background: linear-gradient(90deg, transparent, var(--gold), transparent);
-		border-radius: 0 0 2px 2px;
+		background: linear-gradient(90deg, transparent, var(--color-highlight), transparent);
+		border-radius: 0 0 var(--radius-0-5) var(--radius-0-5);
 	}
 
 	@media (max-width: 640px) {
 		.poetry-section {
-			padding: 20px 24px;
-			border-radius: 8px;
+			padding: var(--space-5) var(--space-6);
+			border-radius: var(--radius-2);
 		}
 
 		.poetry-section::before {
-			left: 16px;
-			right: 16px;
+			left: var(--space-4);
+			right: var(--space-4);
 		}
 	}
 
 	.section-title {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 0.85em;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-2);
 		font-weight: 700;
-		color: var(--stone);
+		color: var(--color-text-subtle);
 		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		margin: 0 0 1.5em 0;
-		padding-bottom: 0.8em;
-		border-bottom: 1px solid var(--cream-mid);
+		letter-spacing: var(--letter-wide);
+		margin: 0 0 var(--space-6) 0;
+		padding-bottom: var(--space-3);
+		border-bottom: 1px solid var(--color-bg-soft);
 		text-align: center;
 	}
 
 	.verses {
 		display: flex;
 		flex-direction: column;
-		gap: 2em;
+		gap: var(--space-7);
 	}
 
 	.verse {
 		display: flex;
-		gap: 0.75em;
+		gap: var(--space-3);
 		align-items: flex-start;
 	}
 
 	.verse-number {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 0.85em;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-2);
 		font-weight: 700;
-		color: var(--gold);
-		min-width: 1.5em;
+		color: var(--color-highlight);
+		min-width: var(--space-6);
 		text-align: right;
-		padding-top: 0.1em;
+		padding-top: var(--space-0);
 		flex-shrink: 0;
 	}
 
@@ -122,25 +122,25 @@
 	}
 
 	.verse-lines {
-		padding-left: 0.8em;
-		border-left: 2px solid var(--gold-dim);
+		padding-left: var(--space-3);
+		border-left: 2px solid var(--color-bg-soft);
 	}
 
 	.line {
 		margin: 0;
-		padding: 0.15em 0;
+		padding: var(--space-0) 0;
 		font-weight: 500;
-		color: var(--ink);
+		color: var(--color-text);
 		text-align: left;
 		overflow-wrap: break-word;
 	}
 
 	.translation {
-		margin: 0.6em 0 0 0;
-		padding-left: 0.8em;
-		font-size: 0.88em;
-		color: var(--ink-soft);
+		margin: var(--space-2) 0 0 0;
+		padding-left: var(--space-3);
+		font-size: var(--font-size-2);
+		color: var(--color-text-muted);
 		text-align: left;
-		line-height: 1.5;
+		line-height: var(--line-height-3);
 	}
 </style>

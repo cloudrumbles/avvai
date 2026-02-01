@@ -85,36 +85,36 @@
 	.popup {
 		position: fixed;
 		width: 280px;
-		background: var(--cream);
-		border: 1.5px solid var(--cream-mid);
-		border-radius: 12px;
-		padding: 12px 16px;
-		box-shadow: 0 8px 32px rgba(26, 14, 6, 0.18);
+		background: var(--color-bg);
+		border: var(--border-strong);
+		border-radius: var(--radius-3);
+		padding: var(--space-3) var(--space-4);
+		box-shadow: var(--shadow-2);
 		z-index: 101;
 	}
 
 	.popup-word {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 16px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-3);
 		font-weight: 700;
-		color: var(--red-deep);
-		margin: 0 0 4px;
+		color: var(--color-accent-strong);
+		margin: 0 0 var(--space-1);
 	}
 
 	.popup-body {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 14px;
-		color: var(--ink);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-2);
+		color: var(--color-text);
 		margin: 0;
-		line-height: 1.5;
+		line-height: var(--line-height-3);
 	}
 
 	.popup-example {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 13px;
-		color: var(--ink-soft);
-		margin: 6px 0 0;
-		line-height: 1.4;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-2);
+		color: var(--color-text-muted);
+		margin: var(--space-2) 0 0;
+		line-height: var(--line-height-2);
 		font-style: italic;
 	}
 </style>

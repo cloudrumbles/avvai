@@ -5,7 +5,7 @@
 		{ name: 'Noto Serif Tamil', family: "'Noto Serif Tamil', serif", category: 'serif' },
 		{ name: 'Noto Sans Tamil', family: "'Noto Sans Tamil', sans-serif", category: 'sans-serif' },
 		{ name: 'Tiro Tamil', family: "'Tiro Tamil', serif", category: 'serif' },
-		{ name: 'Catamaran', family: "'Catamaran', sans-serif", category: 'sans-serif' },
+		{ name: 'Catamaran', family: "var(--font-sans)", category: 'sans-serif' },
 		{ name: 'Anek Tamil', family: "'Anek Tamil', sans-serif", category: 'sans-serif' },
 		{ name: 'Hind Madurai', family: "'Hind Madurai', sans-serif", category: 'sans-serif' },
 		{ name: 'Mukta Malar', family: "'Mukta Malar', sans-serif", category: 'sans-serif' },
@@ -77,69 +77,69 @@
 	}
 
 	.page {
-		background: #faf3e6;
+		background: var(--color-bg);
 		min-height: 100dvh;
-		padding: 32px 24px 64px;
+		padding: var(--space-7) var(--space-6) 64px;
 		max-width: 1400px;
 		margin: 0 auto;
 	}
 
 	.page-header {
-		margin-bottom: 32px;
+		margin-bottom: var(--space-7);
 	}
 
 	.back-link {
 		display: inline-block;
 		font-family: 'Noto Sans Tamil', sans-serif;
-		font-size: 14px;
-		color: #8b1a1a;
+		font-size: var(--font-size-2);
+		color: var(--color-accent);
 		text-decoration: none;
-		margin-bottom: 16px;
-		padding: 6px 12px;
-		border-radius: 6px;
+		margin-bottom: var(--space-4);
+		padding: var(--space-1-5) var(--space-3);
+		border-radius: var(--radius-1-5);
 		transition: background 0.15s ease;
 	}
 
 	.back-link:hover {
-		background: rgba(139, 26, 26, 0.08);
+		background: var(--color-accent-tint);
 	}
 
 	.page-title {
 		font-family: 'Noto Serif Tamil', serif;
-		font-size: 32px;
-		color: #5c0e0e;
-		margin: 0 0 4px;
+		font-size: var(--font-size-8);
+		color: var(--color-accent-strong);
+		margin: 0 0 var(--space-1);
 		font-weight: 700;
 	}
 
 	.page-subtitle {
 		font-family: 'Noto Sans Tamil', sans-serif;
-		font-size: 14px;
-		color: #6b5a48;
+		font-size: var(--font-size-2);
+		color: var(--color-text-subtle);
 		margin: 0;
 		text-transform: uppercase;
 		letter-spacing: 1.5px;
 	}
 
 	.controls {
-		background: #fff;
-		border: 1.5px solid #f0e4cc;
-		border-radius: 12px;
-		padding: 20px 24px;
-		margin-bottom: 32px;
+		background: var(--color-bg);
+		border: 1.5px solid var(--color-bg-soft);
+		border-radius: var(--radius-3);
+		padding: var(--space-5) var(--space-6);
+		margin-bottom: var(--space-7);
 		display: flex;
 		flex-direction: column;
-		gap: 12px;
+		gap: var(--space-3);
 	}
 
 	.slider-label {
 		font-family: 'Noto Sans Tamil', sans-serif;
-		font-size: 14px;
-		color: #3a2a1a;
+		font-size: var(--font-size-2);
+		color: var(--color-text-muted);
 	}
 
 	.slider-label strong {
-		color: #8b1a1a;
+		color: var(--color-accent);
 		font-weight: 600;
 	}
 
@@ -148,8 +148,8 @@
 		appearance: none;
 		width: 100%;
 		height: 6px;
-		border-radius: 3px;
-		background: #f0e4cc;
+		border-radius: var(--radius-0-75);
+		background: var(--color-bg-soft);
 		outline: none;
 	}
 
@@ -159,10 +159,10 @@
 		width: 20px;
 		height: 20px;
 		border-radius: 50%;
-		background: #8b1a1a;
+		background: var(--color-accent);
 		cursor: pointer;
-		border: 3px solid #faf3e6;
-		box-shadow: 0 1px 4px rgba(26, 14, 6, 0.25);
+		border: 3px solid var(--color-bg);
+		box-shadow: var(--shadow-1);
 		transition: transform 0.15s ease;
 	}
 
@@ -174,10 +174,10 @@
 		width: 20px;
 		height: 20px;
 		border-radius: 50%;
-		background: #8b1a1a;
+		background: var(--color-accent);
 		cursor: pointer;
-		border: 3px solid #faf3e6;
-		box-shadow: 0 1px 4px rgba(26, 14, 6, 0.25);
+		border: 3px solid var(--color-bg);
+		box-shadow: var(--shadow-1);
 		transition: transform 0.15s ease;
 	}
 
@@ -187,14 +187,14 @@
 
 	.font-slider::-moz-range-track {
 		height: 6px;
-		border-radius: 3px;
-		background: #f0e4cc;
+		border-radius: var(--radius-0-75);
+		background: var(--color-bg-soft);
 	}
 
 	.grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 24px;
+		gap: var(--space-6);
 	}
 
 	@media (min-width: 768px) {
@@ -210,51 +210,51 @@
 	}
 
 	.card {
-		background: #faf3e6;
-		border: 1.5px solid #f0e4cc;
-		border-radius: 12px;
-		padding: 24px;
-		box-shadow: 0 2px 8px rgba(26, 14, 6, 0.06);
+		background: var(--color-bg);
+		border: 1.5px solid var(--color-bg-soft);
+		border-radius: var(--radius-3);
+		padding: var(--space-6);
+		box-shadow: var(--shadow-1);
 		transition: box-shadow 0.2s ease;
 	}
 
 	.card:hover {
-		box-shadow: 0 4px 16px rgba(26, 14, 6, 0.1);
+		box-shadow: var(--shadow-2);
 	}
 
 	.card-header {
 		display: flex;
 		align-items: baseline;
 		justify-content: space-between;
-		gap: 12px;
-		margin-bottom: 16px;
-		padding-bottom: 12px;
-		border-bottom: 1px solid #f0e4cc;
+		gap: var(--space-3);
+		margin-bottom: var(--space-4);
+		padding-bottom: var(--space-3);
+		border-bottom: 1px solid var(--color-bg-soft);
 	}
 
 	.card-font-name {
-		font-size: 18px;
-		color: #1a0e06;
+		font-size: var(--font-size-4);
+		color: var(--color-text);
 		margin: 0;
 		font-weight: 600;
 	}
 
 	.card-category {
 		font-family: 'Noto Sans Tamil', sans-serif;
-		font-size: 11px;
-		color: #6b5a48;
+		font-size: var(--font-size-0-75);
+		color: var(--color-text-subtle);
 		text-transform: uppercase;
 		letter-spacing: 1px;
 		white-space: nowrap;
-		padding: 2px 8px;
-		background: rgba(197, 148, 26, 0.3);
-		border-radius: 4px;
+		padding: var(--space-0-5) var(--space-2);
+		background: var(--color-bg-soft);
+		border-radius: var(--radius-1);
 		font-weight: 500;
 	}
 
 	.card-sample {
-		color: #1a0e06;
-		line-height: 1.8;
+		color: var(--color-text);
+		line-height: var(--line-height-1-8);
 		margin: 0;
 	}
 </style>

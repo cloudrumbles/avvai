@@ -11,17 +11,11 @@
 <svelte:head>
 	<title>avvai — Learn Tamil</title>
 	<meta name="description" content="Learn Tamil without the pain" />
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Eczar:wght@400;600;700&display=swap" rel="stylesheet" />
 </svelte:head>
 
 <div class="page" class:mounted>
 	<header class="site-header">
 		<div class="logo">avvai</div>
-		<nav class="nav">
-			<a href="/home" class="nav-link">Start</a>
-		</nav>
 	</header>
 
 	<section class="hero">
@@ -47,33 +41,23 @@
 
 	<footer class="site-footer">
 		<div class="footer-content">
-			<span class="footer-logo">avvai</span>
-			<div class="footer-attribution">
-				<a href="https://www.tamilvu.org/" target="_blank" rel="noopener noreferrer">Tamil Virtual Academy</a>
-				<span class="separator">·</span>
-				<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>
+			<div class="footer-chip">
+				<span class="chip-label">Sources</span>
+				<div class="footer-attribution">
+					<a href="https://www.tamilvu.org/" target="_blank" rel="noopener noreferrer">Tamil Virtual Academy</a>
+					<span class="separator">·</span>
+					<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>
+				</div>
 			</div>
 		</div>
 	</footer>
 </div>
 
 <style>
-	:global(:root) {
-		--font-serif: 'Cormorant Garamond', Georgia, serif;
-		--font-heading: 'Eczar', Georgia, serif;
-
-		--c-leaf: #e8e0c8;            /* palm leaf */
-		--c-cream: #f2edd8;
-		--c-terracotta: #c45c3e;
-		--c-terracotta-light: #d4684a;
-		--c-brown: #5c4a3d;
-		--c-dark: #1c1c1c;
-	}
-
 	:global(body) {
 		margin: 0;
-		background: var(--c-dark);
-		color: var(--c-cream);
+		background: var(--color-bg-inverse);
+		color: var(--color-text-inverse);
 		font-family: var(--font-serif);
 		overflow-x: hidden;
 	}
@@ -82,6 +66,7 @@
 		min-height: 100dvh;
 		display: flex;
 		flex-direction: column;
+		color: var(--color-text-inverse);
 	}
 
 	/* Header */
@@ -98,11 +83,11 @@
 	}
 
 	.logo {
-		font-family: var(--font-heading);
-		font-size: 1.5rem;
+		font-family: 'Eczar', Georgia, serif;
+		font-size: var(--font-size-5-5);
 		font-weight: 700;
-		color: var(--c-cream);
-		letter-spacing: -0.01em;
+		color: var(--color-text-inverse);
+		letter-spacing: var(--letter-tight);
 		opacity: 0;
 		transform: translateY(-10px);
 		transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
@@ -113,19 +98,6 @@
 		transform: translateY(0);
 	}
 
-	.nav-link {
-		font-family: var(--font-heading);
-		font-size: 0.9rem;
-		color: var(--c-cream);
-		text-decoration: none;
-		opacity: 0.7;
-		transition: opacity 0.2s;
-		letter-spacing: 0.02em;
-	}
-
-	.nav-link:hover {
-		opacity: 1;
-	}
 
 	/* Hero */
 	.hero {
@@ -155,10 +127,10 @@
 		inset: 0;
 		background: linear-gradient(
 			to top,
-			rgba(28, 28, 28, 0.95) 0%,
-			rgba(28, 28, 28, 0.4) 35%,
-			rgba(28, 28, 28, 0.1) 60%,
-			rgba(28, 28, 28, 0.3) 100%
+			var(--overlay-dark-95) 0%,
+			var(--overlay-dark-40) 35%,
+			var(--overlay-dark-10) 60%,
+			var(--overlay-dark-30) 100%
 		);
 	}
 
@@ -170,12 +142,12 @@
 	}
 
 	.hero-title {
-		font-family: var(--font-heading);
-		font-size: clamp(2.5rem, 7vw, 4rem);
+		font-family: 'Eczar', Georgia, serif;
+		font-size: clamp(var(--font-size-10), 7vw, var(--font-size-12));
 		font-weight: 600;
 		margin: 0 0 2rem;
-		line-height: 1.15;
-		letter-spacing: -0.01em;
+		line-height: var(--line-height-0-75);
+		letter-spacing: var(--letter-tight);
 		opacity: 0;
 		transform: translateY(20px);
 		transition: all 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
@@ -187,20 +159,20 @@
 	}
 
 	.highlight {
-		color: var(--c-terracotta);
+		color: var(--color-accent-secondary);
 	}
 
 	.hero-cta {
 		display: inline-block;
 		padding: 0.9rem 2.5rem;
-		background: var(--c-terracotta);
-		color: white;
+		background: var(--color-accent-secondary);
+		color: var(--color-text-inverse);
 		text-decoration: none;
-		font-family: var(--font-heading);
-		font-size: 1rem;
+		font-family: 'Eczar', Georgia, serif;
+		font-size: var(--font-size-3);
 		font-weight: 600;
-		letter-spacing: 0.03em;
-		border-radius: 4px;
+		letter-spacing: var(--letter-3);
+		border-radius: var(--radius-1);
 		opacity: 0;
 		transform: translateY(15px);
 		transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s,
@@ -214,8 +186,8 @@
 	}
 
 	.hero-cta:hover {
-		background: var(--c-terracotta-light);
-		box-shadow: 0 8px 30px rgba(196, 92, 62, 0.35);
+		background: var(--color-accent-secondary);
+		box-shadow: var(--shadow-accent-secondary);
 	}
 
 	/* Footer */
@@ -226,42 +198,62 @@
 		right: 0;
 		z-index: 50;
 		padding: 1rem 2rem;
+		background: linear-gradient(to top, var(--overlay-dark-75), transparent);
+		backdrop-filter: blur(2px);
 	}
 
 	.footer-content {
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-end;
 		align-items: center;
 	}
 
-	.footer-logo {
-		font-family: var(--font-heading);
-		font-size: 1rem;
-		font-weight: 600;
-		color: var(--c-cream);
-		opacity: 0.3;
+	.footer-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.35rem 0.6rem;
+		border-radius: var(--radius-pill);
+		border: 1px solid var(--overlay-cream-12);
+		background: linear-gradient(
+			120deg,
+			var(--overlay-dark-78) 0%,
+			var(--overlay-dark-35) 100%
+		);
+		box-shadow: 0 6px 18px var(--overlay-dark-20);
+		backdrop-filter: blur(4px);
+	}
+
+	.chip-label {
+		text-transform: uppercase;
+		letter-spacing: var(--letter-18);
+		font-size: var(--font-size-0);
+		color: var(--overlay-cream-45);
 	}
 
 	.footer-attribution {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.75rem;
+		gap: 0.35rem;
+		font-size: var(--font-size-0-5);
+		font-weight: 400;
 	}
 
 	.footer-attribution a {
-		color: var(--c-cream);
+		color: var(--color-bg);
 		text-decoration: none;
-		opacity: 0.3;
+		opacity: 0.45;
 		transition: opacity 0.2s;
+		text-shadow: var(--shadow-text-inverse);
 	}
 
 	.footer-attribution a:hover {
-		opacity: 0.6;
+		opacity: 0.7;
 	}
 
 	.separator {
-		opacity: 0.2;
+		opacity: 0.35;
+		text-shadow: var(--shadow-text-inverse);
 	}
 
 	/* Responsive */
@@ -279,7 +271,10 @@
 		}
 
 		.footer-attribution {
-			display: none;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+			gap: 0.25rem;
 		}
 	}
 </style>

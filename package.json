@@ -5,5 +5,8 @@
 	"workspaces": [
 		"avvai-cms",
 		"avvai-frontend"
-	]
+	],
+	"dependencies": {
+		"svelte-adapter-bun": "^1.0.1"
+	}
 }

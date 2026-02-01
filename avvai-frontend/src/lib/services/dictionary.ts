@@ -1,3 +1,5 @@
+import { lemmatise } from './lemmatiser';
+
 export interface DictionaryEntry {
 	word: string;
 	definition: string;
@@ -55,20 +57,36 @@ function enforceLimit(cache: DictionaryCache) {
 	}
 }
 
+async function fetchEntry(word: string): Promise<DictionaryEntry | null> {
+	const res = await fetch('/api/dictionary', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ word })
+	});
+	return res.ok ? ((await res.json()) as DictionaryEntry) : null;
+}
+
 export async function lookup(word: string): Promise<DictionaryEntry | null> {
 	const key = normalise(word);
 	if (!key) return null;
 
 	const cache = loadCache();
 	const cached = cache[key];
-	if (cached) return cached.value;
+	if (cached?.value) return cached.value;
 
-	const res = await fetch('/api/dictionary', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ word: key })
-	});
-	const value = res.ok ? ((await res.json()) as DictionaryEntry) : null;
+	let value = await fetchEntry(key);
+
+	if (!value) {
+		const lemmaResponse = await lemmatise(key);
+		const lemma = normalise(lemmaResponse?.lemma ?? '');
+		if (lemma && lemma !== key) {
+			const lemmaCached = cache[lemma];
+			value = lemmaCached ? lemmaCached.value : await fetchEntry(lemma);
+			if (value && !lemmaCached) {
+				cache[lemma] = { value, time: Date.now() };
+			}
+		}
+	}
 
 	cache[key] = { value, time: Date.now() };
 	enforceLimit(cache);

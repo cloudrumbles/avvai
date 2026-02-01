@@ -52,8 +52,8 @@
 				{/each}
 			</select>
 
-			<label class="menu-label">Size</label>
-			<div class="size-controls">
+			<label class="menu-label" id="size-label">Size</label>
+			<div class="size-controls" role="group" aria-labelledby="size-label">
 				<button
 					class="ctrl-btn"
 					onclick={decrease}
@@ -96,86 +96,91 @@
 
 	.menu-dropdown {
 		position: absolute;
-		top: calc(100% + 8px);
+		top: calc(100% + var(--space-2));
 		right: 0;
 		z-index: 51;
 		min-width: 200px;
-		padding: 12px;
-		background: var(--cream);
-		border: 1.5px solid var(--cream-mid);
-		border-radius: 12px;
-		box-shadow: 0 8px 32px rgba(26, 14, 6, 0.12);
+		padding: var(--space-3);
+		background: var(--color-bg);
+		border: var(--border-strong);
+		border-radius: var(--radius-3);
+		box-shadow: var(--shadow-2);
 	}
 
 	.menu-label {
 		display: block;
-		font-family: 'Catamaran', sans-serif;
-		font-size: 11px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-1);
 		font-weight: 600;
-		color: var(--stone);
+		color: var(--color-text-subtle);
 		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		margin-bottom: 6px;
+		letter-spacing: var(--letter-wide);
+		margin-bottom: var(--space-2);
 	}
 
 	.menu-label:not(:first-child) {
-		margin-top: 12px;
+		margin-top: var(--space-3);
 	}
 
 	.font-select {
 		width: 100%;
-		font-family: 'Catamaran', sans-serif;
-		font-size: 13px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-2);
 		font-weight: 600;
-		color: var(--red);
+		color: var(--color-accent);
 		background: transparent;
-		border: 1.5px solid var(--cream-mid);
-		border-radius: 8px;
-		padding: 0 10px;
-		height: 36px;
+		border: var(--border-strong);
+		border-radius: var(--radius-2);
+		padding: 0 var(--space-3);
+		height: var(--size-icon-btn);
 		cursor: pointer;
-		transition: all 0.15s ease;
+		transition: background var(--duration-fast) var(--ease-standard),
+			border-color var(--duration-fast) var(--ease-standard),
+			color var(--duration-fast) var(--ease-standard);
 		-webkit-tap-highlight-color: transparent;
 		outline: none;
 	}
 
 	.font-select:hover {
-		background: var(--red-faint);
-		border-color: var(--red);
+		background: var(--color-accent-tint);
+		border-color: var(--color-accent);
 	}
 
 	.font-select:focus-visible {
-		border-color: var(--red);
+		border-color: var(--color-accent);
 	}
 
 	.size-controls {
 		display: flex;
 		align-items: center;
-		gap: 8px;
+		gap: var(--space-2);
 	}
 
 	.ctrl-btn {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 36px;
-		height: 36px;
-		border-radius: 8px;
-		border: 1.5px solid var(--cream-mid);
+		width: var(--size-icon-btn);
+		height: var(--size-icon-btn);
+		border-radius: var(--radius-2);
+		border: var(--border-strong);
 		background: transparent;
-		color: var(--red);
+		color: var(--color-accent);
 		cursor: pointer;
-		transition: all 0.15s ease;
+		transition: transform var(--duration-fast) var(--ease-standard),
+			background var(--duration-fast) var(--ease-standard),
+			border-color var(--duration-fast) var(--ease-standard),
+			color var(--duration-fast) var(--ease-standard);
 		-webkit-tap-highlight-color: transparent;
 	}
 
 	.ctrl-btn:hover:not(:disabled) {
-		background: var(--red-faint);
-		border-color: var(--red);
+		background: var(--color-accent-tint);
+		border-color: var(--color-accent);
 	}
 
 	.ctrl-btn:active:not(:disabled) {
-		background: rgba(139, 26, 26, 0.14);
+		background: var(--overlay-red-soft);
 		transform: scale(0.96);
 	}
 
@@ -185,10 +190,10 @@
 	}
 
 	.size-label {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 14px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-2);
 		font-weight: 600;
-		color: var(--ink);
+		color: var(--color-text);
 		min-width: 28px;
 		text-align: center;
 		font-variant-numeric: tabular-nums;

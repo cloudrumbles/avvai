@@ -27,20 +27,22 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 36px;
-		height: 36px;
+		width: var(--size-icon-btn);
+		height: var(--size-icon-btn);
 		border: none;
-		border-radius: 8px;
+		border-radius: var(--radius-2);
 		background: transparent;
-		color: var(--stone);
+		color: var(--color-text-subtle);
 		cursor: pointer;
-		transition: all 0.15s ease;
+		transition: transform var(--duration-fast) var(--ease-standard),
+			background var(--duration-fast) var(--ease-standard),
+			color var(--duration-fast) var(--ease-standard);
 		-webkit-tap-highlight-color: transparent;
 	}
 
 	.icon-btn:hover:not(:disabled) {
-		background: var(--red-faint);
-		color: var(--red);
+		background: var(--color-accent-tint);
+		color: var(--color-accent);
 	}
 
 	.icon-btn:disabled {

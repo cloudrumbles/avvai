@@ -77,103 +77,100 @@
 
 <style>
 	.dialogue-section {
-		background: linear-gradient(135deg, var(--cream) 0%, rgba(139, 26, 26, 0.03) 100%);
-		border: 1px solid var(--cream-mid);
-		border-radius: 12px;
-		padding: 24px 28px;
+		background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-soft) 100%);
+		border: 1px solid var(--color-bg-soft);
+		border-radius: var(--radius-3);
+		padding: var(--space-6) var(--space-7);
 	}
 
 	.section-title {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 1.1em;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-4);
 		font-weight: 700;
-		color: var(--red);
-		margin: 0 0 1em;
+		color: var(--color-accent);
+		margin: 0 0 var(--space-4);
 		text-align: center;
 	}
 
 	.scene-info {
-		background: var(--cream-mid);
-		border-radius: 8px;
-		padding: 12px 16px;
-		margin-bottom: 1.5em;
-		font-family: 'Catamaran', sans-serif;
-		font-size: 0.9em;
+		background: var(--color-bg-soft);
+		border-radius: var(--radius-2);
+		padding: var(--space-3) var(--space-4);
+		margin-bottom: var(--space-6);
+		font-family: var(--font-sans);
+		font-size: var(--font-size-2-5);
 	}
 
 	.scene-setting {
 		display: flex;
-		gap: 1.5em;
+		gap: var(--space-6);
 		flex-wrap: wrap;
-		margin-bottom: 0.5em;
+		margin-bottom: var(--space-2);
 	}
 
 	.scene-setting:last-child {
 		margin-bottom: 0;
 	}
 
-	.scene-characters {
-		/* Characters line */
-	}
 
 	.scene-label {
 		font-weight: 600;
-		color: var(--stone);
+		color: var(--color-text-subtle);
 	}
 
 	.scene-value {
-		color: var(--ink);
+		color: var(--color-text);
 	}
 
 	.dialogue-lines {
 		display: flex;
 		flex-direction: column;
-		gap: 1em;
+		gap: var(--space-4);
 	}
 
 	.dialogue-line {
 		display: grid;
 		grid-template-columns: auto auto 1fr;
-		gap: 0.3em;
+		gap: var(--space-1);
 		align-items: baseline;
 	}
 
 	.character-name {
-		font-family: 'Catamaran', sans-serif;
+		font-family: var(--font-sans);
 		font-weight: 700;
-		color: var(--red-deep);
+		color: var(--color-accent-strong);
 		white-space: nowrap;
 	}
 
 	.character-separator {
-		color: var(--stone);
+		color: var(--color-text-subtle);
 	}
 
 	.dialogue-text {
-		color: var(--ink);
-		line-height: 1.8;
+		color: var(--color-text);
+		line-height: var(--line-height-1-8);
 	}
 
 	.stage-direction {
-		font-family: 'Catamaran', sans-serif;
+		font-family: var(--font-sans);
 		font-style: italic;
-		color: var(--stone);
+		color: var(--color-text-subtle);
 		text-align: center;
-		margin: 1em 0;
-		padding: 0.5em 1em;
-		background: var(--cream-mid);
-		border-radius: 6px;
+		margin: var(--space-4) 0;
+		padding: var(--space-2) var(--space-4);
+		background: var(--color-bg-soft);
+		border-radius: var(--radius-1-5);
 	}
 
 	.narration {
-		color: var(--ink);
-		line-height: 1.8;
+		color: var(--color-text);
+		line-height: var(--line-height-1-8);
 		margin: 0;
 	}
 
 	@media (max-width: 640px) {
 		.dialogue-section {
-			padding: 20px 20px;
+			padding: var(--space-5) var(--space-5);
 		}
 
 		.dialogue-line {
@@ -182,7 +179,7 @@
 
 		.character-name {
 			display: block;
-			margin-bottom: 0.2em;
+			margin-bottom: var(--space-0-5);
 		}
 
 		.character-separator {

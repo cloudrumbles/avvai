@@ -238,12 +238,12 @@
 
 <style>
 	.exercises-section {
-		font-family: 'Catamaran', sans-serif;
+		font-family: var(--font-sans);
 	}
 
 	/* ── Group ── */
 	.exercise-group {
-		margin-bottom: 2.5em;
+		margin-bottom: var(--space-8);
 	}
 
 	.exercise-group:last-child {
@@ -251,72 +251,69 @@
 	}
 
 	.group-header {
-		margin-bottom: 1.25em;
+		margin-bottom: var(--space-5);
 	}
 
 	.group-label {
-		font-size: 0.95em;
+		font-size: var(--font-size-2-5);
 		font-weight: 600;
-		color: var(--red);
+		color: var(--color-accent);
 	}
 
 	/* ── Exercise list ── */
 	.exercises-list {
 		display: flex;
 		flex-direction: column;
-		gap: 1.75em;
+		gap: var(--space-7);
 	}
 
-	.exercise-item {
-		/* container for each question */
-	}
 
 	/* ── Question text ── */
 	.question {
-		margin: 0 0 1em;
-		padding: 0.75em 1em;
-		line-height: 1.6;
-		color: var(--ink);
+		margin: 0 0 var(--space-4);
+		padding: var(--space-3) var(--space-4);
+		line-height: var(--line-height-1-6);
+		color: var(--color-text);
 		font-weight: 500;
 		background: white;
-		border-radius: 8px;
-		border-left: 3px solid var(--red);
-		box-shadow: 0 2px 8px rgba(26, 14, 6, 0.06);
+		border-radius: var(--radius-2);
+		border-left: 3px solid var(--color-accent);
+		box-shadow: var(--shadow-1);
 	}
 
 	.q-number {
 		font-weight: 700;
-		color: var(--red);
-		margin-right: 0.4em;
+		color: var(--color-accent);
+		margin-right: var(--space-1);
 	}
 
 	/* ── MCQ Options ── */
 	.options {
 		display: flex;
 		flex-direction: column;
-		gap: 0.625em;
+		gap: var(--space-2-5);
 	}
 
 	.option {
 		display: flex;
 		align-items: center;
-		gap: 0.75em;
+		gap: var(--space-3);
 		width: 100%;
-		padding: 0.75em 1em;
+		padding: var(--space-3) var(--space-4);
 		background: transparent;
-		border: 1px solid var(--cream-mid);
-		border-radius: 6px;
+		border: 1px solid var(--color-bg-soft);
+		border-radius: var(--radius-1-5);
 		font-family: inherit;
-		font-size: 0.95em;
-		color: var(--ink-soft);
+		font-size: var(--font-size-2-5);
+		color: var(--color-text-muted);
 		text-align: left;
 		cursor: pointer;
 		transition: all 0.15s ease;
 	}
 
 	.option:hover:not(:disabled) {
-		border-color: var(--stone);
-		color: var(--ink);
+		border-color: var(--color-text-subtle);
+		color: var(--color-text);
 	}
 
 	.option:disabled {
@@ -324,21 +321,21 @@
 	}
 
 	.option.selected {
-		border-color: var(--ink);
-		color: var(--ink);
-		background: rgba(26, 14, 6, 0.03);
+		border-color: var(--color-text);
+		color: var(--color-text);
+		background: var(--overlay-ink-soft);
 	}
 
 	.option.correct {
-		background: var(--green-faint);
-		border-color: var(--green);
-		color: var(--green);
+		background: var(--color-success-tint);
+		border-color: var(--color-success);
+		color: var(--color-success);
 	}
 
 	.option.incorrect {
-		background: var(--red-faint);
-		border-color: var(--red);
-		color: var(--red);
+		background: var(--color-accent-tint);
+		border-color: var(--color-accent);
+		color: var(--color-accent);
 	}
 
 	.option.dimmed {
@@ -347,8 +344,8 @@
 
 	.option-letter {
 		font-weight: 700;
-		min-width: 1.5em;
-		color: var(--stone);
+		min-width: var(--space-6);
+		color: var(--color-text-subtle);
 	}
 
 	.option-text {
@@ -357,24 +354,21 @@
 
 	.option-icon {
 		font-weight: 700;
-		font-size: 1.1em;
+		font-size: var(--font-size-4);
 	}
 
 	.option.correct .option-icon {
-		color: var(--green);
+		color: var(--color-success);
 	}
 
 	.option.incorrect .option-icon {
-		color: var(--red);
+		color: var(--color-accent);
 	}
 
 	/* ── Fill in blank ── */
-	.fill-blank {
-		/* container */
-	}
 
 	.fill-sentence {
-		line-height: 2.2;
+		line-height: var(--line-height-2-2);
 	}
 
 	.input-wrapper {
@@ -382,34 +376,34 @@
 		align-items: center;
 		position: relative;
 		background: white;
-		border: 1.5px solid var(--cream-mid);
-		border-radius: 6px;
-		padding: 0.25em 0.5em;
+		border: 1.5px solid var(--color-bg-soft);
+		border-radius: var(--radius-1-5);
+		padding: var(--space-1) var(--space-2);
 		transition: border-color 0.15s ease;
 	}
 
 	.input-wrapper:focus-within {
-		border-color: var(--red);
+		border-color: var(--color-accent);
 	}
 
 	.input-wrapper.correct {
-		border-color: var(--green);
-		background: var(--green-faint);
+		border-color: var(--color-success);
+		background: var(--color-success-tint);
 	}
 
 	.input-wrapper.incorrect {
-		border-color: var(--red);
-		background: var(--red-faint);
+		border-color: var(--color-accent);
+		background: var(--color-accent-tint);
 	}
 
 	.fill-input,
 	.fill-select {
-		padding: 0.1em 0.2em;
+		padding: var(--space-0) var(--space-0-5);
 		border: none;
 		background: transparent;
 		font-family: inherit;
 		font-size: inherit;
-		color: var(--ink);
+		color: var(--color-text);
 		min-width: 5em;
 	}
 
@@ -427,87 +421,87 @@
 	}
 
 	.fill-input::placeholder {
-		color: var(--stone);
+		color: var(--color-text-subtle);
 		opacity: 0.5;
 	}
 
 	.input-wrapper.correct .fill-input,
 	.input-wrapper.correct .fill-select {
-		color: var(--green);
+		color: var(--color-success);
 	}
 
 	.input-wrapper.incorrect .fill-input,
 	.input-wrapper.incorrect .fill-select {
-		color: var(--red);
+		color: var(--color-accent);
 	}
 
 	.input-icon {
 		font-weight: 700;
-		font-size: 0.85em;
-		margin-left: 0.3em;
+		font-size: var(--font-size-2);
+		margin-left: var(--space-1);
 	}
 
 	.input-wrapper.correct .input-icon {
-		color: var(--green);
+		color: var(--color-success);
 	}
 
 	.input-wrapper.incorrect .input-icon {
-		color: var(--red);
+		color: var(--color-accent);
 	}
 
 	.hint {
-		font-size: 0.85em;
-		color: var(--stone);
-		margin: 0.5em 0 0;
+		font-size: var(--font-size-2);
+		color: var(--color-text-subtle);
+		margin: var(--space-2) 0 0;
 	}
 
 	/* ── Buttons ── */
 	.actions {
-		margin-top: 0.75em;
+		margin-top: var(--space-3);
 		display: flex;
-		gap: 0.5em;
+		gap: var(--space-2);
 	}
 
 	.btn {
-		padding: 0.5em 1.25em;
-		border: 1.5px solid var(--cream-mid);
-		border-radius: 2em;
+		padding: var(--space-2) var(--space-5);
+		border: 1.5px solid var(--color-bg-soft);
+		border-radius: var(--radius-pill);
 		background: transparent;
 		font-family: inherit;
-		font-size: 0.85em;
+		font-size: var(--font-size-2);
 		font-weight: 600;
-		color: var(--stone);
+		color: var(--color-text-subtle);
 		cursor: pointer;
 		transition: all 0.15s ease;
 	}
 
 	.btn:hover {
-		border-color: var(--ink);
-		color: var(--ink);
+		border-color: var(--color-text);
+		color: var(--color-text);
 	}
 
 	.btn.primary {
-		border-color: var(--red);
-		background: var(--red);
-		color: var(--cream);
+		border-color: var(--color-accent);
+		background: var(--color-accent);
+		color: var(--color-bg);
 	}
 
 	.btn.primary:hover {
-		background: var(--red-deep);
-		border-color: var(--red-deep);
+		background: var(--color-accent-strong);
+		border-color: var(--color-accent-strong);
 	}
 
 	/* ── Short/Long answer ── */
 	.answer-input {
 		width: 100%;
 		min-height: 5em;
-		padding: 0.75em;
-		border: 1.5px solid var(--cream-mid);
-		border-radius: 0.5em;
+		padding: var(--space-3);
+		border: 1.5px solid var(--color-bg-soft);
+		border-radius: var(--radius-2);
 		background: transparent;
 		font-family: inherit;
-		font-size: 0.95em;
-		color: var(--ink);
+		font-size: var(--font-size-2-5);
+		color: var(--color-text);
 		resize: none;
 		overflow: hidden;
 		transition: border-color 0.15s ease;
@@ -515,7 +509,7 @@
 
 	.answer-input:focus {
 		outline: none;
-		border-color: var(--red);
+		border-color: var(--color-accent);
 	}
 
 	.answer-input.large {
@@ -523,29 +517,29 @@
 	}
 
 	.answer-input::placeholder {
-		color: var(--stone);
+		color: var(--color-text-subtle);
 		opacity: 0.6;
 	}
 
 	.word-hint {
-		font-size: 0.85em;
-		color: var(--stone);
-		margin: 0 0 0.5em;
+		font-size: var(--font-size-2);
+		color: var(--color-text-subtle);
+		margin: 0 0 var(--space-2);
 	}
 
 	/* ── Model answer ── */
 	.model-answer {
-		margin-top: 0.75em;
-		padding: 0.75em 1em;
-		background: var(--green-faint);
-		border-radius: 0.5em;
-		color: var(--ink);
-		line-height: 1.5;
+		margin-top: var(--space-3);
+		padding: var(--space-3) var(--space-4);
+		background: var(--color-success-tint);
+		border-radius: var(--radius-2);
+		color: var(--color-text);
+		line-height: var(--line-height-3);
 	}
 
 	.model-label {
 		font-weight: 600;
-		color: var(--green);
-		margin-right: 0.3em;
+		color: var(--color-success);
+		margin-right: var(--space-1);
 	}
 </style>

@@ -44,12 +44,12 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: var(--cream);
+		background: var(--color-bg);
 	}
 
 	.loading {
-		font-family: 'Catamaran', sans-serif;
-		color: var(--stone);
+		font-family: var(--font-sans);
+		color: var(--color-text-subtle);
 		text-align: center;
 	}
 </style>

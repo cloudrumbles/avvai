@@ -44,7 +44,7 @@
 				<dt class="word">
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<span
-						class="word-text"
+						class="word-text interactive-text"
 						role="button"
 						tabindex="-1"
 						onclick={(e) => handleWordClick(entry.word, e)}
@@ -59,32 +59,32 @@
 
 <style>
 	.vocabulary-section {
-		font-family: 'Catamaran', sans-serif;
-		color: var(--ink);
-		background: var(--cream);
-		border: 2px solid var(--cream-mid);
-		border-radius: 12px;
-		padding: 28px 32px;
-		box-shadow: inset 0 2px 8px rgba(26, 14, 6, 0.03);
+		font-family: var(--font-sans);
+		color: var(--color-text);
+		background: var(--color-bg);
+		border: 2px solid var(--color-bg-soft);
+		border-radius: var(--radius-3);
+		padding: var(--space-7) var(--space-7);
+		box-shadow: var(--shadow-inset);
 	}
 
 	@media (max-width: 640px) {
 		.vocabulary-section {
-			padding: 20px 24px;
-			border-radius: 8px;
+			padding: var(--space-5) var(--space-6);
+			border-radius: var(--radius-2);
 		}
 	}
 
 	.section-title {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 0.75em;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-1);
 		font-weight: 700;
-		color: var(--stone);
+		color: var(--color-text-subtle);
 		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		margin: 0 0 1.8em;
-		padding-bottom: 0.8em;
-		border-bottom: 1px solid var(--cream-mid);
+		letter-spacing: var(--letter-wide);
+		margin: 0 0 var(--space-7);
+		padding-bottom: var(--space-3);
+		border-bottom: 1px solid var(--color-bg-soft);
 		text-align: center;
 	}
 
@@ -93,7 +93,7 @@
 		padding: 0;
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-		gap: 16px;
+		gap: var(--space-4);
 	}
 
 	@media (max-width: 640px) {
@@ -105,47 +105,35 @@
 	.entry {
 		display: flex;
 		flex-direction: column;
-		gap: 8px;
-		padding: 16px 20px;
-		background: linear-gradient(135deg, var(--cream) 0%, var(--red-subtle) 100%);
-		border: 1px solid var(--cream-mid);
-		border-radius: 10px;
-		border-left: 3px solid var(--red);
+		gap: var(--space-2);
+		padding: var(--space-4) var(--space-5);
+		background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-accent-tint) 100%);
+		border: 1px solid var(--color-bg-soft);
+		border-radius: var(--radius-2-5);
+		border-left: 3px solid var(--color-accent);
 		transition: all 0.15s ease;
 	}
 
 	.entry:hover {
-		border-color: var(--red);
-		box-shadow: 0 2px 8px rgba(139, 26, 26, 0.08);
+		border-color: var(--color-accent);
+		box-shadow: var(--shadow-red);
 	}
 
 	.word {
 		margin: 0;
 		font-weight: 700;
-		color: var(--red-deep);
-		font-size: 1.1em;
+		color: var(--color-accent-strong);
+		font-size: var(--font-size-4);
 	}
 
 	.word-text {
-		cursor: pointer;
-		border-radius: 3px;
 		padding: 0.1em 0.2em;
 		margin: -0.1em -0.2em;
-		transition: background 0.1s ease;
-		-webkit-tap-highlight-color: transparent;
-	}
-
-	.word-text:hover {
-		background: var(--red-faint);
-	}
-
-	.word-text:active {
-		background: rgba(139, 26, 26, 0.14);
 	}
 
 	.meaning {
 		margin: 0;
-		color: var(--ink);
-		line-height: 1.6;
+		color: var(--color-text);
+		line-height: var(--line-height-1-6);
 	}
 </style>

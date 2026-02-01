@@ -1,0 +1,156 @@
+.btn {
+	border-radius: var(--radius-2);
+	border: var(--border-strong);
+	font-family: var(--font-sans);
+	font-size: var(--font-size-2);
+	font-weight: 600;
+	padding: var(--space-2) var(--space-3);
+	cursor: pointer;
+	transition: transform var(--duration-fast) var(--ease-standard),
+		background var(--duration-fast) var(--ease-standard),
+		border-color var(--duration-fast) var(--ease-standard),
+		color var(--duration-fast) var(--ease-standard);
+}
+
+.btn:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.btn-primary {
+	background: var(--color-accent);
+	color: var(--color-text-inverse);
+	border-color: var(--color-accent);
+	box-shadow: var(--shadow-1);
+}
+
+.btn-primary:hover:not(:disabled) {
+	background: var(--color-accent-strong);
+	border-color: var(--color-accent-strong);
+}
+
+.btn-secondary {
+	background: var(--color-bg);
+	color: var(--color-accent);
+}
+
+.btn-secondary:hover:not(:disabled) {
+	background: var(--color-accent-tint);
+}
+
+.btn-ghost {
+	background: transparent;
+	color: var(--color-text);
+}
+
+.btn-ghost:hover:not(:disabled) {
+	background: var(--color-bg-soft);
+}
+
+.input {
+	min-width: 180px;
+	border: var(--border-strong);
+	border-radius: var(--radius-2);
+	padding: var(--space-2) var(--space-3);
+	font-family: var(--font-sans);
+	font-size: var(--font-size-2);
+	color: var(--color-text);
+	background: var(--color-bg);
+	outline: none;
+}
+
+.input:focus-visible {
+	border-color: var(--color-accent);
+	box-shadow: 0 0 0 2px var(--color-accent-tint);
+}
+
+.card {
+	border: var(--border-1);
+	border-radius: var(--radius-3);
+	padding: var(--space-4);
+	background: var(--color-bg);
+	box-shadow: var(--shadow-1);
+	position: relative;
+}
+
+.card.accent {
+	border-color: var(--color-accent-secondary);
+	background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-accent-secondary-tint) 100%);
+}
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	padding: var(--space-0-5) var(--space-2);
+	border-radius: var(--radius-pill);
+	border: 1px solid var(--color-bg-soft);
+	background: var(--color-bg-soft);
+	font-size: var(--font-size-1);
+	letter-spacing: var(--letter-wide);
+	text-transform: uppercase;
+	color: var(--color-text-subtle);
+}
+
+.badge.alt {
+	background: var(--color-accent-secondary-tint);
+	border-color: var(--color-accent-secondary);
+	color: var(--color-accent-secondary);
+}
+
+/* ── Button Reset ── */
+.btn-reset {
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	font: inherit;
+	padding: 0;
+	color: inherit;
+}
+
+.btn-reset:disabled {
+	cursor: not-allowed;
+}
+
+/* ── Icon Button ── */
+.btn-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--size-icon-btn);
+	height: var(--size-icon-btn);
+	border: none;
+	border-radius: var(--radius-2);
+	background: transparent;
+	color: var(--color-text-subtle);
+	cursor: pointer;
+	transition: transform var(--duration-fast) var(--ease-standard),
+		background var(--duration-fast) var(--ease-standard),
+		color var(--duration-fast) var(--ease-standard);
+	-webkit-tap-highlight-color: transparent;
+}
+
+.btn-icon:hover:not(:disabled) {
+	background: var(--color-accent-tint);
+	color: var(--color-accent);
+}
+
+.btn-icon:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+/* ── Interactive Text ── */
+.interactive-text {
+	cursor: pointer;
+	border-radius: var(--radius-0-75);
+	transition: background var(--duration-fast) var(--ease-standard);
+	-webkit-tap-highlight-color: transparent;
+}
+
+.interactive-text:hover {
+	background: var(--color-accent-tint);
+}
+
+.interactive-text:active {
+	background: var(--overlay-red-soft);
+}

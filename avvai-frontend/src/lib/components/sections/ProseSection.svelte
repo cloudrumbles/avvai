@@ -27,22 +27,22 @@
 
 <style>
 	.prose-section {
-		color: var(--ink);
+		color: var(--color-text);
 	}
 
 	.section-title {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 1.1em;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-4);
 		font-weight: 700;
-		color: var(--red);
-		margin: 0 0 1.2em;
+		color: var(--color-accent);
+		margin: 0 0 var(--space-5);
 	}
 
 	.paragraph {
-		margin: 0 0 1.5em;
-		line-height: 2;
+		margin: 0 0 var(--space-6);
+		line-height: var(--line-height-2);
 		overflow-wrap: break-word;
-		text-indent: 1.5em;
+		text-indent: var(--space-6);
 	}
 
 	.paragraph:last-child {

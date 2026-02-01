@@ -169,7 +169,7 @@
 		display: flex;
 		flex-direction: row;
 		height: 100dvh;
-		background: var(--cream);
+		background: var(--color-bg);
 		overflow: hidden;
 	}
 
@@ -195,35 +195,35 @@
 	}
 
 	.section-wrapper {
-		margin-bottom: 32px;
+		margin-bottom: var(--space-7);
 	}
 
 	.lesson-end {
 		display: flex;
 		justify-content: center;
-		padding: 16px 0 24px;
+		padding: var(--space-4) 0 var(--space-6);
 	}
 
 	.end-marker {
-		font-size: 24px;
-		color: var(--gold);
+		font-size: var(--font-size-5-5);
+		color: var(--color-highlight);
 	}
 
 	.header {
 		display: flex;
 		align-items: center;
-		gap: 12px;
-		padding: 12px 16px;
-		border-bottom: 1px solid var(--cream-mid);
-		background: var(--cream);
+		gap: var(--space-3);
+		padding: var(--space-3) var(--space-4);
+		border-bottom: 1px solid var(--color-bg-soft);
+		background: var(--color-bg);
 	}
 
 	.title {
 		flex: 1;
-		font-family: 'Catamaran', sans-serif;
-		font-size: 15px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-2-5);
 		font-weight: 600;
-		color: var(--red-deep);
+		color: var(--color-accent-strong);
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -231,11 +231,11 @@
 
 	.reading-surface {
 		flex: 1;
-		padding: 24px 24px 32px;
+		padding: var(--space-6) var(--space-6) var(--space-7);
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 		overscroll-behavior: contain;
-		color: var(--ink);
+		color: var(--color-text);
 		text-align: left;
 		scrollbar-width: none;
 	}
@@ -245,20 +245,20 @@
 	}
 
 	.reading-surface.drawer-open {
-		padding-bottom: 80px;
+		padding-bottom: var(--space-12);
 	}
 
 	.empty-lesson {
-		font-family: 'Catamaran', sans-serif;
-		color: var(--stone);
+		font-family: var(--font-sans);
+		color: var(--color-text-subtle);
 		text-align: center;
-		padding: 48px 0;
+		padding: var(--space-10) 0;
 	}
 
 	.header-actions {
 		display: flex;
 		align-items: center;
-		gap: 8px;
+		gap: var(--space-2);
 	}
 
 	/* Hide mobile TOC button on desktop */
@@ -280,23 +280,23 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 8px;
-		padding: 14px 24px;
-		background: var(--red);
-		color: var(--cream);
+		gap: var(--space-2);
+		padding: 14px var(--space-6);
+		background: var(--color-accent);
+		color: var(--color-bg);
 		border: none;
 		border-radius: 0;
-		font-family: 'Catamaran', sans-serif;
-		font-size: 14px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-2);
 		font-weight: 600;
 		cursor: pointer;
 		z-index: 100;
 		transition: all 0.2s ease;
-		box-shadow: 0 -2px 12px rgba(139, 26, 26, 0.2);
+		box-shadow: var(--shadow-red-deep);
 	}
 
 	.drawer-tab:hover {
-		background: var(--red-deep);
+		background: var(--color-accent-strong);
 	}
 
 	.drawer-tab.open {
@@ -315,10 +315,10 @@
 	@media (min-width: 769px) {
 		.drawer-tab {
 			left: auto;
-			right: 48px;
-			bottom: 24px;
-			border-radius: 30px;
-			padding: 12px 24px;
+			right: var(--space-10);
+			bottom: var(--space-6);
+			border-radius: var(--radius-5);
+			padding: var(--space-3) var(--space-6);
 		}
 	}
 </style>

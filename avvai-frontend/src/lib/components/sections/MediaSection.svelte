@@ -38,7 +38,7 @@
 <style>
 	.media-section {
 		width: 100%;
-		margin: 1.5em 0;
+		margin: var(--space-6) 0;
 	}
 
 	.media-image {
@@ -46,7 +46,7 @@
 		width: 100%;
 		max-width: 100%;
 		height: auto;
-		border-radius: 8px;
+		border-radius: var(--radius-2);
 	}
 
 	.media-audio {
@@ -57,14 +57,14 @@
 	.media-video {
 		width: 100%;
 		max-width: 100%;
-		border-radius: 8px;
+		border-radius: var(--radius-2);
 	}
 
 	.media-caption {
-		margin-top: 0.5em;
+		margin-top: var(--space-2);
 		text-align: center;
-		font-size: 0.875em;
+		font-size: var(--font-size-2);
 		font-style: italic;
-		color: #6b5a48;
+		color: var(--color-text-subtle);
 	}
 </style>

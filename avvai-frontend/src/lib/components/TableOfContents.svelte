@@ -86,52 +86,52 @@
 		height: 100%;
 		display: flex;
 		flex-direction: column;
-		background: var(--cream);
-		border-right: 1px solid var(--cream-mid);
+		background: var(--color-bg);
+		border-right: 1px solid var(--color-bg-soft);
 	}
 
 	.toc-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 16px 20px;
-		border-bottom: 1px solid var(--cream-mid);
+		padding: var(--space-4) var(--space-5);
+		border-bottom: 1px solid var(--color-bg-soft);
 	}
 
 	.toc-title {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 13px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-1-5);
 		font-weight: 700;
-		color: var(--stone);
+		color: var(--color-text-subtle);
 		text-transform: uppercase;
-		letter-spacing: 0.06em;
+		letter-spacing: var(--letter-wide);
 	}
 
 	.toc-progress {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 13px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-1-5);
 		font-weight: 600;
-		color: var(--gold);
+		color: var(--color-highlight);
 	}
 
 	.progress-bar {
 		height: 2px;
-		background: var(--cream-mid);
-		margin: 0 20px;
-		border-radius: 1px;
+		background: var(--color-bg-soft);
+		margin: 0 var(--space-5);
+		border-radius: var(--radius-0);
 		overflow: hidden;
 	}
 
 	.progress-fill {
 		height: 100%;
-		background: var(--gold);
+		background: var(--color-highlight);
 		transition: width 0.3s ease;
 	}
 
 	.toc-list {
 		list-style: none;
 		margin: 0;
-		padding: 12px 16px;
+		padding: var(--space-3) var(--space-4);
 		overflow-y: auto;
 		flex: 1;
 	}
@@ -141,18 +141,18 @@
 	}
 
 	.toc-item:not(:last-child) {
-		border-bottom: 1px solid var(--cream-mid);
+		border-bottom: 1px solid var(--color-bg-soft);
 	}
 
 	.toc-link {
 		display: flex;
 		align-items: flex-start;
-		gap: 10px;
+		gap: var(--space-2-5);
 		width: 100%;
-		padding: 12px 8px;
+		padding: var(--space-3) var(--space-2);
 		background: transparent;
 		border: none;
-		border-radius: 8px;
+		border-radius: var(--radius-2);
 		cursor: pointer;
 		text-align: left;
 		transition: all 0.15s ease;
@@ -160,24 +160,24 @@
 	}
 
 	.toc-link:hover {
-		background: var(--red-faint);
+		background: var(--color-accent-tint);
 	}
 
 	.toc-item.active .toc-link {
-		background: var(--red-faint);
+		background: var(--color-accent-tint);
 	}
 
 	.toc-item.active .toc-label {
-		color: var(--red);
+		color: var(--color-accent);
 	}
 
 	.toc-item.active .toc-section-title {
-		color: var(--red-deep);
+		color: var(--color-accent-strong);
 	}
 
 	.toc-icon {
-		font-size: 14px;
-		line-height: 1.4;
+		font-size: var(--font-size-2);
+		line-height: var(--line-height-1-4);
 		flex-shrink: 0;
 		width: 20px;
 		text-align: center;
@@ -186,30 +186,31 @@
 	.toc-text {
 		display: flex;
 		flex-direction: column;
-		gap: 2px;
+		gap: var(--space-0-5);
 		min-width: 0;
 		flex: 1;
 	}
 
 	.toc-label {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 10px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-0-5);
 		font-weight: 600;
-		color: var(--stone);
+		color: var(--color-text-subtle);
 		text-transform: uppercase;
-		letter-spacing: 0.04em;
+		letter-spacing: var(--letter-4);
 		transition: color 0.15s ease;
 	}
 
 	.toc-section-title {
-		font-family: 'Catamaran', sans-serif;
-		font-size: 13px;
+		font-family: var(--font-sans);
+		font-size: var(--font-size-1-5);
 		font-weight: 500;
-		color: var(--ink);
-		line-height: 1.4;
+		color: var(--color-text);
+		line-height: var(--line-height-1-4);
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display: -webkit-box;
+		line-clamp: 2;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		transition: color 0.15s ease;
@@ -225,11 +226,11 @@
 	}
 
 	.toc-list::-webkit-scrollbar-thumb {
-		background: var(--cream-mid);
-		border-radius: 3px;
+		background: var(--color-bg-soft);
+		border-radius: var(--radius-0-75);
 	}
 
 	.toc-list::-webkit-scrollbar-thumb:hover {
-		background: var(--stone);
+		background: var(--color-text-subtle);
 	}
 </style>
