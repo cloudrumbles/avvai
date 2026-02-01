@@ -1,13 +1,8 @@
-import { env } from '$env/dynamic/private';
-import { json, error } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
+import { fetchBackendJson } from '$lib/services/api-client';
 import type { RequestHandler } from './$types';
 
-const BASE = env.BACKEND_URL ?? 'http://localhost:3001';
-
 export const GET: RequestHandler = async () => {
-	const res = await fetch(`${BASE}/lesson/list`);
-	if (!res.ok) return error(res.status, 'Failed to fetch lessons');
-
-	const data = await res.json();
+	const data = await fetchBackendJson('/lesson/list');
 	return json(data);
 };

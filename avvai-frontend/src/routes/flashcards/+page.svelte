@@ -113,7 +113,7 @@
 
 <div class="flashcards">
 	<header class="header">
-		<a href="/home" class="back-btn" aria-label="Back to home">
+		<a href="/home" class="btn-icon" aria-label="Back to home">
 			<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 				<path d="M12 4L6 10L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 			</svg>
@@ -145,7 +145,7 @@
 				bind:value={desiredRetention}
 			/>
 			<span class="settings-value">{desiredRetention.toFixed(2)}</span>
-			<button class="reset-btn" disabled={settingsSaving} onclick={saveSettings}>
+			<button class="btn btn-secondary" disabled={settingsSaving} onclick={saveSettings}>
 				{settingsSaving ? 'Saving…' : 'Save'}
 			</button>
 		</div>
@@ -159,12 +159,12 @@
 	{:else if errorMessage}
 		<div class="error">
 			<p>{errorMessage}</p>
-			<button class="reset-btn" onclick={reset}>Try again</button>
+			<button class="btn btn-secondary" onclick={reset}>Try again</button>
 		</div>
 	{:else if !currentCard}
 		<div class="empty">
 			<p>No flashcards due right now.</p>
-			<button class="reset-btn" onclick={reset}>Refresh</button>
+			<button class="btn btn-secondary" onclick={reset}>Refresh</button>
 		</div>
 	{:else}
 		<div class="card-container">
@@ -205,7 +205,7 @@
 		{#if completed.length === cards.length && cards.length > 0}
 			<div class="complete-message">
 				<p>🎉 All cards reviewed!</p>
-				<button class="reset-btn" onclick={reset}>Review again</button>
+				<button class="btn btn-primary" onclick={reset}>Review again</button>
 			</div>
 		{/if}
 	{/if}
@@ -225,23 +225,6 @@
 		align-items: center;
 		gap: var(--space-3);
 		padding: var(--space-3) var(--space-4);
-	}
-
-	.back-btn {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 36px;
-		height: 36px;
-		border-radius: var(--radius-2);
-		color: var(--color-text-subtle);
-		text-decoration: none;
-		transition: all 0.15s ease;
-	}
-
-	.back-btn:hover {
-		background: var(--color-accent-tint);
-		color: var(--color-accent);
 	}
 
 	.header h1 {
@@ -265,8 +248,8 @@
 
 	.progress-fill {
 		height: 100%;
-		background: var(--color-bg-soft);
-		transition: width 0.3s ease;
+		background: var(--color-accent);
+		transition: width var(--duration-medium) var(--ease-standard);
 	}
 
 	.settings {
@@ -274,7 +257,7 @@
 		flex-direction: column;
 		gap: var(--space-2);
 		padding: var(--space-3) var(--space-4);
-		border-bottom: 1px solid var(--color-bg-soft);
+		border-bottom: var(--border-1);
 	}
 
 	.settings-label {
@@ -294,6 +277,37 @@
 
 	.settings-controls input[type='range'] {
 		flex: 1;
+		height: 4px;
+		background: var(--color-bg-soft);
+		border-radius: var(--radius-pill);
+		appearance: none;
+		cursor: pointer;
+	}
+
+	.settings-controls input[type='range']::-webkit-slider-thumb {
+		appearance: none;
+		width: 16px;
+		height: 16px;
+		background: var(--color-accent);
+		border-radius: var(--radius-pill);
+		border: 2px solid var(--color-bg);
+		box-shadow: var(--shadow-1);
+		cursor: pointer;
+		transition: transform var(--duration-fast) var(--ease-standard);
+	}
+
+	.settings-controls input[type='range']::-webkit-slider-thumb:hover {
+		transform: scale(1.1);
+	}
+
+	.settings-controls input[type='range']::-moz-range-thumb {
+		width: 16px;
+		height: 16px;
+		background: var(--color-accent);
+		border-radius: var(--radius-pill);
+		border: 2px solid var(--color-bg);
+		box-shadow: var(--shadow-1);
+		cursor: pointer;
 	}
 
 	.settings-value {
@@ -317,7 +331,7 @@
 		justify-content: center;
 		width: 18px;
 		height: 18px;
-		border-radius: 50%;
+		border-radius: var(--radius-pill);
 		background: var(--color-bg-soft);
 		color: var(--color-text-subtle);
 		font-size: var(--font-size-0-75);
@@ -331,17 +345,17 @@
 		bottom: 140%;
 		transform: translateX(-50%);
 		width: 220px;
-		background: var(--color-text);
-		color: var(--color-bg);
+		background: var(--color-bg-inverse);
+		color: var(--color-text-inverse);
 		padding: var(--space-2-5) var(--space-3);
-		border-radius: var(--radius-2-5);
+		border-radius: var(--radius-2);
 		font-size: var(--font-size-1);
 		font-weight: 400;
 		line-height: var(--line-height-1-4);
 		opacity: 0;
 		pointer-events: none;
-		transition: opacity 0.15s ease;
-		box-shadow: var(--shadow-deep);
+		transition: opacity var(--duration-fast) var(--ease-standard);
+		box-shadow: var(--shadow-2);
 		z-index: 2;
 	}
 
@@ -365,7 +379,7 @@
 		aspect-ratio: 3/4;
 		position: relative;
 		transform-style: preserve-3d;
-		transition: transform 0.5s ease;
+		transition: transform var(--duration-slow) var(--ease-standard);
 		cursor: pointer;
 	}
 
@@ -382,10 +396,10 @@
 		justify-content: center;
 		padding: var(--space-6);
 		background: var(--color-bg);
-		border: 2px solid var(--color-bg-soft);
-		border-radius: var(--radius-4);
+		border: var(--border-strong);
+		border-radius: var(--radius-3);
 		backface-visibility: hidden;
-		box-shadow: var(--shadow-elevated);
+		box-shadow: var(--shadow-2);
 	}
 
 	.card-back {
@@ -393,6 +407,7 @@
 	}
 
 	.card-text {
+		font-family: var(--font-serif);
 		font-size: var(--font-size-5-5);
 		font-weight: 600;
 		color: var(--color-text);
@@ -415,7 +430,7 @@
 
 	.actions {
 		display: flex;
-		gap: var(--space-4);
+		gap: var(--space-3);
 		padding: var(--space-6);
 		justify-content: center;
 	}
@@ -425,14 +440,19 @@
 		flex-direction: column;
 		align-items: center;
 		gap: var(--space-1);
-		padding: var(--space-4) var(--space-7);
+		padding: var(--space-3) var(--space-5);
 		border: none;
-		border-radius: var(--radius-3);
+		border-radius: var(--radius-2);
 		font-family: var(--font-sans);
 		font-size: var(--font-size-2);
 		font-weight: 600;
 		cursor: pointer;
-		transition: all 0.15s ease;
+		transition: transform var(--duration-fast) var(--ease-standard),
+			background var(--duration-fast) var(--ease-standard);
+	}
+
+	.action-btn:active {
+		transform: scale(0.96);
 	}
 
 	.action-btn.again {
@@ -441,7 +461,7 @@
 	}
 
 	.action-btn.again:hover {
-		background: var(--color-accent-tint);
+		background: var(--overlay-red-soft);
 	}
 
 	.action-btn.good {
@@ -449,9 +469,17 @@
 		color: var(--color-success);
 	}
 
+	.action-btn.good:hover {
+		background: rgba(26, 107, 74, 0.15);
+	}
+
 	.action-btn.hard {
 		background: var(--color-bg-soft);
 		color: var(--color-highlight);
+	}
+
+	.action-btn.hard:hover {
+		background: var(--color-bg-pressed);
 	}
 
 	.action-btn.easy {
@@ -459,16 +487,8 @@
 		color: var(--color-accent-secondary);
 	}
 
-	.action-btn.good:hover {
-		background: var(--color-success-tint);
-	}
-
-	.action-btn.hard:hover {
-		background: var(--color-bg-soft);
-	}
-
 	.action-btn.easy:hover {
-		background: var(--color-accent-secondary-tint);
+		background: rgba(196, 92, 62, 0.18);
 	}
 
 	.action-icon {
@@ -488,33 +508,16 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-3);
+		gap: var(--space-4);
 		text-align: center;
 		color: var(--color-text-subtle);
 		padding: var(--space-6);
 	}
 
 	.complete-message p {
-		font-size: var(--font-size-4);
+		font-family: var(--font-display);
+		font-size: var(--font-size-5);
 		color: var(--color-text);
 		margin: 0 0 var(--space-4);
-	}
-
-	.reset-btn {
-		font-family: var(--font-sans);
-		font-size: var(--font-size-2);
-		font-weight: 600;
-		color: var(--color-highlight);
-		background: transparent;
-		border: 1.5px solid var(--color-bg-soft);
-		border-radius: var(--radius-2);
-		padding: var(--space-2-5) var(--space-5);
-		cursor: pointer;
-		transition: all 0.15s ease;
-	}
-
-	.reset-btn:hover {
-		border-color: var(--color-highlight);
-		background: var(--color-bg-soft);
 	}
 </style>

@@ -1,20 +1,14 @@
-import { env } from '$env/dynamic/private';
 import { json, error } from '@sveltejs/kit';
+import { fetchBackendJson, parseRequestJson } from '$lib/services/api-client';
 import type { RequestHandler } from './$types';
 
-const BASE = env.BACKEND_URL ?? 'http://localhost:3001';
-
 export const POST: RequestHandler = async ({ request }) => {
-	const { word } = await request.json();
+	const { word } = await parseRequestJson<{ word?: string }>(request);
 	if (!word) return error(400, 'Missing word parameter');
-
-	const res = await fetch(`${BASE}/dictionary/lookup`, {
+	const data = await fetchBackendJson('/dictionary/lookup', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ word })
 	});
-	if (!res.ok) return error(res.status, 'Dictionary lookup failed');
-
-	const data = await res.json();
 	return json(data);
 };

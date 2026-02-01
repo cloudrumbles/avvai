@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ClickableText from 'avvai-frontend/components/ClickableText';
+	import ClickableText from '$lib/components/ClickableText.svelte';
 
 	interface SceneInfo {
 		location?: string;
@@ -28,7 +28,7 @@
 
 <section class="dialogue-section">
 	{#if data.title}
-		<h2 class="section-title">{data.title}</h2>
+		<h2 class="section-title section-title--size-4 section-title--accent section-title--center section-title--mb-4">{data.title}</h2>
 	{/if}
 
 	{#if data.scene}
@@ -81,15 +81,6 @@
 		border: 1px solid var(--color-bg-soft);
 		border-radius: var(--radius-3);
 		padding: var(--space-6) var(--space-7);
-	}
-
-	.section-title {
-		font-family: var(--font-sans);
-		font-size: var(--font-size-4);
-		font-weight: 700;
-		color: var(--color-accent);
-		margin: 0 0 var(--space-4);
-		text-align: center;
 	}
 
 	.scene-info {

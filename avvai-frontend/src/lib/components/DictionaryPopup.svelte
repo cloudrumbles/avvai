@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { lookup, type DictionaryEntry } from 'avvai-frontend/services/dictionary';
-	import { getDictionaryState, hideDictionary } from 'avvai-frontend/stores/dictionary';
+	import { lookup, type DictionaryEntry } from '$lib/services/dictionary';
+	import { getDictionaryState, hideDictionary } from '$lib/stores/dictionary.svelte';
 
 	const popup = getDictionaryState();
 

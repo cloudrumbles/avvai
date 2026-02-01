@@ -3,7 +3,7 @@
 		ExercisesSection as ExercisesSectionData,
 		Exercise,
 		ExerciseContent
-	} from 'avvai-frontend/types/lesson';
+	} from '$lib/types/lesson';
 
 	interface Props {
 		data: ExercisesSectionData;

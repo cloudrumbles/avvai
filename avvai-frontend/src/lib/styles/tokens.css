@@ -38,7 +38,7 @@
 	--color-accent: var(--red);
 	--color-accent-strong: var(--red-deep);
 	--color-accent-tint: var(--red-faint);
-	--color-accent-wash: var(--red-faint);
+	--color-accent-wash: var(--overlay-red-soft);
 	--color-accent-secondary: var(--terracotta);
 	--color-accent-secondary-tint: var(--terracotta-faint);
 	--color-highlight: var(--gold);
@@ -85,6 +85,7 @@
 	--line-height-2: 2;
 	--line-height-2-2: 2.2;
 	--line-height-3: 1.75;
+	--line-height-body: var(--line-height-3);
 
 	--letter-tight: -0.01em;
 	--letter-normal: 0.01em;
@@ -135,7 +136,7 @@
 
 	/* ── Borders ── */
 	--border-1: 1px solid var(--color-bg-soft);
-	--border-strong: 1.5px solid var(--color-bg-soft);
+	--border-strong: 2px solid var(--color-bg-soft);
 
 	/* ── Shadows ── */
 	--shadow-1: 0 2px 8px rgba(26, 14, 6, 0.08);

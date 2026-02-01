@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { showDictionary } from 'avvai-frontend/stores/dictionary';
+	import { showDictionaryAtElement } from '$lib/actions/dictionary-lookup';
 
 	interface VocabularyEntry {
 		word: string;
@@ -17,38 +17,89 @@
 
 	let { data }: Props = $props();
 
-	function handleWordClick(word: string, event: MouseEvent) {
-		const rect = (event.target as HTMLElement).getBoundingClientRect();
-		showDictionary(word, {
-			x: rect.left + rect.width / 2,
-			y: rect.top,
-			bottom: rect.bottom
-		});
+	let wordCount = $derived(data.entries.length);
+	let activeIndex = $state(0);
+	let wordElements = $state<(HTMLElement | undefined)[]>([]);
+	let currentIndex = $derived.by(() => {
+		if (wordCount === 0) return 0;
+		return Math.max(0, Math.min(activeIndex, wordCount - 1));
+	});
+
+	function focusWord(index: number) {
+		if (wordCount === 0) return;
+		const clamped = Math.max(0, Math.min(index, wordCount - 1));
+		activeIndex = clamped;
+		const el = wordElements[clamped];
+		if (el) el.focus();
 	}
 
-	function handleKeydown(word: string, event: KeyboardEvent) {
-		if (event.key === 'Enter') {
-			handleWordClick(word, event as unknown as MouseEvent);
+	function storeWordElement(index: number) {
+		return (node: HTMLElement) => {
+			wordElements[index] = node;
+			return () => {
+				if (wordElements[index] === node) {
+					wordElements[index] = undefined;
+				}
+			};
+		};
+	}
+
+	function handleWordClick(word: string, event: MouseEvent) {
+		showDictionaryAtElement(word, event.currentTarget as HTMLElement | null);
+	}
+
+	function handleKeydown(word: string, wordIndex: number, event: KeyboardEvent) {
+		switch (event.key) {
+			case 'ArrowLeft':
+			case 'ArrowUp':
+				event.preventDefault();
+				focusWord(wordIndex - 1);
+				break;
+			case 'ArrowRight':
+			case 'ArrowDown':
+				event.preventDefault();
+				focusWord(wordIndex + 1);
+				break;
+			case 'Home':
+				event.preventDefault();
+				focusWord(0);
+				break;
+			case 'End':
+				event.preventDefault();
+				focusWord(wordCount - 1);
+				break;
+			case 'Enter':
+			case ' ':
+			case 'Spacebar':
+				event.preventDefault();
+				showDictionaryAtElement(word, event.currentTarget as HTMLElement | null);
+				break;
 		}
 	}
 </script>
 
 <section class="vocabulary-section">
 	{#if data.title}
-		<h2 class="section-title">{data.title}</h2>
+		<h2 class="section-title section-title--size-1 section-title--subtle section-title--uppercase section-title--divider section-title--center section-title--mb-7">{data.title}</h2>
 	{/if}
 
 	<dl class="definition-list">
 		{#each data.entries as entry, i (i)}
 			<div class="entry">
 				<dt class="word">
-					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<span
 						class="word-text interactive-text"
 						role="button"
-						tabindex="-1"
-						onclick={(e) => handleWordClick(entry.word, e)}
-						onkeydown={(e) => handleKeydown(entry.word, e)}
+						tabindex={i === currentIndex ? 0 : -1}
+						{@attach storeWordElement(i)}
+						onclick={(e) => {
+							activeIndex = i;
+							handleWordClick(entry.word, e);
+						}}
+						onfocus={() => {
+							activeIndex = i;
+						}}
+						onkeydown={(e) => handleKeydown(entry.word, i, e)}
 					>{entry.word}</span>
 				</dt>
 				<dd class="meaning">{entry.meaning}</dd>
@@ -73,19 +124,6 @@
 			padding: var(--space-5) var(--space-6);
 			border-radius: var(--radius-2);
 		}
-	}
-
-	.section-title {
-		font-family: var(--font-sans);
-		font-size: var(--font-size-1);
-		font-weight: 700;
-		color: var(--color-text-subtle);
-		text-transform: uppercase;
-		letter-spacing: var(--letter-wide);
-		margin: 0 0 var(--space-7);
-		padding-bottom: var(--space-3);
-		border-bottom: 1px solid var(--color-bg-soft);
-		text-align: center;
 	}
 
 	.definition-list {

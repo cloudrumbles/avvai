@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { ProseSection, PoetrySection, VocabularySection, MediaSection, ExercisesSection, DialogueSection } from 'avvai-frontend/components/sections';
-	import type { Lesson, ContentSection } from 'avvai-frontend/types/lesson';
-	import TableOfContents from 'avvai-frontend/components/TableOfContents';
-	import Drawer from 'avvai-frontend/components/Drawer';
-	import IconButton from 'avvai-frontend/components/IconButton';
-	import ReadingSettingsMenu from 'avvai-frontend/components/ReadingSettingsMenu';
-	import { DEFAULT_FONT } from 'avvai-frontend/config/fonts';
+	import { ProseSection, PoetrySection, VocabularySection, MediaSection, ExercisesSection, DialogueSection } from '$lib/components/sections';
+	import type { Lesson, ContentSection } from '$lib/types/lesson';
+	import TableOfContents from '$lib/components/TableOfContents.svelte';
+	import Drawer from '$lib/components/Drawer.svelte';
+	import IconButton from '$lib/components/IconButton.svelte';
+	import ReadingSettingsMenu from '$lib/components/ReadingSettingsMenu.svelte';
+	import { DEFAULT_FONT } from '$lib/config/fonts';
 
 	interface Props {
 		lesson: Lesson;
@@ -135,7 +135,7 @@
 				<TableOfContents
 					sections={lesson.sections}
 					{activeSectionIndex}
-					onSectionClick={(index) => {
+										onSectionClick={(index: number) => {
 						scrollToSection(index);
 						tocOpen = false;
 					}}

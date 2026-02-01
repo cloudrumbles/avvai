@@ -6,7 +6,7 @@
 		title: string;
 		onclose: () => void;
 		position?: 'bottom' | 'left' | 'right';
-		children: Snippet;
+		children?: Snippet;
 	}
 
 	let { open, title, onclose, position = 'bottom', children }: Props = $props();
@@ -28,7 +28,7 @@
 		</button>
 	</div>
 	<div class="drawer-content">
-		{@render children()}
+		{@render children?.()}
 	</div>
 </div>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ContentSection } from 'avvai-frontend/types/lesson';
+	import type { ContentSection } from '$lib/types/lesson';
 
 	interface Props {
 		sections: ContentSection[];

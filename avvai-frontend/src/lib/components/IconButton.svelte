@@ -6,7 +6,7 @@
 		label: string;
 		disabled?: boolean;
 		expanded?: boolean;
-		children: Snippet;
+		children?: Snippet;
 	}
 
 	let { onclick, label, disabled = false, expanded, children }: Props = $props();
@@ -19,7 +19,7 @@
 	aria-label={label}
 	aria-expanded={expanded}
 >
-	{@render children()}
+	{@render children?.()}
 </button>
 
 <style>

@@ -31,7 +31,7 @@ Tokens live in `src/lib/styles/tokens.css`. Use semantic tokens in components; r
 ### Typography
 - Families: `--font-sans` (Catamaran), `--font-serif` (Cormorant Garamond + Tamil fallbacks), `--font-display` (Eczar + Tamil fallbacks)
 - Sizes: `--font-size-0` through `--font-size-12` (includes micro and display sizes)
-- Line-height: `--line-height-0` through `--line-height-2-2`, plus `--line-height-3` for long-form body text
+- Line-height: `--line-height-0` through `--line-height-2-2`, plus `--line-height-3` and the semantic alias `--line-height-body` for long-form body text
 - Letter spacing: `--letter-tight`, `--letter-normal`, `--letter-wide`, plus `--letter-2/3/4/5/8/10/18`
 
 ### Spacing
@@ -47,7 +47,8 @@ Tokens live in `src/lib/styles/tokens.css`. Use semantic tokens in components; r
 `--size-icon-btn`, `--size-touch-target`
 
 ### Shadows
-`--shadow-1`, `--shadow-2`, `--shadow-3`, `--shadow-inset`, plus specialized shadows for drawers, overlays, and accents.
+Core: `--shadow-1`, `--shadow-2`, `--shadow-3`, `--shadow-inset`
+Specialized: `--shadow-soft`, `--shadow-warm`, `--shadow-red`, `--shadow-red-deep`, `--shadow-deep`, `--shadow-elevated`, `--shadow-accent-secondary`, `--shadow-text-inverse`, `--shadow-drawer-*`
 
 ### Overlays
 `--overlay-*` tokens for modals, scrims, and surface tints.

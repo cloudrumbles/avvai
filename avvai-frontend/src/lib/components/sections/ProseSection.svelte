@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ClickableText from 'avvai-frontend/components/ClickableText';
+	import ClickableText from '$lib/components/ClickableText.svelte';
 
 	interface ProseSectionData {
 		title?: string;
@@ -15,7 +15,7 @@
 
 <section class="prose-section">
 	{#if data.title}
-		<h2 class="section-title">{data.title}</h2>
+		<h2 class="section-title section-title--size-4 section-title--accent section-title--mb-5">{data.title}</h2>
 	{/if}
 
 	{#each data.paragraphs as paragraph, i (i)}
@@ -28,14 +28,6 @@
 <style>
 	.prose-section {
 		color: var(--color-text);
-	}
-
-	.section-title {
-		font-family: var(--font-sans);
-		font-size: var(--font-size-4);
-		font-weight: 700;
-		color: var(--color-accent);
-		margin: 0 0 var(--space-5);
 	}
 
 	.paragraph {

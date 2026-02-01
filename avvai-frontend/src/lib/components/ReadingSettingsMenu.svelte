@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { TAMIL_FONTS, MIN_FONT_SIZE, MAX_FONT_SIZE, FONT_SIZE_STEP } from 'avvai-frontend/config/fonts';
-	import IconButton from 'avvai-frontend/components/IconButton';
+	import { TAMIL_FONTS, MIN_FONT_SIZE, MAX_FONT_SIZE, FONT_SIZE_STEP } from '$lib/config/fonts';
+	import IconButton from '$lib/components/IconButton.svelte';
 
 	interface Props {
 		fontFamily: string;

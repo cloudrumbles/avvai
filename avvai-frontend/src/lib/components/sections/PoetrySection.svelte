@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ClickableText from 'avvai-frontend/components/ClickableText';
+	import ClickableText from '$lib/components/ClickableText.svelte';
 
 	interface Verse {
 		number?: number;
@@ -19,7 +19,7 @@
 
 <section class="poetry-section">
 	{#if data.title}
-		<h2 class="section-title">{data.title}</h2>
+		<h2 class="section-title section-title--size-2 section-title--subtle section-title--uppercase section-title--divider section-title--center section-title--mb-6">{data.title}</h2>
 	{/if}
 
 	<div class="verses">
@@ -78,19 +78,6 @@
 			left: var(--space-4);
 			right: var(--space-4);
 		}
-	}
-
-	.section-title {
-		font-family: var(--font-sans);
-		font-size: var(--font-size-2);
-		font-weight: 700;
-		color: var(--color-text-subtle);
-		text-transform: uppercase;
-		letter-spacing: var(--letter-wide);
-		margin: 0 0 var(--space-6) 0;
-		padding-bottom: var(--space-3);
-		border-bottom: 1px solid var(--color-bg-soft);
-		text-align: center;
 	}
 
 	.verses {
