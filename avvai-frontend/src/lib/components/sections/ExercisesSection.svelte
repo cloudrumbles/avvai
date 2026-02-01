@@ -58,6 +58,195 @@
 		textarea.style.height = textarea.scrollHeight + 'px';
 	}
 
+	// Tamil IME using Google Input Tools API
+	async function transliterate(text: string): Promise<string[]> {
+		if (!text.trim()) return [];
+		const url = new URL('https://inputtools.google.com/request');
+		url.searchParams.set('text', text);
+		url.searchParams.set('itc', 'ta-t-i0-und'); // Tamil transliteration
+		url.searchParams.set('num', '5');
+		url.searchParams.set('cp', '0');
+		url.searchParams.set('cs', '1');
+		url.searchParams.set('ie', 'utf-8');
+		url.searchParams.set('oe', 'utf-8');
+		url.searchParams.set('app', 'demopage');
+
+		try {
+			const res = await fetch(url.toString());
+			const data = await res.json();
+			if (data[0] === 'SUCCESS' && data[1]?.[0]?.[1]) {
+				return data[1][0][1] as string[];
+			}
+		} catch {
+			// silently fail
+		}
+		return [];
+	}
+
+	function tamilIme(node: HTMLInputElement | HTMLTextAreaElement) {
+		let suggestions: string[] = [];
+		let selectedIndex = 0;
+		let currentWord = '';
+		let wordStart = 0;
+		let wordEnd = 0;
+		let dropdown: HTMLDivElement | null = null;
+		let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+
+		function getWordAtCursor(): { word: string; start: number; end: number } {
+			const value = node.value;
+			const cursor = node.selectionStart ?? value.length;
+			let start = cursor;
+			let end = cursor;
+			// Find word boundaries (Latin letters only for transliteration)
+			while (start > 0 && /[a-zA-Z]/.test(value[start - 1])) start--;
+			while (end < value.length && /[a-zA-Z]/.test(value[end])) end++;
+			return { word: value.slice(start, end), start, end };
+		}
+
+		function createDropdown() {
+			if (dropdown) return;
+			dropdown = document.createElement('div');
+			dropdown.className = 'tamil-ime-dropdown';
+			document.body.appendChild(dropdown);
+		}
+
+		function positionDropdown() {
+			if (!dropdown) return;
+			const rect = node.getBoundingClientRect();
+			// Try to get caret position, fallback to input position
+			dropdown.style.position = 'fixed';
+			dropdown.style.left = `${rect.left}px`;
+			dropdown.style.top = `${rect.bottom + 4}px`;
+			dropdown.style.minWidth = `${Math.min(rect.width, 200)}px`;
+		}
+
+		function renderDropdown() {
+			if (!dropdown) return;
+			if (suggestions.length === 0) {
+				dropdown.style.display = 'none';
+				return;
+			}
+			dropdown.style.display = 'block';
+			dropdown.innerHTML = suggestions
+				.map(
+					(s, i) =>
+						`<div class="tamil-ime-option${i === selectedIndex ? ' selected' : ''}" data-index="${i}">${s}</div>`
+				)
+				.join('');
+			positionDropdown();
+		}
+
+		function hideDropdown() {
+			if (dropdown) {
+				dropdown.style.display = 'none';
+			}
+			suggestions = [];
+			selectedIndex = 0;
+		}
+
+		function selectSuggestion(index: number) {
+			const selected = suggestions[index];
+			if (!selected) return;
+			const value = node.value;
+			const newValue = value.slice(0, wordStart) + selected + value.slice(wordEnd);
+			node.value = newValue;
+			const newCursor = wordStart + selected.length;
+			node.setSelectionRange(newCursor, newCursor);
+			node.dispatchEvent(new Event('input', { bubbles: true }));
+			hideDropdown();
+		}
+
+		async function handleInput() {
+			const { word, start, end } = getWordAtCursor();
+			if (!word || word.length < 1) {
+				hideDropdown();
+				return;
+			}
+			currentWord = word;
+			wordStart = start;
+			wordEnd = end;
+
+			if (debounceTimer) clearTimeout(debounceTimer);
+			debounceTimer = setTimeout(async () => {
+				const results = await transliterate(word);
+				if (results.length > 0) {
+					suggestions = results;
+					selectedIndex = 0;
+					createDropdown();
+					renderDropdown();
+				} else {
+					hideDropdown();
+				}
+			}, 150);
+		}
+
+		function handleKeydown(e: KeyboardEvent) {
+			if (suggestions.length === 0) return;
+
+			if (e.key === 'ArrowDown') {
+				e.preventDefault();
+				selectedIndex = (selectedIndex + 1) % suggestions.length;
+				renderDropdown();
+			} else if (e.key === 'ArrowUp') {
+				e.preventDefault();
+				selectedIndex = (selectedIndex - 1 + suggestions.length) % suggestions.length;
+				renderDropdown();
+			} else if (e.key === 'Enter' || e.key === 'Tab') {
+				if (suggestions.length > 0) {
+					e.preventDefault();
+					selectSuggestion(selectedIndex);
+				}
+			} else if (e.key === 'Escape') {
+				hideDropdown();
+			} else if (e.key === ' ') {
+				// Space commits the first suggestion
+				if (suggestions.length > 0) {
+					e.preventDefault();
+					selectSuggestion(selectedIndex);
+					// Add space after
+					const cursor = node.selectionStart ?? node.value.length;
+					node.value = node.value.slice(0, cursor) + ' ' + node.value.slice(cursor);
+					node.setSelectionRange(cursor + 1, cursor + 1);
+					node.dispatchEvent(new Event('input', { bubbles: true }));
+				}
+			}
+		}
+
+		function handleDropdownClick(e: MouseEvent) {
+			const target = e.target as HTMLElement;
+			if (target.classList.contains('tamil-ime-option')) {
+				const index = parseInt(target.dataset.index ?? '0', 10);
+				selectSuggestion(index);
+			}
+		}
+
+		function handleBlur() {
+			// Delay to allow click on dropdown
+			setTimeout(hideDropdown, 150);
+		}
+
+		node.addEventListener('input', handleInput);
+		node.addEventListener('keydown', handleKeydown);
+		node.addEventListener('blur', handleBlur);
+
+		// Listen for clicks on dropdown
+		document.addEventListener('click', handleDropdownClick);
+
+		return {
+			destroy() {
+				if (debounceTimer) clearTimeout(debounceTimer);
+				node.removeEventListener('input', handleInput);
+				node.removeEventListener('keydown', handleKeydown);
+				node.removeEventListener('blur', handleBlur);
+				document.removeEventListener('click', handleDropdownClick);
+				if (dropdown) {
+					dropdown.remove();
+					dropdown = null;
+				}
+			}
+		};
+	}
+
 	// Parse hint like "(option1, option2, option3)" into dropdown options
 	function parseHintOptions(hint?: string): string[] | null {
 		if (!hint) return null;
@@ -130,18 +319,20 @@
 													disabled={isChecked && isCorrect}
 												>
 													<option value="" disabled selected>தேர்வு செய்க</option>
-													{#each dropdownOptions as option}
-														<option value={option}>{option}</option>
-													{/each}
+												{#each dropdownOptions as option (option)}
+													<option value={option}>{option}</option>
+												{/each}
 												</select>
 											{:else}
-												<input
-													type="text"
-													class="fill-input"
-													placeholder="______"
-													bind:value={fillBlankAnswers[exercise.id]}
-													disabled={isChecked && isCorrect}
-												/>
+							<input
+								type="text"
+								class="fill-input"
+								id={`exercise-fib-${exercise.id}`}
+								placeholder="______"
+								bind:value={fillBlankAnswers[exercise.id]}
+								disabled={isChecked && isCorrect}
+								use:tamilIme
+							/>
 											{/if}
 											{#if isChecked}
 												<span class="input-icon">{isCorrect ? '✓' : '✗'}</span>
@@ -176,12 +367,14 @@
 									<span class="q-number">{exerciseIndex + 1}.</span>
 									{content.question}
 								</p>
-								<textarea
-									class="answer-input"
-									placeholder="உங்கள் பதிலை இங்கே எழுதுங்கள்..."
-									bind:value={shortAnswers[exercise.id]}
-									oninput={autoResize}
-								></textarea>
+							<textarea
+								class="answer-input"
+								id={`exercise-short-${exercise.id}`}
+								placeholder="உங்கள் பதிலை இங்கே எழுதுங்கள்..."
+								bind:value={shortAnswers[exercise.id]}
+								oninput={autoResize}
+								use:tamilIme
+							></textarea>
 								{#if content.model_answer}
 									<div class="actions">
 										<button type="button" class="btn" onclick={() => toggleShortAnswer(exercise.id)}>
@@ -208,12 +401,14 @@
 								{#if content.min_words}
 									<p class="word-hint">குறைந்தது {content.min_words} சொற்கள்</p>
 								{/if}
-								<textarea
-									class="answer-input large"
-									placeholder="உங்கள் பதிலை இங்கே எழுதுங்கள்..."
-									bind:value={longAnswers[exercise.id]}
-									oninput={autoResize}
-								></textarea>
+							<textarea
+								class="answer-input large"
+								id={`exercise-long-${exercise.id}`}
+								placeholder="உங்கள் பதிலை இங்கே எழுதுங்கள்..."
+								bind:value={longAnswers[exercise.id]}
+								oninput={autoResize}
+								use:tamilIme
+							></textarea>
 								{#if content.model_answer}
 									<div class="actions">
 										<button type="button" class="btn" onclick={() => toggleLongAnswer(exercise.id)}>
@@ -541,5 +736,35 @@
 		font-weight: 600;
 		color: var(--color-success);
 		margin-right: var(--space-1);
+	}
+
+	/* Tamil IME dropdown (global because it's appended to body) */
+	:global(.tamil-ime-dropdown) {
+		position: fixed;
+		z-index: 9999;
+		background: white;
+		border: 1px solid var(--color-bg-soft, #e5e5e5);
+		border-radius: 6px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		max-height: 200px;
+		overflow-y: auto;
+		font-family: var(--font-tamil, 'Mukta Malar', sans-serif);
+	}
+
+	:global(.tamil-ime-option) {
+		padding: 8px 12px;
+		cursor: pointer;
+		font-size: 1rem;
+		border-bottom: 1px solid var(--color-bg-soft, #f0f0f0);
+	}
+
+	:global(.tamil-ime-option:last-child) {
+		border-bottom: none;
+	}
+
+	:global(.tamil-ime-option:hover),
+	:global(.tamil-ime-option.selected) {
+		background: var(--color-accent-tint, #fff5f5);
+		color: var(--color-accent, #8b2500);
 	}
 </style>
