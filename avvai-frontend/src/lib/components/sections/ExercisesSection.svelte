@@ -4,6 +4,7 @@
 		Exercise,
 		ExerciseContent
 	} from '$lib/types/lesson';
+	import ClickableText from '$lib/components/ClickableText.svelte';
 
 	interface Props {
 		data: ExercisesSectionData;
@@ -260,7 +261,7 @@
 	{#each data.exercise_groups as group, groupIndex (groupIndex)}
 		<div class="exercise-group">
 			<div class="group-header">
-				<span class="group-label">{group.instructions}</span>
+				<span class="group-label"><ClickableText text={group.instructions} /></span>
 			</div>
 
 			<div class="exercises-list">
@@ -273,7 +274,7 @@
 							<div class="mcq">
 								<p class="question">
 									<span class="q-number">{exerciseIndex + 1}.</span>
-									{content.question}
+									<ClickableText text={content.question} />
 								</p>
 								<div class="options">
 									{#each content.options as option (option.id)}
@@ -290,7 +291,7 @@
 											onclick={() => selectMcqOption(exercise.id, option.id)}
 										>
 											<span class="option-letter">{option.id})</span>
-											<span class="option-text">{option.text}</span>
+											<span class="option-text"><ClickableText text={option.text} /></span>
 											{#if isChecked && isCorrect}
 												<span class="option-icon">✓</span>
 											{:else if isChecked && isSelected && !isCorrect}
@@ -310,7 +311,7 @@
 								<p class="question">
 									<span class="q-number">{exerciseIndex + 1}.</span>
 									<span class="fill-sentence">
-										{content.text_before}
+										<ClickableText text={content.text_before} />
 										<span class="input-wrapper" class:correct={isChecked && isCorrect} class:incorrect={isChecked && !isCorrect}>
 											{#if dropdownOptions && dropdownOptions.length > 0}
 												<select
@@ -339,7 +340,7 @@
 											{/if}
 										</span>
 										{#if content.text_after}
-											{content.text_after}
+											<ClickableText text={content.text_after} />
 										{/if}
 									</span>
 								</p>
@@ -365,7 +366,7 @@
 							<div class="short-answer">
 								<p class="question">
 									<span class="q-number">{exerciseIndex + 1}.</span>
-									{content.question}
+									<ClickableText text={content.question} />
 								</p>
 							<textarea
 								class="answer-input"
@@ -384,7 +385,7 @@
 									{#if isRevealed}
 										<div class="model-answer">
 											<span class="model-label">Answer:</span>
-											{content.model_answer}
+											<ClickableText text={content.model_answer} />
 										</div>
 									{/if}
 								{/if}
@@ -396,7 +397,7 @@
 							<div class="long-answer">
 								<p class="question">
 									<span class="q-number">{exerciseIndex + 1}.</span>
-									{content.question}
+									<ClickableText text={content.question} />
 								</p>
 								{#if content.min_words}
 									<p class="word-hint">குறைந்தது {content.min_words} சொற்கள்</p>
@@ -418,7 +419,7 @@
 									{#if isRevealed}
 										<div class="model-answer">
 											<span class="model-label">Answer:</span>
-											{content.model_answer}
+											<ClickableText text={content.model_answer} />
 										</div>
 									{/if}
 								{/if}
