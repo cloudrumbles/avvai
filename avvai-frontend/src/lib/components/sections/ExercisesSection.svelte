@@ -94,9 +94,8 @@
 		let wordEnd = 0;
 		let dropdown: HTMLDivElement | null = null;
 		let debounceTimer: ReturnType<typeof setTimeout> | null = null;
-		let isComposing = false; // Track IME composition state (for mobile keyboards)
+		let isComposing = false;
 		let isLoading = false;
-		let pendingSelection: number | null = null; // For touch events
 
 		function getWordAtCursor(): { word: string; start: number; end: number } {
 			const value = node.value;
@@ -115,10 +114,9 @@
 			dropdown.className = 'tamil-ime-dropdown';
 			document.body.appendChild(dropdown);
 
-			// Handle touch events directly on dropdown for mobile
-			dropdown.addEventListener('touchstart', handleDropdownTouchstart, { passive: false });
-			dropdown.addEventListener('touchend', handleDropdownTouchend, { passive: false });
-			dropdown.addEventListener('selectstart', handleSelectStart);
+			// Handle click for option selection (works for both touch and mouse)
+			dropdown.addEventListener('click', handleDropdownClick);
+			// Prevent blur on desktop
 			dropdown.addEventListener('mousedown', handleDropdownMousedown);
 		}
 
@@ -171,7 +169,6 @@
 			suggestions = [];
 			selectedIndex = 0;
 			isLoading = false;
-			pendingSelection = null;
 		}
 
 		function selectSuggestion(index: number, addSpace = false) {
@@ -262,56 +259,27 @@
 			}
 		}
 
-		// Touchstart - just prevent default to stop iOS text selection
-		function handleDropdownTouchstart(e: TouchEvent) {
-			e.preventDefault();
-			e.stopPropagation();
-		}
-
-		// Touchend - actually select the suggestion
-		function handleDropdownTouchend(e: TouchEvent) {
-			e.preventDefault();
-			e.stopPropagation();
-			const target = e.target as HTMLElement;
-			const option = target.closest('.tamil-ime-option') as HTMLElement | null;
-			if (option) {
-				const index = parseInt(option.dataset.index ?? '0', 10);
-				pendingSelection = index;
-				// Small delay to let blur handler know we have a pending selection
-				setTimeout(() => {
-					if (pendingSelection !== null) {
-						selectSuggestion(pendingSelection);
-						node.focus();
-						pendingSelection = null;
-					}
-				}, 10);
-			}
-		}
-
-		// Prevent text selection on the dropdown
-		function handleSelectStart(e: Event) {
-			e.preventDefault();
-		}
-
-		// Mousedown to prevent blur on desktop
-		function handleDropdownMousedown(e: MouseEvent) {
-			e.preventDefault();
-			e.stopPropagation();
+		// Click handler for option selection (works for both touch tap and mouse click)
+		function handleDropdownClick(e: MouseEvent) {
 			const target = e.target as HTMLElement;
 			const option = target.closest('.tamil-ime-option') as HTMLElement | null;
 			if (option) {
 				const index = parseInt(option.dataset.index ?? '0', 10);
 				selectSuggestion(index);
+				node.focus();
 			}
 		}
 
+		// Mousedown to prevent blur on desktop
+		function handleDropdownMousedown(e: MouseEvent) {
+			e.preventDefault();
+		}
+
 		function handleBlur() {
-			// Only hide if there's no pending touch selection
+			// Delay to allow click events to fire before hiding
 			setTimeout(() => {
-				if (pendingSelection === null) {
-					hideDropdown();
-				}
-			}, 200);
+				hideDropdown();
+			}, 150);
 		}
 
 		// Composition events for mobile keyboard predictive text
@@ -354,9 +322,7 @@
 				window.visualViewport?.removeEventListener('resize', handleViewportResize);
 				window.visualViewport?.removeEventListener('scroll', handleViewportResize);
 				if (dropdown) {
-					dropdown.removeEventListener('touchstart', handleDropdownTouchstart);
-					dropdown.removeEventListener('touchend', handleDropdownTouchend);
-					dropdown.removeEventListener('selectstart', handleSelectStart);
+					dropdown.removeEventListener('click', handleDropdownClick);
 					dropdown.removeEventListener('mousedown', handleDropdownMousedown);
 					dropdown.remove();
 					dropdown = null;
