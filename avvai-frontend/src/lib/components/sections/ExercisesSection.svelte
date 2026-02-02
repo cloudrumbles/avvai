@@ -60,7 +60,9 @@
 	}
 
 	// Tamil IME using Google Input Tools API
-	async function transliterate(text: string): Promise<string[]> {
+	let currentAbortController: AbortController | null = null;
+
+	async function transliterate(text: string, signal?: AbortSignal): Promise<string[]> {
 		if (!text.trim()) return [];
 		const url = new URL('https://inputtools.google.com/request');
 		url.searchParams.set('text', text);
@@ -73,13 +75,14 @@
 		url.searchParams.set('app', 'demopage');
 
 		try {
-			const res = await fetch(url.toString());
+			const res = await fetch(url.toString(), { signal });
 			const data = await res.json();
 			if (data[0] === 'SUCCESS' && data[1]?.[0]?.[1]) {
 				return data[1][0][1] as string[];
 			}
-		} catch {
-			// silently fail
+		} catch (e) {
+			// Ignore abort errors, silently fail others
+			if (e instanceof Error && e.name === 'AbortError') return [];
 		}
 		return [];
 	}
@@ -87,11 +90,13 @@
 	function tamilIme(node: HTMLInputElement | HTMLTextAreaElement) {
 		let suggestions: string[] = [];
 		let selectedIndex = 0;
-		let currentWord = '';
 		let wordStart = 0;
 		let wordEnd = 0;
 		let dropdown: HTMLDivElement | null = null;
 		let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+		let isComposing = false; // Track IME composition state (for mobile keyboards)
+		let isLoading = false;
+		let pendingSelection: number | null = null; // For touch events
 
 		function getWordAtCursor(): { word: string; start: number; end: number } {
 			const value = node.value;
@@ -109,31 +114,53 @@
 			dropdown = document.createElement('div');
 			dropdown.className = 'tamil-ime-dropdown';
 			document.body.appendChild(dropdown);
+
+			// Handle touch events directly on dropdown for mobile
+			dropdown.addEventListener('touchstart', handleDropdownTouchstart, { passive: false });
+			dropdown.addEventListener('touchend', handleDropdownTouchend, { passive: false });
+			dropdown.addEventListener('selectstart', handleSelectStart);
+			dropdown.addEventListener('mousedown', handleDropdownMousedown);
 		}
 
 		function positionDropdown() {
 			if (!dropdown) return;
-			const rect = node.getBoundingClientRect();
-			// Try to get caret position, fallback to input position
+
 			dropdown.style.position = 'fixed';
-			dropdown.style.left = `${rect.left}px`;
-			dropdown.style.top = `${rect.bottom + 4}px`;
-			dropdown.style.minWidth = `${Math.min(rect.width, 200)}px`;
+			dropdown.style.left = '0';
+			dropdown.style.right = '0';
+			dropdown.style.width = '100%';
+
+			const viewport = window.visualViewport;
+			if (viewport) {
+				// Position at bottom of visual viewport (above keyboard)
+				const top = viewport.offsetTop + viewport.height - 48;
+				dropdown.style.top = `${top}px`;
+				dropdown.style.bottom = 'auto';
+			} else {
+				// Fallback: pin to bottom
+				dropdown.style.bottom = '0';
+				dropdown.style.top = 'auto';
+			}
 		}
 
 		function renderDropdown() {
 			if (!dropdown) return;
-			if (suggestions.length === 0) {
+			if (suggestions.length === 0 && !isLoading) {
 				dropdown.style.display = 'none';
 				return;
 			}
-			dropdown.style.display = 'block';
-			dropdown.innerHTML = suggestions
-				.map(
-					(s, i) =>
-						`<div class="tamil-ime-option${i === selectedIndex ? ' selected' : ''}" data-index="${i}">${s}</div>`
-				)
-				.join('');
+			dropdown.style.display = 'flex';
+
+			if (isLoading && suggestions.length === 0) {
+				dropdown.innerHTML = '<div class="tamil-ime-loading">...</div>';
+			} else {
+				dropdown.innerHTML = suggestions
+					.map(
+						(s, i) =>
+							`<div class="tamil-ime-option${i === selectedIndex ? ' selected' : ''}" data-index="${i}"><span class="tamil-ime-key">${i + 1}</span>${s}</div>`
+					)
+					.join('');
+			}
 			positionDropdown();
 		}
 
@@ -143,37 +170,54 @@
 			}
 			suggestions = [];
 			selectedIndex = 0;
+			isLoading = false;
+			pendingSelection = null;
 		}
 
-		function selectSuggestion(index: number) {
+		function selectSuggestion(index: number, addSpace = false) {
 			const selected = suggestions[index];
 			if (!selected) return;
 			const value = node.value;
-			const newValue = value.slice(0, wordStart) + selected + value.slice(wordEnd);
+			const suffix = addSpace ? ' ' : '';
+			const newValue = value.slice(0, wordStart) + selected + suffix + value.slice(wordEnd);
 			node.value = newValue;
-			const newCursor = wordStart + selected.length;
+			const newCursor = wordStart + selected.length + suffix.length;
 			node.setSelectionRange(newCursor, newCursor);
 			node.dispatchEvent(new Event('input', { bubbles: true }));
 			hideDropdown();
 		}
 
 		async function handleInput() {
+			// Skip if in composition mode (mobile keyboard predictive text)
+			if (isComposing) return;
+
 			const { word, start, end } = getWordAtCursor();
 			if (!word || word.length < 1) {
 				hideDropdown();
 				return;
 			}
-			currentWord = word;
 			wordStart = start;
 			wordEnd = end;
 
+			// Cancel any pending request
+			if (currentAbortController) {
+				currentAbortController.abort();
+			}
+
 			if (debounceTimer) clearTimeout(debounceTimer);
 			debounceTimer = setTimeout(async () => {
-				const results = await transliterate(word);
+				isLoading = true;
+				createDropdown();
+				renderDropdown();
+
+				currentAbortController = new AbortController();
+				const results = await transliterate(word, currentAbortController.signal);
+				currentAbortController = null;
+				isLoading = false;
+
 				if (results.length > 0) {
 					suggestions = results;
 					selectedIndex = 0;
-					createDropdown();
 					renderDropdown();
 				} else {
 					hideDropdown();
@@ -182,6 +226,16 @@
 		}
 
 		function handleKeydown(e: KeyboardEvent) {
+			// Number keys 1-5 to select suggestions
+			if (suggestions.length > 0 && /^[1-5]$/.test(e.key)) {
+				const index = parseInt(e.key, 10) - 1;
+				if (index < suggestions.length) {
+					e.preventDefault();
+					selectSuggestion(index);
+					return;
+				}
+			}
+
 			if (suggestions.length === 0) return;
 
 			if (e.key === 'ArrowDown') {
@@ -200,47 +254,110 @@
 			} else if (e.key === 'Escape') {
 				hideDropdown();
 			} else if (e.key === ' ') {
-				// Space commits the first suggestion
+				// Space commits the selected suggestion and adds space
 				if (suggestions.length > 0) {
 					e.preventDefault();
-					selectSuggestion(selectedIndex);
-					// Add space after
-					const cursor = node.selectionStart ?? node.value.length;
-					node.value = node.value.slice(0, cursor) + ' ' + node.value.slice(cursor);
-					node.setSelectionRange(cursor + 1, cursor + 1);
-					node.dispatchEvent(new Event('input', { bubbles: true }));
+					selectSuggestion(selectedIndex, true);
 				}
 			}
 		}
 
-		function handleDropdownClick(e: MouseEvent) {
+		// Touchstart - just prevent default to stop iOS text selection
+		function handleDropdownTouchstart(e: TouchEvent) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
+		// Touchend - actually select the suggestion
+		function handleDropdownTouchend(e: TouchEvent) {
+			e.preventDefault();
+			e.stopPropagation();
 			const target = e.target as HTMLElement;
-			if (target.classList.contains('tamil-ime-option')) {
-				const index = parseInt(target.dataset.index ?? '0', 10);
+			const option = target.closest('.tamil-ime-option') as HTMLElement | null;
+			if (option) {
+				const index = parseInt(option.dataset.index ?? '0', 10);
+				pendingSelection = index;
+				// Small delay to let blur handler know we have a pending selection
+				setTimeout(() => {
+					if (pendingSelection !== null) {
+						selectSuggestion(pendingSelection);
+						node.focus();
+						pendingSelection = null;
+					}
+				}, 10);
+			}
+		}
+
+		// Prevent text selection on the dropdown
+		function handleSelectStart(e: Event) {
+			e.preventDefault();
+		}
+
+		// Mousedown to prevent blur on desktop
+		function handleDropdownMousedown(e: MouseEvent) {
+			e.preventDefault();
+			e.stopPropagation();
+			const target = e.target as HTMLElement;
+			const option = target.closest('.tamil-ime-option') as HTMLElement | null;
+			if (option) {
+				const index = parseInt(option.dataset.index ?? '0', 10);
 				selectSuggestion(index);
 			}
 		}
 
 		function handleBlur() {
-			// Delay to allow click on dropdown
-			setTimeout(hideDropdown, 150);
+			// Only hide if there's no pending touch selection
+			setTimeout(() => {
+				if (pendingSelection === null) {
+					hideDropdown();
+				}
+			}, 200);
+		}
+
+		// Composition events for mobile keyboard predictive text
+		function handleCompositionStart() {
+			isComposing = true;
+		}
+
+		function handleCompositionEnd() {
+			isComposing = false;
+			// Trigger input handling after composition ends
+			handleInput();
+		}
+
+		// Reposition dropdown when viewport changes (mobile keyboard open/close)
+		function handleViewportResize() {
+			if (dropdown && dropdown.style.display !== 'none') {
+				positionDropdown();
+			}
 		}
 
 		node.addEventListener('input', handleInput);
-		node.addEventListener('keydown', handleKeydown);
+		node.addEventListener('keydown', handleKeydown as EventListener);
 		node.addEventListener('blur', handleBlur);
+		node.addEventListener('compositionstart', handleCompositionStart);
+		node.addEventListener('compositionend', handleCompositionEnd);
 
-		// Listen for clicks on dropdown
-		document.addEventListener('click', handleDropdownClick);
+		// Listen for viewport changes (mobile keyboard)
+		window.visualViewport?.addEventListener('resize', handleViewportResize);
+		window.visualViewport?.addEventListener('scroll', handleViewportResize);
 
 		return {
 			destroy() {
 				if (debounceTimer) clearTimeout(debounceTimer);
+				if (currentAbortController) currentAbortController.abort();
 				node.removeEventListener('input', handleInput);
-				node.removeEventListener('keydown', handleKeydown);
+				node.removeEventListener('keydown', handleKeydown as EventListener);
 				node.removeEventListener('blur', handleBlur);
-				document.removeEventListener('click', handleDropdownClick);
+				node.removeEventListener('compositionstart', handleCompositionStart);
+				node.removeEventListener('compositionend', handleCompositionEnd);
+				window.visualViewport?.removeEventListener('resize', handleViewportResize);
+				window.visualViewport?.removeEventListener('scroll', handleViewportResize);
 				if (dropdown) {
+					dropdown.removeEventListener('touchstart', handleDropdownTouchstart);
+					dropdown.removeEventListener('touchend', handleDropdownTouchend);
+					dropdown.removeEventListener('selectstart', handleSelectStart);
+					dropdown.removeEventListener('mousedown', handleDropdownMousedown);
 					dropdown.remove();
 					dropdown = null;
 				}
@@ -739,33 +856,69 @@
 		margin-right: var(--space-1);
 	}
 
-	/* Tamil IME dropdown (global because it's appended to body) */
+	/* Tamil IME dropdown - horizontal strip above keyboard */
 	:global(.tamil-ime-dropdown) {
 		position: fixed;
 		z-index: 9999;
-		background: white;
-		border: 1px solid var(--color-bg-soft, #e5e5e5);
-		border-radius: 6px;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-		max-height: 200px;
-		overflow-y: auto;
+		background: #f5f5f5;
+		border-top: 1px solid #e0e0e0;
+		display: none;
+		flex-direction: row;
+		overflow-x: auto;
+		overflow-y: hidden;
+		height: 48px;
 		font-family: var(--font-tamil, 'Mukta Malar', sans-serif);
+		-webkit-user-select: none;
+		user-select: none;
+		-webkit-overflow-scrolling: touch;
 	}
 
 	:global(.tamil-ime-option) {
-		padding: 8px 12px;
+		flex: 1;
+		padding: 12px 16px;
 		cursor: pointer;
-		font-size: 1rem;
-		border-bottom: 1px solid var(--color-bg-soft, #f0f0f0);
+		font-size: 1.1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #f5f5f5;
+		color: #333333;
+		border-right: 1px solid #e0e0e0;
+		-webkit-tap-highlight-color: transparent;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		user-select: none;
+		touch-action: manipulation;
+		white-space: nowrap;
 	}
 
 	:global(.tamil-ime-option:last-child) {
-		border-bottom: none;
+		border-right: none;
 	}
 
-	:global(.tamil-ime-option:hover),
 	:global(.tamil-ime-option.selected) {
-		background: var(--color-accent-tint, #fff5f5);
-		color: var(--color-accent, #8b2500);
+		background: var(--color-accent, #8b2500);
+		color: #ffffff;
+	}
+
+	:global(.tamil-ime-option:active) {
+		background: #e8e8e8;
+	}
+
+	:global(.tamil-ime-option.selected:active) {
+		background: var(--color-accent-strong, #6b1d00);
+	}
+
+	:global(.tamil-ime-key) {
+		display: none;
+	}
+
+	:global(.tamil-ime-loading) {
+		flex: 1;
+		padding: 12px 16px;
+		color: #888888;
+		font-size: 0.9rem;
+		text-align: center;
+		background: #f5f5f5;
 	}
 </style>

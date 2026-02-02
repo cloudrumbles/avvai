@@ -76,3 +76,7 @@ src/lib/components/
 - Mobile-first with 768px breakpoint
 - Tamil fonts: configurable (Mukta Malar, Tiro Tamil, Noto, etc.)
 - English fonts: Catamaran (UI), Cormorant Garamond (landing)
+
+## Out of Scope
+
+- **Accessibility (a11y)**: ARIA attributes, screen reader support, and other accessibility features are not a priority for this project.

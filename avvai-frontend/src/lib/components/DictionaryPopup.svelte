@@ -79,7 +79,7 @@
 	.popup-overlay {
 		position: fixed;
 		inset: 0;
-		z-index: 100;
+		z-index: 300;
 	}
 
 	.popup {
@@ -90,7 +90,7 @@
 		border-radius: var(--radius-3);
 		padding: var(--space-3) var(--space-4);
 		box-shadow: var(--shadow-2);
-		z-index: 101;
+		z-index: 301;
 	}
 
 	.popup-word {
