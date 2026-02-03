@@ -1,5 +1,7 @@
-import { showDictionary } from '$lib/stores/dictionary.svelte';
+import { showDictionary, showDictionaryPanel } from '$lib/stores/dictionary.svelte';
 import type { PopupAnchor } from '$lib/stores/dictionary.svelte';
+
+const PANEL_BREAKPOINT = 1024;
 
 export function cleanDictionaryToken(token: string) {
 	return token.replace(/^[\s\p{P}]+|[\s\p{P}]+$/gu, '');
@@ -23,5 +25,12 @@ export function showDictionaryAtElement(word: string, element: HTMLElement | nul
 
 export function showDictionaryFromEvent(word: string, event: Event) {
 	const element = event.currentTarget instanceof HTMLElement ? event.currentTarget : null;
-	showDictionaryAtElement(word, element);
+	const anchor = anchorFromElement(element);
+	if (!anchor) return;
+
+	if (window.innerWidth >= PANEL_BREAKPOINT) {
+		showDictionaryPanel(word);
+	} else {
+		showDictionary(word, anchor);
+	}
 }
