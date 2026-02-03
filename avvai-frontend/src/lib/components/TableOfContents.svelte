@@ -13,17 +13,17 @@
 	function getSectionIcon(type: string): string {
 		switch (type) {
 			case 'prose':
-				return '📖';
+				return '◈';
 			case 'poetry':
-				return '✦';
+				return '◆';
 			case 'vocabulary':
-				return '📚';
+				return '◎';
 			case 'exercises':
-				return '✏️';
+				return '◉';
 			case 'media':
-				return '🎬';
+				return '◐';
 			default:
-				return '•';
+				return '○';
 		}
 	}
 
