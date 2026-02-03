@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { ProseSection, PoetrySection, VocabularySection, MediaSection, ExercisesSection, DialogueSection } from '$lib/components/sections';
-	import type { Lesson, ContentSection } from '$lib/types/lesson';
+	import type { Lesson, ContentSection, ExercisesSection as ExercisesSectionType } from '$lib/types/lesson';
 	import TableOfContents from '$lib/components/TableOfContents.svelte';
 	import Drawer from '$lib/components/Drawer.svelte';
 	import IconButton from '$lib/components/IconButton.svelte';
 	import ReadingSettingsMenu from '$lib/components/ReadingSettingsMenu.svelte';
+	import DictionaryPanel from '$lib/components/DictionaryPanel.svelte';
 	import { DEFAULT_FONT } from '$lib/config/fonts';
 
 	interface Props {
@@ -162,6 +163,10 @@
 			</div>
 		{/if}
 	</div>
+
+	<aside class="right-sidebar">
+		<DictionaryPanel exercisesSection={exercisesSection as ExercisesSectionType | undefined} />
+	</aside>
 </div>
 
 <style>
@@ -174,7 +179,7 @@
 	}
 
 	.sidebar {
-		width: 280px;
+		width: 350px;
 		flex-shrink: 0;
 		height: 100%;
 		overflow: hidden;
@@ -183,6 +188,20 @@
 	@media (max-width: 768px) {
 		.sidebar {
 			display: none;
+		}
+	}
+
+	.right-sidebar {
+		width: 480px;
+		flex-shrink: 0;
+		height: 100%;
+		overflow: hidden;
+		display: none;
+	}
+
+	@media (min-width: 1024px) {
+		.right-sidebar {
+			display: flex;
 		}
 	}
 
@@ -238,6 +257,18 @@
 		color: var(--color-text);
 		text-align: left;
 		scrollbar-width: none;
+	}
+
+	@media (min-width: 1024px) {
+		.reading-surface {
+			padding: var(--space-6) var(--space-8) var(--space-7);
+		}
+
+		.reading-surface > :global(*) {
+			max-width: 720px;
+			margin-left: auto;
+			margin-right: auto;
+		}
 	}
 
 	.reading-surface::-webkit-scrollbar {
@@ -319,6 +350,12 @@
 			bottom: var(--space-6);
 			border-radius: var(--radius-5);
 			padding: var(--space-3) var(--space-6);
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.drawer-tab {
+			display: none;
 		}
 	}
 </style>
