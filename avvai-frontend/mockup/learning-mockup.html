@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avvai - Learning UI Mockup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Eczar:wght@400;600;700&family=Tiro+Tamil:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Palette inspired by palm-leaf manuscripts */
+            --ink: #181512;
+            --ink-soft: #4a433a;
+            --cream: #f4efdf;
+            --cream-mid: #e8e0c8;
+            --paper: #fcfbf8;
+            --red: #8b2323;
+            --gold: #b3801b;
+            --forest: #2b4c3f;
+
+            --font-sans: 'Catamaran', sans-serif;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-tamil: 'Tiro Tamil', serif;
+            --font-display: 'Eczar', serif;
+            
+            --ease-elegant: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--ink);
+            font-family: var(--font-serif);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+
+        /* Layout */
+        .app-container {
+            display: grid;
+            grid-template-columns: 280px 1fr 380px;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* 1. Left Sidebar: Navigation & Context */
+        .sidebar-left {
+            border-right: 1px solid var(--cream-mid);
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 4rem;
+        }
+
+        .toc {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .toc-item {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--ink-soft);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: color 0.3s;
+        }
+
+        .toc-item::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--cream-mid);
+            transition: width 0.3s, background 0.3s;
+        }
+
+        .toc-item:hover, .toc-item.active {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .toc-item.active::before {
+            width: 40px;
+            background: var(--red);
+        }
+
+        .thinai-context {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--cream-mid);
+        }
+
+        .thinai-label {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+            display: block;
+            font-weight: 600;
+        }
+
+        .thinai-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .thinai-meta {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            color: var(--ink-soft);
+            line-height: 1.5;
+        }
+
+        /* 2. Main Content: The Reading Interface */
+        .main-content {
+            padding: 5rem 6rem;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .lesson-header {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .lesson-number {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .lesson-title {
+            font-family: var(--font-tamil);
+            font-size: 3rem;
+            font-weight: 400;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-subtitle {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1.4rem;
+            color: var(--ink-soft);
+        }
+
+        .poem-container {
+            margin-bottom: 5rem;
+            position: relative;
+        }
+
+        /* The beautiful Tamil typography */
+        .tamil-text {
+            font-family: var(--font-tamil);
+            font-size: 2.2rem;
+            line-height: 2.2;
+            color: var(--ink);
+            margin-bottom: 2rem;
+        }
+
+        .tamil-line {
+            display: block;
+            margin-bottom: 0.5rem;
+            white-space: pre-wrap;
+        }
+
+        /* Interactive Words */
+        .word {
+            position: relative;
+            cursor: pointer;
+            display: inline-block;
+            transition: color 0.2s ease;
+        }
+
+        .word::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--red);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s var(--ease-elegant);
+            opacity: 0.4;
+        }
+
+        .word:hover {
+            color: var(--red);
+        }
+
+        .word:hover::after {
+            transform: scaleX(1);
+        }
+
+        .word.active {
+            color: var(--red);
+            font-weight: 400;
+        }
+
+        .word.active::after {
+            transform: scaleX(1);
+            opacity: 1;
+        }
+
+        /* Transliteration & Translation */
+        .poem-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--cream-mid);
+        }
+
+        .meta-section h3 {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--ink-soft);
+            margin-bottom: 1.5rem;
+        }
+
+        .transliteration {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            line-height: 2;
+            color: var(--ink-soft);
+            font-weight: 300;
+        }
+
+        .translation {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--ink);
+        }
+
+        .translation p {
+            margin-bottom: 1rem;
+        }
+
+        .author {
+            display: block;
+            margin-top: 1.5rem;
+            font-style: italic;
+            color: var(--ink-soft);
+            font-size: 1.1rem;
+        }
+
+        /* 3. Right Sidebar: Dictionary / Context Panel */
+        .sidebar-right {
+            background-color: var(--paper);
+            border-left: 1px solid var(--cream-mid);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            box-shadow: -20px 0 40px rgba(24, 21, 18, 0.03);
+            transform: translateX(100%);
+            transition: transform 0.6s var(--ease-elegant);
+            z-index: 10;
+        }
+
+        .sidebar-right.open {
+            transform: translateX(0);
+        }
+
+        .dictionary-content {
+            padding: 4rem 3rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.4s ease 0.2s;
+        }
+
+        .sidebar-right.open .dictionary-content {
+            opacity: 1;
+        }
+
+        .dict-header {
+            margin-bottom: 3rem;
+        }
+
+        .dict-label {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--red);
+            margin-bottom: 1rem;
+            display: block;
+            font-weight: 600;
+        }
+
+        .dict-word {
+            font-family: var(--font-tamil);
+            font-size: 3.5rem;
+            line-height: 1;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .dict-pronunciation {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--ink-soft);
+            font-weight: 300;
+        }
+
+        .dict-definition {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            line-height: 1.5;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid var(--cream-mid);
+        }
+
+        .dict-grammar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .grammar-tag {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.3rem 0.6rem;
+            background: var(--cream);
+            color: var(--ink-soft);
+            border-radius: 4px;
+        }
+
+        .dict-etymology {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--ink-soft);
+            font-weight: 300;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .close-btn:hover {
+            background: var(--cream);
+        }
+
+        .close-icon {
+            width: 20px;
+            height: 20px;
+            stroke: var(--ink);
+            stroke-width: 1.5;
+        }
+
+        /* Overlay for mobile/smaller screens */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(24, 21, 18, 0.2);
+            backdrop-filter: blur(2px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s var(--ease-elegant);
+            z-index: 5;
+        }
+
+        .overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Instruction text */
+        .interaction-hint {
+            text-align: center;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            color: var(--red);
+            margin-bottom: 3rem;
+            font-weight: 500;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .app-container {
+                grid-template-columns: 240px 1fr 0; /* Hide sidebar right initially */
+            }
+            .sidebar-right {
+                position: fixed;
+                right: 0;
+                width: 400px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar-left {
+                display: none; /* Add a hamburger menu for mobile instead */
+            }
+            .main-content {
+                padding: 3rem 2rem;
+            }
+            .poem-meta-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .tamil-text {
+                font-size: 1.8rem;
+                line-height: 2;
+            }
+            .sidebar-right {
+                width: 100%;
+                max-width: 450px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Left Sidebar -->
+        <aside class="sidebar-left">
+            <div class="logo">avvai</div>
+            
+            <nav class="toc">
+                <a href="#" class="toc-item">01. Introduction</a>
+                <a href="#" class="toc-item active">02. Kurunthokai 3</a>
+                <a href="#" class="toc-item">03. Vocabulary</a>
+                <a href="#" class="toc-item">04. Grammar Rules</a>
+                <a href="#" class="toc-item">05. Practice</a>
+            </nav>
+
+            <div class="thinai-context">
+                <span class="thinai-label">Current Landscape</span>
+                <h2 class="thinai-title">Kurunji</h2>
+                <p class="thinai-meta">
+                    <strong>Theme:</strong> Union of lovers<br>
+                    <strong>Terrain:</strong> Mountains<br>
+                    <strong>Time:</strong> Midnight
+                </p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="lesson-header">
+                <span class="lesson-number">Poem 03</span>
+                <h1 class="lesson-title">குறுந்தொகை 3</h1>
+                <h2 class="lesson-subtitle">Kurunthokai 3</h2>
+            </header>
+
+            <div class="interaction-hint">
+                Hover or click any Tamil word to reveal its meaning
+            </div>
+
+            <article class="poem-container">
+                <div class="tamil-text" id="poem-text">
+                    <span class="tamil-line"><span class="word" data-word="nilathinum">நிலத்தினும்</span> <span class="word" data-word="peridhey">பெரிதே</span> <span class="word" data-word="vaaninum">வானினும்</span> <span class="word" data-word="uyarndhanrey">உயர்ந்தன்றே</span></span>
+                    <span class="tamil-line"><span class="word" data-word="neerinum">நீரினும்</span> <span class="word" data-word="aarala">ஆரள</span> <span class="word" data-word="vinrey">வின்றே</span> <span class="word" data-word="saaral">சாரல்</span></span>
+                    <span class="tamil-line"><span class="word" data-word="karungot">கருங்கோற்</span> <span class="word" data-word="kurinji">குறிஞ்சிப்</span> <span class="word" data-word="pookondu">பூக்கொண்டு</span></span>
+                    <span class="tamil-line"><span class="word" data-word="perunthen">பெருந்தேன்</span> <span class="word" data-word="izhaikkum">இழைக்கும்</span> <span class="word" data-word="naadanodu">நாடனொடு</span> <span class="word" data-word="natpey">நட்பே.</span></span>
+                </div>
+
+                <div class="poem-meta-grid">
+                    <div class="meta-section">
+                        <h3>Transliteration</h3>
+                        <div class="transliteration">
+                            nilathinum peridē vāniṉum uyarndaṉrē<br>
+                            nīriṉum ārala viṉrē cāral<br>
+                            karuṅkōṟ kuṟiñcip pūkkoṇḍu<br>
+                            peruntēṉ iḻaikkum nāḍaṉoḍu naṭpē.
+                        </div>
+                    </div>
+                    
+                    <div class="meta-section">
+                        <h3>Translation</h3>
+                        <div class="translation">
+                            <p>Bigger than earth, certainly,<br>
+                            higher than the sky,<br>
+                            more unfathomable than the waters<br>
+                            is this love for this man</p>
+                            <p>whose mountain slopes<br>
+                            are thick with the dark-stalked kurunji flowers<br>
+                            where bees make rich honey.</p>
+                            <span class="author">— Deva Kullathar (Translated by A.K. Ramanujan)</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <!-- Right Sidebar (Dictionary) -->
+        <aside class="sidebar-right" id="dictionary">
+            <button class="close-btn" id="close-dict">
+                <svg class="close-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            
+            <div class="dictionary-content" id="dict-content">
+                <!-- Content injected via JS -->
+            </div>
+        </aside>
+
+        <!-- Overlay for smaller screens -->
+        <div class="overlay" id="overlay"></div>
+
+    </div>
+
+    <script>
+        // Dictionary Data Mockup
+        const dictionaryData = {
+            'nilathinum': {
+                tamil: 'நிலத்தினும்',
+                translit: 'nilathinum',
+                definition: 'Even bigger than the earth',
+                grammar: ['Noun', 'Comparative'],
+                etymology: 'Root: நிலம் (nilam) meaning earth/land + இனும் (inum) a comparative suffix meaning "even more than".'
+            },
+            'peridhey': {
+                tamil: 'பெரிதே',
+                translit: 'peridhey',
+                definition: 'It is bigger',
+                grammar: ['Adjective'],
+                etymology: 'Root: பெரிது (perithu) meaning big/great.'
+            },
+            'vaaninum': {
+                tamil: 'வானினும்',
+                translit: 'vaaninum',
+                definition: 'Even higher than the sky',
+                grammar: ['Noun', 'Comparative'],
+                etymology: 'Root: வான் (vaan) meaning sky/heavens.'
+            },
+            'uyarndhanrey': {
+                tamil: 'உயர்ந்தன்றே',
+                translit: 'uyarndhanrey',
+                definition: 'It is higher / more elevated',
+                grammar: ['Verb'],
+                etymology: 'Root: உயர் (uyar) meaning to rise/elevate.'
+            },
+            'neerinum': {
+                tamil: 'நீரினும்',
+                translit: 'neerinum',
+                definition: 'Even more than the waters (ocean)',
+                grammar: ['Noun', 'Comparative'],
+                etymology: 'Root: நீர் (neer) meaning water.'
+            },
+            'kurinji': {
+                tamil: 'குறிஞ்சிப்',
+                translit: 'kurinjip',
+                definition: 'The Kurunji flower; a metaphor for the mountainous landscape and secret love.',
+                grammar: ['Noun', 'Proper Noun'],
+                etymology: 'Refers to the Strobilanthes kunthiana flower that blooms once in 12 years in the Western Ghats.'
+            },
+            'natpey': {
+                tamil: 'நட்பே',
+                translit: 'natpey',
+                definition: 'Love / Friendship / Intimacy',
+                grammar: ['Noun'],
+                etymology: 'Root: நட்பு (natpu) meaning friendship or intimacy. In Sangam poetry, it often implies romantic love.'
+            }
+        };
+
+        const words = document.querySelectorAll('.word');
+        const dictionary = document.getElementById('dictionary');
+        const dictContent = document.getElementById('dict-content');
+        const overlay = document.getElementById('overlay');
+        const closeBtn = document.getElementById('close-dict');
+        let currentActiveWord = null;
+
+        function openDictionary(wordId, wordElement) {
+            const data = dictionaryData[wordId] || {
+                tamil: wordElement.innerText,
+                translit: wordId,
+                definition: 'Definition not found in mockup data.',
+                grammar: ['Unknown'],
+                etymology: 'Root information unavailable.'
+            };
+
+            // Remove active class from previous
+            if (currentActiveWord) {
+                currentActiveWord.classList.remove('active');
+            }
+            
+            // Set new active
+            wordElement.classList.add('active');
+            currentActiveWord = wordElement;
+
+            // Populate dictionary
+            dictContent.innerHTML = `
+                <div class="dict-header">
+                    <span class="dict-label">Dictionary Lookup</span>
+                    <h2 class="dict-word">${data.tamil}</h2>
+                    <span class="dict-pronunciation">/${data.translit}/</span>
+                </div>
+                
+                <div class="dict-grammar">
+                    ${data.grammar.map(g => `<span class="grammar-tag">${g}</span>`).join('')}
+                </div>
+                
+                <div class="dict-definition">
+                    ${data.definition}
+                </div>
+                
+                <div class="dict-etymology">
+                    <strong>Etymology:</strong><br>
+                    ${data.etymology}
+                </div>
+            `;
+
+            // Open panel
+            dictionary.classList.add('open');
+            
+            // Show overlay only if screen is narrow enough that sidebar overlaps
+            if (window.innerWidth <= 1200) {
+                overlay.classList.add('visible');
+            }
+        }
+
+        function closeDictionary() {
+            dictionary.classList.remove('open');
+            overlay.classList.remove('visible');
+            if (currentActiveWord) {
+                currentActiveWord.classList.remove('active');
+                currentActiveWord = null;
+            }
+        }
+
+        words.forEach(word => {
+            word.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openDictionary(word.dataset.word, word);
+            });
+        });
+
+        closeBtn.addEventListener('click', closeDictionary);
+        overlay.addEventListener('click', closeDictionary);
+
+        // Handle resize to hide overlay if screen gets big
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1200 && overlay.classList.contains('visible')) {
+                overlay.classList.remove('visible');
+            } else if (window.innerWidth <= 1200 && dictionary.classList.contains('open')) {
+                overlay.classList.add('visible');
+            }
+        });
+    </script>
+</body>
+</html>

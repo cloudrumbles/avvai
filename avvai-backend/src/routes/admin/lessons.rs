@@ -5,118 +5,58 @@ use axum::{
     routing::{delete, get, post, put},
     Json, Router,
 };
-use serde::{Deserialize, Serialize};
-use std::{fs, path::Path, sync::Arc};
+use serde::Deserialize;
+use std::sync::Arc;
 
-use crate::services::admin_auth::{AdminAuthState, AdminUser};
-use crate::routes::lesson::Lesson;
-
-#[derive(Serialize)]
-struct LessonListItem {
-    id: String,
-    title: String,
-    description: String,
-    filename: String,
-}
+use crate::core::lesson;
+use crate::http::admin_auth::{AdminAuthState, AdminUser};
 
 #[derive(Deserialize)]
 struct LessonCreateRequest {
-    lesson: Lesson,
+    lesson: lesson::Lesson,
     filename: Option<String>,
 }
 
 #[derive(Deserialize)]
 struct LessonUpdateRequest {
-    lesson: Lesson,
-}
-
-const LESSONS_DIR: &str = "data/lessons";
-
-fn lessons_dir() -> std::path::PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join(LESSONS_DIR)
-}
-
-fn lesson_filename_for_id(id: &str) -> String {
-    format!("{}.json", id)
-}
-
-fn load_lesson_from_file(path: &std::path::Path) -> Option<Lesson> {
-    let Ok(content) = fs::read_to_string(path) else {
-        return None;
-    };
-    serde_json::from_str::<Lesson>(&content).ok()
-}
-
-fn save_lesson_to_file(path: &std::path::Path, lesson: &Lesson) -> Result<(), String> {
-    let Ok(contents) = serde_json::to_string_pretty(lesson) else {
-        return Err("Failed to serialize lesson".to_string());
-    };
-    fs::write(path, contents).map_err(|e| e.to_string())
+    lesson: lesson::Lesson,
 }
 
 async fn list_lessons(_admin: AdminUser) -> impl IntoResponse {
-    let mut items = Vec::new();
-    let dir = lessons_dir();
-
-    if let Ok(entries) = fs::read_dir(dir) {
-        for entry in entries.flatten() {
-            let path = entry.path();
-            if path.extension().map_or(false, |ext| ext == "json") {
-                if let Some(lesson) = load_lesson_from_file(&path) {
-                    let filename = path
-                        .file_name()
-                        .map(|name| name.to_string_lossy().to_string())
-                        .unwrap_or_default();
-                    items.push(LessonListItem {
-                        id: lesson.id,
-                        title: lesson.title,
-                        description: lesson.description,
-                        filename,
-                    });
-                }
-            }
-        }
-    }
-
-    items.sort_by(|a, b| a.id.cmp(&b.id));
+    let items = lesson::list_admin_items().await;
     Json(items).into_response()
 }
 
 async fn get_lesson(_admin: AdminUser, AxumPath(id): AxumPath<String>) -> impl IntoResponse {
-    let path = lessons_dir().join(lesson_filename_for_id(&id));
-    let Some(lesson) = load_lesson_from_file(&path) else {
-        return (
-            StatusCode::NOT_FOUND,
-            Json(serde_json::json!({"error": "Lesson not found"})),
-        )
-            .into_response();
-    };
-    Json(lesson).into_response()
+    lesson::get_lesson(&id).await.map_or_else(
+        || {
+            (
+                StatusCode::NOT_FOUND,
+                Json(serde_json::json!({"error": "Lesson not found"})),
+            )
+                .into_response()
+        },
+        |lesson| Json(lesson).into_response(),
+    )
 }
 
-async fn create_lesson(_admin: AdminUser, AxumJson(payload): AxumJson<LessonCreateRequest>) -> impl IntoResponse {
-    let filename = payload
-        .filename
-        .unwrap_or_else(|| lesson_filename_for_id(&payload.lesson.id));
-    let path = lessons_dir().join(filename);
-
-    if path.exists() {
-        return (
+async fn create_lesson(
+    _admin: AdminUser,
+    AxumJson(payload): AxumJson<LessonCreateRequest>,
+) -> impl IntoResponse {
+    match lesson::create_lesson(&payload.lesson, payload.filename).await {
+        Ok(lesson) => Json(lesson).into_response(),
+        Err(lesson::LessonStoreError::AlreadyExists) => (
             StatusCode::CONFLICT,
             Json(serde_json::json!({"error": "Lesson already exists"})),
         )
-            .into_response();
-    }
-
-    if let Err(error) = save_lesson_to_file(&path, &payload.lesson) {
-        return (
+            .into_response(),
+        Err(error) => (
             StatusCode::INTERNAL_SERVER_ERROR,
-            Json(serde_json::json!({"error": error})),
+            Json(serde_json::json!({"error": error.message()})),
         )
-            .into_response();
+            .into_response(),
     }
-
-    Json(payload.lesson).into_response()
 }
 
 async fn update_lesson(
@@ -124,45 +64,35 @@ async fn update_lesson(
     AxumPath(id): AxumPath<String>,
     AxumJson(payload): AxumJson<LessonUpdateRequest>,
 ) -> impl IntoResponse {
-    let path = lessons_dir().join(lesson_filename_for_id(&id));
-    if !path.exists() {
-        return (
+    match lesson::update_lesson(&id, &payload.lesson).await {
+        Ok(lesson) => Json(lesson).into_response(),
+        Err(lesson::LessonStoreError::NotFound) => (
             StatusCode::NOT_FOUND,
             Json(serde_json::json!({"error": "Lesson not found"})),
         )
-            .into_response();
-    }
-
-    if let Err(error) = save_lesson_to_file(&path, &payload.lesson) {
-        return (
+            .into_response(),
+        Err(error) => (
             StatusCode::INTERNAL_SERVER_ERROR,
-            Json(serde_json::json!({"error": error})),
+            Json(serde_json::json!({"error": error.message()})),
         )
-            .into_response();
+            .into_response(),
     }
-
-    Json(payload.lesson).into_response()
 }
 
 async fn delete_lesson(_admin: AdminUser, AxumPath(id): AxumPath<String>) -> impl IntoResponse {
-    let path = lessons_dir().join(lesson_filename_for_id(&id));
-    if !path.exists() {
-        return (
+    match lesson::delete_lesson(&id).await {
+        Ok(()) => Json(serde_json::json!({"status": "deleted"})).into_response(),
+        Err(lesson::LessonStoreError::NotFound) => (
             StatusCode::NOT_FOUND,
             Json(serde_json::json!({"error": "Lesson not found"})),
         )
-            .into_response();
-    }
-
-    if let Err(error) = fs::remove_file(&path) {
-        return (
+            .into_response(),
+        Err(error) => (
             StatusCode::INTERNAL_SERVER_ERROR,
-            Json(serde_json::json!({"error": error.to_string()})),
+            Json(serde_json::json!({"error": error.message()})),
         )
-            .into_response();
+            .into_response(),
     }
-
-    Json(serde_json::json!({"status": "deleted"})).into_response()
 }
 
 pub fn router() -> Router<Arc<AdminAuthState>> {

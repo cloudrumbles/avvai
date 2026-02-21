@@ -10,8 +10,8 @@ use axum::{
 use serde::Deserialize;
 use std::sync::Arc;
 
-use crate::services::admin_auth::{AdminAuthState, AdminUser};
-use crate::services::dictionary_cache::{self, DictionaryEntry};
+use crate::core::dictionary_cache::{self, DictionaryEntry};
+use crate::http::admin_auth::{AdminAuthState, AdminUser};
 
 #[derive(Deserialize)]
 struct CacheKeyRequest {
@@ -38,14 +38,16 @@ async fn get_entry(_admin: AdminUser, AxumJson(params): AxumJson<CacheKeyRequest
             .into_response();
     };
 
-    match dictionary_cache::get(&key).await {
-        Some(entry) => Json(entry).into_response(),
-        None => (
-            StatusCode::NOT_FOUND,
-            Json(serde_json::json!({"error": "Entry not found"})),
-        )
-            .into_response(),
-    }
+    dictionary_cache::get(&key).await.map_or_else(
+        || {
+            (
+                StatusCode::NOT_FOUND,
+                Json(serde_json::json!({"error": "Entry not found"})),
+            )
+                .into_response()
+        },
+        |entry| Json(entry).into_response(),
+    )
 }
 
 async fn upsert_entry(_admin: AdminUser, AxumJson(params): AxumJson<CacheUpsertRequest>) -> impl IntoResponse {

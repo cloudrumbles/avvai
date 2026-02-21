@@ -5,7 +5,7 @@ pub mod media;
 use axum::Router;
 use std::sync::Arc;
 
-use crate::services::admin_auth::AdminAuthState;
+use crate::http::admin_auth::AdminAuthState;
 
 pub fn router() -> Router<Arc<AdminAuthState>> {
     Router::new()

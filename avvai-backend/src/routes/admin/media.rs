@@ -5,54 +5,24 @@ use axum::{
     routing::{delete, get, post},
     Json, Router,
 };
-use std::{fs, path::Path, sync::Arc};
+use std::sync::Arc;
 use tokio::io::AsyncWriteExt;
 
-use crate::services::admin_auth::{AdminAuthState, AdminUser};
-
-const MEDIA_DIR: &str = "static/media";
-
-fn media_root() -> std::path::PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join(MEDIA_DIR)
-}
+use crate::core::media;
+use crate::http::admin_auth::{AdminAuthState, AdminUser};
 
 async fn list_media(_admin: AdminUser) -> impl IntoResponse {
-    let dir = media_root();
-    let mut files = Vec::new();
-
-    if let Ok(entries) = fs::read_dir(dir) {
-        for entry in entries.flatten() {
-            let path = entry.path();
-            if path.is_file() {
-                if let Some(name) = path.file_name() {
-                    files.push(name.to_string_lossy().to_string());
-                }
-            }
-        }
-    }
-
-    files.sort();
+    let files = media::list_media().await;
     Json(files).into_response()
 }
 
 async fn upload_media(_admin: AdminUser, mut multipart: Multipart) -> impl IntoResponse {
-    let root = media_root();
-    if let Err(error) = fs::create_dir_all(&root) {
-        return (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            Json(serde_json::json!({"error": error.to_string()})),
-        )
-            .into_response();
-    }
-
     while let Ok(Some(field)) = multipart.next_field().await {
-        let Some(filename) = field.file_name().map(|f| f.to_string()) else {
+        let Some(filename) = field.file_name().map(ToString::to_string) else {
             continue;
         };
 
-        let sanitized = filename.replace(['/', '\\'], "_");
-        let path = root.join(sanitized);
-        let Ok(mut file) = tokio::fs::File::create(&path).await else {
+        let Ok((path, mut file)) = media::create_media_file(&filename).await else {
             return (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 Json(serde_json::json!({"error": "Failed to create file"})),
@@ -82,25 +52,19 @@ async fn upload_media(_admin: AdminUser, mut multipart: Multipart) -> impl IntoR
 }
 
 async fn delete_media(_admin: AdminUser, AxumPath(filename): AxumPath<String>) -> impl IntoResponse {
-    let sanitized = filename.replace(['/', '\\'], "_");
-    let path = media_root().join(sanitized);
-    if !path.exists() {
-        return (
+    match media::delete_media(&filename).await {
+        Ok(()) => Json(serde_json::json!({"status": "deleted"})).into_response(),
+        Err(media::MediaError::NotFound) => (
             StatusCode::NOT_FOUND,
             Json(serde_json::json!({"error": "File not found"})),
         )
-            .into_response();
-    }
-
-    if let Err(error) = fs::remove_file(&path) {
-        return (
+            .into_response(),
+        Err(error) => (
             StatusCode::INTERNAL_SERVER_ERROR,
-            Json(serde_json::json!({"error": error.to_string()})),
+            Json(serde_json::json!({"error": error.message()})),
         )
-            .into_response();
+            .into_response(),
     }
-
-    Json(serde_json::json!({"status": "deleted"})).into_response()
 }
 
 pub fn router() -> Router<Arc<AdminAuthState>> {

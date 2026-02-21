@@ -5,6 +5,7 @@ use axum::{
 use serde::Deserialize;
 use std::{collections::HashSet, env, sync::Arc};
 
+#[allow(dead_code)]
 #[derive(Clone)]
 pub struct AdminAuthState {
     pub supabase_url: String,
@@ -20,7 +21,7 @@ impl AdminAuthState {
             .map_err(|_| "Missing PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY".to_string())?;
 
         let allowed = env::var("ADMIN_ALLOWED_EMAILS")
-            .unwrap_or_else(|_| "".to_string())
+            .unwrap_or_else(|_| String::new())
             .split(',')
             .map(|email| email.trim().to_lowercase())
             .filter(|email| !email.is_empty())
@@ -34,11 +35,13 @@ impl AdminAuthState {
     }
 }
 
+#[allow(dead_code)]
 #[derive(Deserialize)]
 struct SupabaseUser {
     email: Option<String>,
 }
 
+#[allow(dead_code)]
 pub struct AdminUser {
     pub email: String,
 }
@@ -51,10 +54,13 @@ impl FromRequestParts<Arc<AdminAuthState>> for AdminUser {
         _state: &Arc<AdminAuthState>,
     ) -> Result<Self, Self::Rejection> {
         // AUTH DISABLED - allowing all access
-        Ok(AdminUser { email: "admin@avvai.edu".to_string() })
+        Ok(Self {
+            email: "admin@avvai.edu".to_string(),
+        })
     }
 }
 
+#[allow(dead_code)]
 fn extract_bearer(headers: &HeaderMap) -> Option<String> {
     let header = headers.get("Authorization")?.to_str().ok()?;
     let mut parts = header.split_whitespace();

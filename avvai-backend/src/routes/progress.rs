@@ -1,10 +1,18 @@
-use axum::{routing::{get, post}, Json, Router};
+use axum::{
+    http::StatusCode,
+    response::IntoResponse,
+    routing::{get, post},
+    Json, Router,
+};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 
-// In-memory store for now - replace with database later
-type ProgressStore = Arc<Mutex<HashMap<String, bool>>>;
+use crate::core::{db, progress};
+
+#[derive(Clone)]
+struct ProgressState {
+    db: Arc<std::sync::Mutex<rusqlite::Connection>>,
+}
 
 #[derive(Deserialize)]
 struct UpdateRequest {
@@ -19,22 +27,49 @@ struct UpdateResponse {
 }
 
 pub fn router() -> Router {
-    let store: ProgressStore = Arc::new(Mutex::new(HashMap::new()));
+    let state = ProgressState { db: db::db() };
+    let state_for_get = state.clone();
+    let state_for_update = state;
 
     Router::new()
         .route("/get", get({
-            let store = store.clone();
+            let state = state_for_get;
             move || async move {
-                let progress = store.lock().unwrap();
-                Json(progress.clone())
+                match load_progress(state.db.clone()).await {
+                    Ok(progress) => Json(progress).into_response(),
+                    Err(error) => (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(serde_json::json!({"error": error})),
+                    )
+                        .into_response(),
+                }
             }
         }))
         .route("/update", post({
-            let store = store.clone();
+            let state = state_for_update;
             move |Json(body): Json<UpdateRequest>| async move {
-                let mut progress = store.lock().unwrap();
-                progress.insert(body.lesson_id, body.completed);
-                Json(UpdateResponse { success: true })
+                match upsert_progress(state.db.clone(), &body.lesson_id, body.completed).await {
+                    Ok(()) => Json(UpdateResponse { success: true }).into_response(),
+                    Err(error) => (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(serde_json::json!({"error": error})),
+                    )
+                        .into_response(),
+                }
             }
         }))
+}
+
+async fn load_progress(
+    db: Arc<std::sync::Mutex<rusqlite::Connection>>,
+) -> Result<std::collections::HashMap<String, bool>, String> {
+    progress::load_progress(db).await
+}
+
+async fn upsert_progress(
+    db: Arc<std::sync::Mutex<rusqlite::Connection>>,
+    lesson_id: &str,
+    completed: bool,
+) -> Result<(), String> {
+    progress::upsert_progress(db, lesson_id, completed).await
 }

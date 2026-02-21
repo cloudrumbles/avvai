@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avvai | The Five Thinai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,400&family=Tiro+Tamil:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --leaf-bg: #1a1815;
+            --leaf-text: #eaddcf;
+            --leaf-accent: #d4af37;
+            --font-ui: 'Catamaran', sans-serif;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-tamil: 'Tiro Tamil', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--leaf-bg);
+            color: var(--leaf-text);
+            font-family: var(--font-ui);
+            overflow-x: hidden;
+        }
+
+        /* grain overlay for that organic manuscript feel */
+        .grain {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-family: var(--font-ui);
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            font-size: 0.8rem;
+            color: rgba(234, 221, 207, 0.6);
+            margin-bottom: 2rem;
+            animation: fadeUp 1s ease-out;
+        }
+
+        .title {
+            font-family: var(--font-serif);
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 1rem;
+            animation: fadeUp 1s ease-out 0.2s both;
+        }
+
+        .tamil-title {
+            font-family: var(--font-tamil);
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: var(--leaf-accent);
+            opacity: 0.8;
+            animation: fadeUp 1s ease-out 0.4s both;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1.2rem;
+            animation: pulse 2s infinite;
+        }
+
+        /* the sticky stack gallery */
+        .thinai-container {
+            position: relative;
+        }
+
+        .thinai-card {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4rem 10vw;
+            box-shadow: 0 -20px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+            transition: filter 0.3s ease;
+        }
+
+        .thinai-content {
+            max-width: 500px;
+            z-index: 2;
+            mix-blend-mode: difference;
+        }
+
+        .thinai-name-en {
+            font-family: var(--font-serif);
+            font-size: 5rem;
+            font-weight: 300;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .thinai-name-ta {
+            font-family: var(--font-tamil);
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .thinai-desc {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .thinai-meta {
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .meta-label { opacity: 0.5; display: block; margin-bottom: 0.3rem; }
+
+        .landscape-graphic {
+            position: absolute;
+            right: -10vw;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60vw;
+            height: 80vh;
+            border-radius: 500px 500px 0 0;
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), transparent);
+            backdrop-filter: blur(10px);
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* specific landscapes with distinct dark color palettes */
+        #kurinji { background-color: #0b1115; }
+        #kurinji .landscape-graphic { background: radial-gradient(circle at 50% 0%, #1a2a3a, transparent 70%); border-radius: 50% 50% 0 0; }
+        
+        #mullai { background-color: #121a10; }
+        #mullai .landscape-graphic { border-radius: 200px; background: linear-gradient(to bottom, #1d3316, transparent); }
+        
+        #marutham { background-color: #1a130c; }
+        #marutham .landscape-graphic { border-radius: 0; transform: translateY(-50%) rotate(15deg); background: repeating-linear-gradient(45deg, #2a1b10, #2a1b10 10px, transparent 10px, transparent 20px); }
+        
+        #neithal { background-color: #0c161c; }
+        #neithal .landscape-graphic { border-radius: 50%; width: 50vw; height: 50vw; background: radial-gradient(circle, #153247, transparent); }
+        
+        #palai { background-color: #1c100a; }
+        #palai .landscape-graphic { border-radius: 500px 500px 0 0; background: linear-gradient(to top, #361706, transparent); clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, 0); }
+            50% { opacity: 1; transform: translate(-50%, 10px); }
+        }
+
+        @media (max-width: 768px) {
+            .thinai-card { padding: 2rem; flex-direction: column; justify-content: flex-end; padding-bottom: 5rem; }
+            .thinai-content { width: 100%; mix-blend-mode: normal; }
+            .landscape-graphic { right: 50%; top: 10%; transform: translateX(50%); width: 90vw; height: 50vh; opacity: 0.5; }
+            .thinai-name-en { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    
+    <header class="hero">
+        <div class="subtitle">Classical Tamil Learning</div>
+        <h1 class="title">The Five Landscapes</h1>
+        <div class="tamil-title">ஐந்திணை</div>
+        <div class="scroll-indicator">begin the journey &darr;</div>
+    </header>
+
+    <main class="thinai-container">
+        <section class="thinai-card" id="kurinji">
+            <div class="landscape-graphic"></div>
+            <div class="thinai-content">
+                <h2 class="thinai-name-en">Kurinji</h2>
+                <div class="thinai-name-ta">குறிஞ்சி</div>
+                <p class="thinai-desc">the mountainous regions. midnight. the clandestine meeting of lovers, shrouded in mist and mystery. the first bloom of the kurinji flower.</p>
+                <div class="thinai-meta">
+                    <div><span class="meta-label">emotion</span>union</div>
+                    <div><span class="meta-label">time</span>midnight</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="thinai-card" id="mullai">
+            <div class="landscape-graphic"></div>
+            <div class="thinai-content">
+                <h2 class="thinai-name-en">Mullai</h2>
+                <div class="thinai-name-ta">முல்லை</div>
+                <p class="thinai-desc">the pastoral forests. evening. waiting in quiet endurance for the return of the beloved, as the jasmine flowers begin to open in the dusk.</p>
+                <div class="thinai-meta">
+                    <div><span class="meta-label">emotion</span>patient waiting</div>
+                    <div><span class="meta-label">time</span>evening</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="thinai-card" id="marutham">
+            <div class="landscape-graphic"></div>
+            <div class="thinai-content">
+                <h2 class="thinai-name-en">Marutham</h2>
+                <div class="thinai-name-ta">மருதம்</div>
+                <p class="thinai-desc">the fertile plains and river valleys. the dawn. the complex dynamics of established love, marked by sulking, quarrels, and eventual reconciliation.</p>
+                <div class="thinai-meta">
+                    <div><span class="meta-label">emotion</span>infidelity & sulking</div>
+                    <div><span class="meta-label">time</span>dawn</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="thinai-card" id="neithal">
+            <div class="landscape-graphic"></div>
+            <div class="thinai-content">
+                <h2 class="thinai-name-en">Neithal</h2>
+                <div class="thinai-name-ta">நெய்தல்</div>
+                <p class="thinai-desc">the seashore. sunset. the deep, expansive sorrow of parting, vast and relentless as the ocean waves crashing against the sand.</p>
+                <div class="thinai-meta">
+                    <div><span class="meta-label">emotion</span>pining</div>
+                    <div><span class="meta-label">time</span>sunset</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="thinai-card" id="palai">
+            <div class="landscape-graphic"></div>
+            <div class="thinai-content">
+                <h2 class="thinai-name-en">Palai</h2>
+                <div class="thinai-name-ta">பாலை</div>
+                <p class="thinai-desc">the dry, arid desert. midday. the harsh, unforgiving pain of separation and the dangerous journey undertaken for wealth or war.</p>
+                <div class="thinai-meta">
+                    <div><span class="meta-label">emotion</span>separation</div>
+                    <div><span class="meta-label">time</span>midday</div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

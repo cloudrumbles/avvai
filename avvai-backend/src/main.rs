@@ -1,5 +1,6 @@
+mod core;
+mod http;
 mod routes;
-pub mod services;
 
 use axum::{routing::get, Router};
 use dotenv::from_filename;
@@ -12,7 +13,7 @@ async fn main() {
     let flashcards_state = routes::flashcards::init_state();
 
     let admin_state = Arc::new(
-        services::admin_auth::AdminAuthState::from_env()
+        http::admin_auth::AdminAuthState::from_env()
             .expect("Missing admin auth configuration"),
     );
 
